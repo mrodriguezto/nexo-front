@@ -14,6 +14,7 @@ export const components: Components = {
     defaultProps: {
       variant: 'outlined',
       margin: 'dense',
+      fullWidth: true,
     },
   },
   MuiButton: {
@@ -23,7 +24,9 @@ export const components: Components = {
     },
     styleOverrides: {
       root: {
+        textTransform: 'capitalize',
         borderRadius: '9999px',
+        padding: '0.6em 3em',
       },
     },
   },

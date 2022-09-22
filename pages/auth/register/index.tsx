@@ -1,20 +1,22 @@
-import { NextPage } from 'next';
-import Image from 'next/image';
-
 import { Box, Grid, Typography } from '@mui/material';
 import AuthLayout from 'layouts/auth';
-import LoginForm from 'modules/auth/components/LoginForm';
+import RegisterForm from 'modules/auth/components/RegisterForm';
+import type { NextPage } from 'next';
+import Image from 'next/image';
 
-const LoginPage: NextPage = () => {
+const RegisterPage: NextPage = () => {
   return (
-    <AuthLayout pageTitle="Iniciar sesión" pageDescription="Iniciar sesión">
+    <AuthLayout
+      pageTitle="Registro"
+      pageDescription="Empieza la experiencia nexo ahora"
+    >
       <Grid
         container
         paddingY={4}
         paddingX={{
           xs: 1,
           sm: 2,
-          md: 5,
+          md: 4,
         }}
       >
         <Grid item xs={12} sm={6} md={8}>
@@ -27,12 +29,11 @@ const LoginPage: NextPage = () => {
               sm: 'left',
             }}
           >
-            Iniciar Sesión
+            Empieza la experiencia nexo ahora
           </Typography>
+          <RegisterForm />
 
           {/* TODO: Implement Google OAuth */}
-
-          <LoginForm />
         </Grid>
         <Grid
           paddingLeft={2}
@@ -56,4 +57,4 @@ const LoginPage: NextPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
