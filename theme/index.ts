@@ -1,4 +1,6 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { palette, typography } from './base';
+import { components } from './components';
 
 // declare module '@mui/material/styles' {
 //   interface Palette {
@@ -16,23 +18,10 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 //   }
 // }
 
-const bodyFontFamily = ['Montserrat', 'Roboto', 'Helvetica', 'sans-serif'].join(',');
-const headingFontFamily = ['Oswald', 'Roboto', 'sans-serif'].join(',');
-
 let defaultTheme = createTheme({
-  palette: {
-    primary: { main: '#8D7BDC' },
-    secondary: { main: '#53429E' },
-  },
-  typography: {
-    fontFamily: bodyFontFamily,
-    h1: { fontFamily: headingFontFamily, fontWeight: 700 },
-    h2: { fontFamily: headingFontFamily },
-    h3: { fontFamily: headingFontFamily },
-    h4: { fontFamily: headingFontFamily },
-    h5: { fontFamily: headingFontFamily },
-    h6: { fontFamily: headingFontFamily },
-  },
+  palette,
+  typography,
+  components,
 });
 
 defaultTheme = responsiveFontSizes(defaultTheme);
