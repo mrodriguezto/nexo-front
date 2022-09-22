@@ -34,7 +34,17 @@ const AuthLayout = ({
             md: 4,
           }}
         >
-          <Grid item xs={12} sm={6} md={8} component="main">
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={8}
+            component="main"
+            minHeight="calc(100vh - 10em)"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+          >
             {mainContent}
           </Grid>
           <Grid
@@ -43,7 +53,10 @@ const AuthLayout = ({
             xs={12}
             sm={6}
             md={4}
-            display={{ xs: 'none', sm: 'block' }}
+            display={{ xs: 'none', sm: 'flex' }}
+            minHeight="calc(100vh - 10em)"
+            flexDirection="column"
+            justifyContent="center"
           >
             {decoration}
           </Grid>

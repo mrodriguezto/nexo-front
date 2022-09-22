@@ -24,7 +24,8 @@ export const components: Components = {
     },
     styleOverrides: {
       root: {
-        textTransform: 'capitalize',
+        fontWeight: 600,
+        textTransform: 'none',
         borderRadius: '9999px',
         padding: '0.6em 4em',
       },
