@@ -7,52 +7,42 @@ import LoginForm from 'modules/auth/components/LoginForm';
 
 const LoginPage: NextPage = () => {
   return (
-    <AuthLayout pageTitle="Iniciar sesión" pageDescription="Iniciar sesión">
-      <Grid
-        container
-        paddingY={4}
-        paddingX={{
-          xs: 1,
-          sm: 2,
-          md: 5,
+    <AuthLayout
+      pageTitle="Iniciar sesión"
+      pageDescription="Iniciar sesión"
+      mainContent={<MainContent />}
+      decoration={<Decoration />}
+    />
+  );
+};
+
+const MainContent = () => {
+  return (
+    <>
+      <Typography
+        variant="h1"
+        color="primary"
+        textTransform="uppercase"
+        textAlign={{
+          xs: 'center',
+          sm: 'left',
         }}
       >
-        <Grid item xs={12} sm={6} md={8}>
-          <Typography
-            variant="h1"
-            color="primary"
-            textTransform="uppercase"
-            textAlign={{
-              xs: 'center',
-              sm: 'left',
-            }}
-          >
-            Iniciar Sesión
-          </Typography>
+        Iniciar Sesión
+      </Typography>
 
-          {/* TODO: Implement Google OAuth */}
+      {/* TODO: Implement Google OAuth */}
 
-          <LoginForm />
-        </Grid>
-        <Grid
-          paddingLeft={2}
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          display={{ xs: 'none', sm: 'block' }}
-        >
-          <Box position="relative" width="100%" height="100%">
-            <Image
-              src="/images/auth-1.png"
-              alt=""
-              layout="fill"
-              objectFit="contain"
-            />
-          </Box>
-        </Grid>
-      </Grid>
-    </AuthLayout>
+      <LoginForm />
+    </>
+  );
+};
+
+const Decoration = () => {
+  return (
+    <Box position="relative" width="100%" height="100%">
+      <Image src="/images/auth-1.png" alt="" layout="fill" objectFit="contain" />
+    </Box>
   );
 };
 

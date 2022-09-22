@@ -26,7 +26,7 @@ export const components: Components = {
       root: {
         textTransform: 'capitalize',
         borderRadius: '9999px',
-        padding: '0.6em 3em',
+        padding: '0.6em 4em',
       },
     },
   },

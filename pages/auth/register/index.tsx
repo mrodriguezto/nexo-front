@@ -9,51 +9,37 @@ const RegisterPage: NextPage = () => {
     <AuthLayout
       pageTitle="Registro"
       pageDescription="Empieza la experiencia nexo ahora"
-    >
-      <Grid
-        container
-        paddingY={4}
-        paddingX={{
-          xs: 1,
-          sm: 2,
-          md: 4,
+      mainContent={<MainContent />}
+      decoration={<Decoration />}
+    />
+  );
+};
+
+const MainContent = () => {
+  return (
+    <>
+      <Typography
+        variant="h1"
+        color="primary"
+        textTransform="uppercase"
+        textAlign={{
+          xs: 'center',
+          sm: 'left',
         }}
       >
-        <Grid item xs={12} sm={6} md={8}>
-          <Typography
-            variant="h1"
-            color="primary"
-            textTransform="uppercase"
-            textAlign={{
-              xs: 'center',
-              sm: 'left',
-            }}
-          >
-            Empieza la experiencia nexo ahora
-          </Typography>
-          <RegisterForm />
+        Empieza la experiencia nexo ahora
+      </Typography>
+      <RegisterForm />
+      {/* TODO: Implement Google OAuth */}
+    </>
+  );
+};
 
-          {/* TODO: Implement Google OAuth */}
-        </Grid>
-        <Grid
-          paddingLeft={2}
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          display={{ xs: 'none', sm: 'block' }}
-        >
-          <Box position="relative" width="100%" height="100%">
-            <Image
-              src="/images/auth-1.png"
-              alt=""
-              layout="fill"
-              objectFit="contain"
-            />
-          </Box>
-        </Grid>
-      </Grid>
-    </AuthLayout>
+const Decoration = () => {
+  return (
+    <Box position="relative" width="100%" height="100%">
+      <Image src="/images/auth-1.png" alt=" " layout="fill" objectFit="contain" />
+    </Box>
   );
 };
 
