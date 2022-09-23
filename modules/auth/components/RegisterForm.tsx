@@ -1,11 +1,15 @@
 import NextLink from 'next/link';
 import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { registerStrings } from '../strings';
+import { routes } from 'lib/strings';
 
 const RegisterForm = () => {
+  const { registerForm: strings } = registerStrings;
+
   return (
     <form>
       <Box marginY={4}>
-        <Typography textAlign="center">Entrar con Google</Typography>
+        <Typography textAlign="center">{strings.btns.google_login}</Typography>
       </Box>
       <Grid
         container
@@ -17,18 +21,17 @@ const RegisterForm = () => {
         }}
       >
         <Grid xs={12} md={6} item>
-          <TextField type="text" label="Nombre" />
+          <TextField type="text" label={strings.inputs.firstname_lbl} />
         </Grid>
         <Grid xs={12} md={6} item>
-          <TextField type="text" label="Apellido" />
+          <TextField type="text" label={strings.inputs.lastname_lbl} />
         </Grid>
         <Grid xs={12} md={6} item>
-          <TextField type="email" label="Correo electrónico" />
+          <TextField type="email" label={strings.inputs.email_lbl} />
         </Grid>
-
         {/* TODO: add eye icon to show */}
         <Grid xs={12} md={6} item>
-          <TextField type="password" label="Contraseña" />
+          <TextField type="password" label={strings.inputs.pass_lbl} />
         </Grid>
       </Grid>
 
@@ -39,9 +42,9 @@ const RegisterForm = () => {
           color="GrayText"
           textAlign="center"
         >
-          Al dar clic en REGISTRARME estás aceptando nuestros{' '}
-          <NextLink href="/" passHref>
-            <Link>Términos y condiciones</Link>
+          {strings.terms.info}{' '}
+          <NextLink href={routes.terms} passHref>
+            <Link>{strings.terms.link}</Link>
           </NextLink>
         </Typography>
       </Box>
@@ -53,9 +56,9 @@ const RegisterForm = () => {
 
       <Box marginY={4} display="flex" justifyContent="center">
         <Typography variant="body2" color="GrayText" textAlign="center">
-          ¿Ya tienes una cuenta?{' '}
-          <NextLink href="/auth/login" passHref>
-            <Link>Iniciar Sesión</Link>
+          {strings.has_account.info}{' '}
+          <NextLink href={routes.login} passHref>
+            <Link>{strings.has_account.link}</Link>
           </NextLink>
         </Typography>
       </Box>

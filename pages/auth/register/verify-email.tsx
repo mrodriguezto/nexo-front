@@ -2,12 +2,15 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import AuthLayout from 'common/layouts/AuthLayout';
 import type { NextPage } from 'next';
 import Image from 'next/image';
+import { registerStrings } from 'modules/auth/strings';
 
 const VerifyEmailPage: NextPage = () => {
+  const { verifyEmailPage: strings } = registerStrings;
+
   return (
     <AuthLayout
-      pageTitle="Verificación de cuenta"
-      pageDescription="Verifica tu correo electrónico"
+      pageTitle={strings.title}
+      pageDescription={strings.description}
       mainContent={<MainContent />}
       decoration={<Decoration />}
     />
@@ -15,6 +18,10 @@ const VerifyEmailPage: NextPage = () => {
 };
 
 const MainContent = () => {
+  const {
+    verifyEmailPage: { content: strings },
+  } = registerStrings;
+
   return (
     <Stack
       rowGap={4}
@@ -25,7 +32,7 @@ const MainContent = () => {
       }}
     >
       <Typography variant="h1" color="primary" textTransform="uppercase">
-        Ya casi terminamos, verifica tu cuenta
+        {strings.title}
       </Typography>
 
       <Box
@@ -48,11 +55,10 @@ const MainContent = () => {
       </Box>
 
       <Typography>
-        Hemos enviado un mensaje de confirmación a tu correo, revisa tu bandeja, y
-        haz click en <strong>“CONFIRMAR”</strong>
+        {strings.info1} <strong>{strings.email_verification_btn}</strong>
         <br />
         <br />
-        Si no recibiste el correo, da click en reenviar
+        {strings.info2}
       </Typography>
       <Box
         display="flex"
@@ -61,7 +67,7 @@ const MainContent = () => {
           sm: 'flex-start',
         }}
       >
-        <Button variant="outlined">Reenviar</Button>
+        <Button variant="outlined">{strings.resend_btn}</Button>
       </Box>
     </Stack>
   );

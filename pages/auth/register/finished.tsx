@@ -1,13 +1,17 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { Box, Button, Stack, Typography } from '@mui/material';
+
 import AuthLayout from 'common/layouts/AuthLayout';
+import { registerStrings } from 'modules/auth/strings';
 
 const RegisterFinishedPage: NextPage = () => {
+  const { finishedRegistrationPage: strings } = registerStrings;
+
   return (
     <AuthLayout
-      pageTitle="Verificación de cuenta"
-      pageDescription="Verifica tu correo electrónico"
+      pageTitle={strings.title}
+      pageDescription={strings.description}
       mainContent={<MainContent />}
       decoration={<Decoration />}
     />
@@ -15,6 +19,10 @@ const RegisterFinishedPage: NextPage = () => {
 };
 
 const MainContent = () => {
+  const {
+    finishedRegistrationPage: { content: strings },
+  } = registerStrings;
+
   return (
     <Stack
       rowGap={4}
@@ -24,8 +32,8 @@ const MainContent = () => {
         sm: 'left',
       }}
     >
-      <Typography variant="h1" color="success" textTransform="uppercase">
-        ¡Felicidades! Ya estas registrado
+      <Typography variant="h1" color="primary" textTransform="uppercase">
+        {strings.title}
       </Typography>
 
       <Box
@@ -46,13 +54,7 @@ const MainContent = () => {
         />
       </Box>
 
-      <Typography>
-        Hemos enviado un mensaje de confirmación a tu correo, revisa tu bandeja, y
-        haz click en <strong>“CONFIRMAR”</strong>
-        <br />
-        <br />
-        Si no recibiste el correo, da click en reenviar
-      </Typography>
+      <Typography>{strings.info}</Typography>
       <Box
         display="flex"
         justifyContent={{
@@ -60,7 +62,7 @@ const MainContent = () => {
           sm: 'flex-start',
         }}
       >
-        <Button>Empezar</Button>
+        <Button>{strings.begin_btn}</Button>
       </Box>
     </Stack>
   );

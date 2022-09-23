@@ -4,12 +4,13 @@ import Image from 'next/image';
 import { Box, Typography } from '@mui/material';
 import AuthLayout from 'common/layouts/AuthLayout';
 import LoginForm from 'modules/auth/components/LoginForm';
+import { loginStrings } from 'modules/auth/strings';
 
 const LoginPage: NextPage = () => {
   return (
     <AuthLayout
-      pageTitle="Iniciar sesión"
-      pageDescription="Iniciar sesión"
+      pageTitle={loginStrings.page_title}
+      pageDescription={loginStrings.page_description}
       mainContent={<MainContent />}
       decoration={<Decoration />}
     />
@@ -28,7 +29,7 @@ const MainContent = () => {
           sm: 'left',
         }}
       >
-        Iniciar Sesión
+        {loginStrings.content_title}
       </Typography>
 
       {/* TODO: Implement Google OAuth */}

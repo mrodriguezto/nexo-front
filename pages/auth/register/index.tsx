@@ -3,12 +3,13 @@ import Image from 'next/image';
 import { Box, Typography } from '@mui/material';
 import AuthLayout from 'common/layouts/AuthLayout';
 import RegisterForm from 'modules/auth/components/RegisterForm';
+import { registerStrings as strings } from 'modules/auth/strings';
 
 const RegisterPage: NextPage = () => {
   return (
     <AuthLayout
-      pageTitle="Registro"
-      pageDescription="Empieza la experiencia nexo ahora"
+      pageTitle={strings.registerPage.title}
+      pageDescription={strings.registerPage.description}
       mainContent={<MainContent />}
       decoration={<Decoration />}
     />
@@ -27,7 +28,7 @@ const MainContent = () => {
           sm: 'left',
         }}
       >
-        Empieza la experiencia nexo ahora
+        {strings.registerPage.content_title}
       </Typography>
       <RegisterForm />
       {/* TODO: Implement Google OAuth */}

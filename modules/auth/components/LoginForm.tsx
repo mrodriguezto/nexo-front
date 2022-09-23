@@ -1,7 +1,10 @@
 import NextLink from 'next/link';
 import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
+import { loginStrings } from '../strings';
+import { routes } from 'lib/strings';
 
 const LoginForm = () => {
+  const { loginForm: strings } = loginStrings;
   // TODO: add logic
   return (
     <form>
@@ -13,18 +16,15 @@ const LoginForm = () => {
         }}
       >
         <Box marginY={4}>
-          <Typography textAlign="center">Entrar con Google</Typography>
+          <Typography textAlign="center">{strings.btns.google_login}</Typography>
         </Box>
-        <TextField label="Correo electrónico" />
-
-        {/* TODO: eye icon */}
-        <TextField label="Contraseña" />
-        {/* TODO: change path */}
-        <NextLink href="/" passHref>
-          <Link>Olvidé mi clave</Link>
+        <TextField label={strings.inputs.email_lbl} />
+        <TextField label={strings.inputs.pass_lbl} /> {/* TODO: eye icon */}
+        <NextLink href={routes.restore_password} passHref>
+          <Link>{strings.links.forgot_pass_link}</Link>
         </NextLink>
         <Button type="submit" size="large">
-          Ingresar
+          {strings.btns.login}
         </Button>
         <Stack
           direction={{
@@ -34,9 +34,9 @@ const LoginForm = () => {
           spacing={1}
           sx={{ textAlign: 'center' }}
         >
-          <Typography>¿No tienes una cuenta?</Typography>
-          <NextLink href="/auth/register" passHref>
-            <Link>Regístrate</Link>
+          <Typography>{strings.no_account.info}</Typography>
+          <NextLink href={routes.register} passHref>
+            <Link>{strings.no_account.link}</Link>
           </NextLink>
         </Stack>
       </Stack>
