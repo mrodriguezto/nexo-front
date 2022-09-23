@@ -29,7 +29,7 @@ const finishedRegistrationPage = {
   title: 'Registro exitoso',
   description: 'Registro completado',
   content: {
-    title: '¡Felicidades! Ya estas registrado',
+    title: '¡Felicidades! Ya estás registrado',
     info: 'La función está a punto de empezar, revisa tu bandeja de correo para confirmar tu cuenta.',
     begin_btn: 'Empezar',
   },
@@ -49,4 +49,26 @@ const verifyEmailPage = {
   },
 };
 
-export { registerPage, registerForm, finishedRegistrationPage, verifyEmailPage };
+const termsPage = {
+  title: 'Términos y condiciones',
+  description: 'Lee nuestros términos y condiciones antes de registrarte',
+  content: {
+    title: 'Términos y condiciones',
+    info: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum tellus vel sed enim, accumsan. Nulla urna viverra eget quis semper egestas est. Lectus ornare etiam et tincidunt diam. Risus id velit rutrum netus diam. Sapien, pellentesque et ac pharetra. Turpis sagittis, quam scelerisque id sit mi interdum. At velit, congue cras pretium. Vel tellus ut quam hac libero feugiat adipiscing quisque. Odio fringilla ut et a diam. Mauris lobortis et leo amet. Varius nunc nulla sed eleifend. Venenatis ac non venenatis faucibus augue nulla sapien. Feugiat interdum tellus adipiscing amet, volutpat.
+    Nisi, quam tristique diam, id egestas odio etiam commodo dolor. Sit neque amet curabitur aliquam nec. Cursus urna pulvinar tincidunt quis eget dolor nulla pretium eleifend. Vulputate velit, vivamus in pharetra id urna netus tortor. Dui donec morbi pharetra ultricies. Pretium donec risus ultrices molestie sed cras vulputate. Nulla sagittis cursus a et est. Nascetur nunc adipiscing arcu velit enim sed nisl nec arcu. Diam ac turpis accumsan tortor bibendum aliquam pulvinar nisi. Quis venenatis est sed amet ligula aliquet. Non blandit euismod mus diam lacus pretium. Interdum scelerisque venenatis et eu sit sapien velit arcu. At laoreet integer posuere odio arcu vitae commodo quis gravida. Sem justo, fringilla diam sem.
+    Nulla nibh venenatis, viverra purus sollicitudin. Feugiat aliquam massa sed mollis vitae ac. Condimentum augue leo id integer non eu, facilisi. Ut elit duis amet pellentesque augue viverra habitasse ac. Sed amet nisi, sagittis eu tortor ultricies morbi a. Magna risus est, venenatis augue. Sed semper fermentum elit mattis mattis duis a. Laoreet eu placerat lacus, ornare dictum. Nisi pretium rhoncus faucibus urna orci. Viverra urna pulvinar dui eu lobortis ut urna egestas arcu. Integer natoque viverra iaculis ornare. Integer cursus purus diam sollicitudin cras egestas. Euismod diam nulla vulputate vitae fermentum convallis nunc at porttitor. Leo tincidunt gravida aliquam, non egestas faucibus ut integer.
+    Varius molestie neque, eu vitae nunc, purus elementum viverra. Ipsum laoreet diam scelerisque sem tristique leo ullamcorper gravida. Amet nisi venenatis maecenas nec, donec quis felis eget. Congue morbi consequat pellentesque enim donec ultricies maecenas pharetra. Sed morbi tortor sed elementum aenean consequat dolor tortor nibh. Proin rhoncus turpis quam nisi, rhoncus vel vitae nunc. Congue commodo vestibulum nec, a eu, praesent. Risus vestibulum nulla justo, erat sed.
+    Etiam pellentesque sed mattis euismod at ipsum. Semper mattis vitae ultrices fringilla. Sit gravida imperdiet et mi hendrerit massa. Ut amet eu, ac nulla nulla enim sagittis. Diam eros, condimentum adipiscing venenatis nibh. Vitae pharetra odio ultrices pellentesque 
+    `,
+    go_back_btn: 'Volver al inicio',
+  },
+};
+
+export {
+  registerPage,
+  registerForm,
+  finishedRegistrationPage,
+  verifyEmailPage,
+  termsPage,
+};

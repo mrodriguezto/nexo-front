@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { Box, Button, Stack, Typography } from '@mui/material';
+import { withStyles } from 'tss-react/mui';
 
 import AuthLayout from 'common/layouts/AuthLayout';
 import { registerStrings } from 'modules/auth/strings';
@@ -32,9 +33,9 @@ const MainContent = () => {
         sm: 'left',
       }}
     >
-      <Typography variant="h1" color="primary" textTransform="uppercase">
+      <Title variant="h1" textTransform="uppercase">
         {strings.title}
-      </Typography>
+      </Title>
 
       <Box
         display={{
@@ -80,5 +81,11 @@ const Decoration = () => {
     </Box>
   );
 };
+
+const Title = withStyles(Typography, (theme) => ({
+  root: {
+    color: theme.palette.success.main,
+  },
+}));
 
 export default RegisterFinishedPage;
