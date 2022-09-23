@@ -1,9 +1,9 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-import AuthLayout from 'common/layouts/AuthLayout';
 import type { NextPage } from 'next';
 import Image from 'next/image';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import AuthLayout from 'common/layouts/AuthLayout';
 
-const VerifyEmailPage: NextPage = () => {
+const RegisterFinishedPage: NextPage = () => {
   return (
     <AuthLayout
       pageTitle="Verificación de cuenta"
@@ -24,8 +24,8 @@ const MainContent = () => {
         sm: 'left',
       }}
     >
-      <Typography variant="h1" color="primary" textTransform="uppercase">
-        Ya casi terminamos, verifica tu cuenta
+      <Typography variant="h1" color="success" textTransform="uppercase">
+        ¡Felicidades! Ya estas registrado
       </Typography>
 
       <Box
@@ -39,8 +39,7 @@ const MainContent = () => {
         minHeight={200}
       >
         <Image
-          style={{ rotate: '8.72deg' }}
-          src="/images/auth-lock.svg"
+          src="/images/auth-thumbs.svg"
           alt=""
           layout="fill"
           objectFit="contain"
@@ -61,7 +60,7 @@ const MainContent = () => {
           sm: 'flex-start',
         }}
       >
-        <Button variant="outlined">Reenviar</Button>
+        <Button>Empezar</Button>
       </Box>
     </Stack>
   );
@@ -69,10 +68,9 @@ const MainContent = () => {
 
 const Decoration = () => {
   return (
-    <Box position="relative" width="100%" height="100%" maxHeight={400}>
+    <Box position="relative" width="100%" height="100%" maxHeight={500}>
       <Image
-        style={{ rotate: '8.72deg' }}
-        src="/images/auth-lock.svg"
+        src="/images/auth-thumbs.svg"
         alt=""
         layout="fill"
         objectFit="contain"
@@ -81,4 +79,4 @@ const Decoration = () => {
   );
 };
 
-export default VerifyEmailPage;
+export default RegisterFinishedPage;

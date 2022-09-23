@@ -1,6 +1,6 @@
-import { Box, Container, Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import Head from 'next/head';
-import { AuthNavbar } from './components';
+import AuthNavbar from 'common/components/Navbar/AuthNavbar';
 
 type Props = {
   mainContent: React.ReactNode;

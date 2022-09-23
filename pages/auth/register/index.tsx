@@ -1,8 +1,8 @@
-import { Box, Grid, Typography } from '@mui/material';
-import AuthLayout from 'layouts/auth';
-import RegisterForm from 'modules/auth/components/RegisterForm';
 import type { NextPage } from 'next';
 import Image from 'next/image';
+import { Box, Typography } from '@mui/material';
+import AuthLayout from 'common/layouts/AuthLayout';
+import RegisterForm from 'modules/auth/components/RegisterForm';
 
 const RegisterPage: NextPage = () => {
   return (

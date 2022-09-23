@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
 
-import { Box, Grid, Typography } from '@mui/material';
-import AuthLayout from 'layouts/auth';
+import { Box, Typography } from '@mui/material';
+import AuthLayout from 'common/layouts/AuthLayout';
 import LoginForm from 'modules/auth/components/LoginForm';
 
 const LoginPage: NextPage = () => {
