@@ -4,14 +4,14 @@ import AuthNavbar from 'common/components/Navbar/AuthNavbar';
 
 type Props = {
   mainContent: React.ReactNode;
-  decoration?: React.ReactNode;
+  sideinfo?: React.ReactNode;
   pageTitle: string;
   pageDescription: string;
 };
 
 const AuthLayout = ({
   mainContent,
-  decoration,
+  sideinfo,
   pageTitle,
   pageDescription,
 }: Props) => {
@@ -25,7 +25,7 @@ const AuthLayout = ({
       </Head>
       <AuthNavbar />
       <Container sx={{ paddingTop: 8 }} maxWidth="lg">
-        {decoration ? (
+        {sideinfo ? (
           <Grid
             container
             paddingY={2}
@@ -59,7 +59,7 @@ const AuthLayout = ({
               flexDirection="column"
               justifyContent="center"
             >
-              {decoration}
+              {sideinfo}
             </Grid>
           </Grid>
         ) : (

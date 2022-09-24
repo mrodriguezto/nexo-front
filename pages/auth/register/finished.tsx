@@ -12,7 +12,7 @@ const RegisterFinishedPage: NextPage = () => {
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}
-      decoration={<Decoration />}
+      sideinfo={<Sideinfo />}
     />
   );
 };
@@ -65,7 +65,7 @@ const MainContent = () => {
   );
 };
 
-const Decoration = () => {
+const Sideinfo = () => {
   return (
     <Box position="relative" width="100%" height="100%" maxHeight={500}>
       <Image

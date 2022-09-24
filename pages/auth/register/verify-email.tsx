@@ -10,7 +10,7 @@ const VerifyEmailPage: NextPage = () => {
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}
-      decoration={<Decoration />}
+      sideinfo={<Decoration />}
     />
   );
 };

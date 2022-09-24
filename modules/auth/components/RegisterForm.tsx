@@ -1,11 +1,9 @@
 import NextLink from 'next/link';
 import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
-import { registerStrings } from '../strings';
+import { registerForm as strings } from '../strings';
 import { routes } from 'lib/strings';
 
 const RegisterForm = () => {
-  const { registerForm: strings } = registerStrings;
-
   return (
     <form>
       <Box marginY={4}>

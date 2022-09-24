@@ -11,7 +11,7 @@ const RegisterPage: NextPage = () => {
       pageTitle={registerPage.title}
       pageDescription={registerPage.description}
       mainContent={<MainContent />}
-      decoration={<Decoration />}
+      sideinfo={<Sideinfo />}
     />
   );
 };
@@ -36,7 +36,7 @@ const MainContent = () => {
   );
 };
 
-const Decoration = () => {
+const Sideinfo = () => {
   return (
     <Box position="relative" width="100%" height="100%">
       <Image src="/images/auth-1.svg" alt=" " layout="fill" objectFit="contain" />

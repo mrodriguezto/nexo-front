@@ -1,10 +1,9 @@
 import NextLink from 'next/link';
 import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
-import { loginStrings } from '../strings';
+import { loginForm as strings } from '../strings';
 import { routes } from 'lib/strings';
 
 const LoginForm = () => {
-  const { loginForm: strings } = loginStrings;
   // TODO: add logic
   return (
     <form>
