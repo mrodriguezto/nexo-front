@@ -1,7 +1,9 @@
 const registerPage = {
   title: 'Registro',
   description: 'Empieza la experiencia nexo ahora',
-  content_title: 'Empieza la experiencia nexo ahora',
+  content: {
+    title: 'Empieza la experiencia nexo ahora',
+  },
 };
 
 const registerForm = {

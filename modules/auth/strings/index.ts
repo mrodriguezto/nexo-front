@@ -1,2 +1,3 @@
-export * as loginStrings from './login';
-export * as registerStrings from './register';
+export * from './login';
+export * from './register';
+export * from './reset-password';

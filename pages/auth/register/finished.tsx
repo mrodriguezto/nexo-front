@@ -4,15 +4,13 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import { withStyles } from 'tss-react/mui';
 
 import AuthLayout from 'common/layouts/AuthLayout';
-import { registerStrings } from 'modules/auth/strings';
+import { finishedRegistrationPage as pageStrings } from 'modules/auth/strings';
 
 const RegisterFinishedPage: NextPage = () => {
-  const { finishedRegistrationPage: strings } = registerStrings;
-
   return (
     <AuthLayout
-      pageTitle={strings.title}
-      pageDescription={strings.description}
+      pageTitle={pageStrings.title}
+      pageDescription={pageStrings.description}
       mainContent={<MainContent />}
       decoration={<Decoration />}
     />
@@ -20,9 +18,7 @@ const RegisterFinishedPage: NextPage = () => {
 };
 
 const MainContent = () => {
-  const {
-    finishedRegistrationPage: { content: strings },
-  } = registerStrings;
+  const { content: strings } = pageStrings;
 
   return (
     <Stack
@@ -33,7 +29,7 @@ const MainContent = () => {
         sm: 'left',
       }}
     >
-      <Title variant="h1" textTransform="uppercase">
+      <Title variant="h1" color="primary">
         {strings.title}
       </Title>
 

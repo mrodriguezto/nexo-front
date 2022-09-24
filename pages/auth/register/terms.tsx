@@ -2,27 +2,23 @@ import type { NextPage } from 'next';
 import { Box, Button, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import AuthLayout from 'common/layouts/AuthLayout';
-import { registerStrings } from 'modules/auth/strings';
+import { termsPage as pageStrings } from 'modules/auth/strings';
 
 const TermsPage: NextPage = () => {
-  const { termsPage: strings } = registerStrings;
-
   return (
     <AuthLayout
-      pageTitle={strings.title}
-      pageDescription={strings.description}
+      pageTitle={pageStrings.title}
+      pageDescription={pageStrings.description}
       mainContent={<MainContent />}
     />
   );
 };
 
 const MainContent = () => {
-  const {
-    termsPage: { content: strings },
-  } = registerStrings;
+  const { content: strings } = pageStrings;
 
   return (
-    <Box maxWidth={800} marginX="auto">
+    <Box maxWidth={720} marginX="auto">
       <Button
         sx={{ maxWidth: 300, padding: '0.6em 1.2em' }}
         variant="text"

@@ -4,13 +4,13 @@ import Image from 'next/image';
 import { Box, Typography } from '@mui/material';
 import AuthLayout from 'common/layouts/AuthLayout';
 import LoginForm from 'modules/auth/components/LoginForm';
-import { loginStrings } from 'modules/auth/strings';
+import { loginPage as pageStrings } from 'modules/auth/strings';
 
 const LoginPage: NextPage = () => {
   return (
     <AuthLayout
-      pageTitle={loginStrings.page_title}
-      pageDescription={loginStrings.page_description}
+      pageTitle={pageStrings.title}
+      pageDescription={pageStrings.description}
       mainContent={<MainContent />}
       decoration={<Decoration />}
     />
@@ -23,13 +23,12 @@ const MainContent = () => {
       <Typography
         variant="h1"
         color="primary"
-        textTransform="uppercase"
         textAlign={{
           xs: 'center',
           sm: 'left',
         }}
       >
-        {loginStrings.content_title}
+        {pageStrings.content.title}
       </Typography>
 
       {/* TODO: Implement Google OAuth */}

@@ -2,15 +2,13 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import AuthLayout from 'common/layouts/AuthLayout';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { registerStrings } from 'modules/auth/strings';
+import { verifyEmailPage as pageStrings } from 'modules/auth/strings';
 
 const VerifyEmailPage: NextPage = () => {
-  const { verifyEmailPage: strings } = registerStrings;
-
   return (
     <AuthLayout
-      pageTitle={strings.title}
-      pageDescription={strings.description}
+      pageTitle={pageStrings.title}
+      pageDescription={pageStrings.description}
       mainContent={<MainContent />}
       decoration={<Decoration />}
     />
@@ -18,9 +16,7 @@ const VerifyEmailPage: NextPage = () => {
 };
 
 const MainContent = () => {
-  const {
-    verifyEmailPage: { content: strings },
-  } = registerStrings;
+  const { content: strings } = pageStrings;
 
   return (
     <Stack
@@ -31,7 +27,7 @@ const MainContent = () => {
         sm: 'left',
       }}
     >
-      <Typography variant="h1" color="primary" textTransform="uppercase">
+      <Typography variant="h1" color="primary">
         {strings.title}
       </Typography>
 

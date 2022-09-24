@@ -3,13 +3,13 @@ import Image from 'next/image';
 import { Box, Typography } from '@mui/material';
 import AuthLayout from 'common/layouts/AuthLayout';
 import RegisterForm from 'modules/auth/components/RegisterForm';
-import { registerStrings as strings } from 'modules/auth/strings';
+import { registerPage } from 'modules/auth/strings';
 
 const RegisterPage: NextPage = () => {
   return (
     <AuthLayout
-      pageTitle={strings.registerPage.title}
-      pageDescription={strings.registerPage.description}
+      pageTitle={registerPage.title}
+      pageDescription={registerPage.description}
       mainContent={<MainContent />}
       decoration={<Decoration />}
     />
@@ -28,7 +28,7 @@ const MainContent = () => {
           sm: 'left',
         }}
       >
-        {strings.registerPage.content_title}
+        {registerPage.content.title}
       </Typography>
       <RegisterForm />
       {/* TODO: Implement Google OAuth */}

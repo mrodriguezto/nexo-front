@@ -1,6 +1,10 @@
-const page_title = 'Iniciar sesión';
-const page_description = 'Iniciar sesión';
-const content_title = 'Iniciar Sesión';
+const loginPage = {
+  title: 'Iniciar sesión',
+  description: 'Iniciar sesión',
+  content: {
+    title: 'Iniciar sesión',
+  },
+};
 
 const loginForm = {
   inputs: {
@@ -20,4 +24,4 @@ const loginForm = {
   },
 };
 
-export { page_title, page_description, content_title, loginForm };
+export { loginPage, loginForm };
