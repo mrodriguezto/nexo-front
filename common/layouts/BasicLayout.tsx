@@ -9,7 +9,7 @@ type Props = {
   pageDescription: string;
 };
 
-const AuthLayout = ({
+const BasicLayout = ({
   mainContent,
   sideinfo,
   pageTitle,
@@ -41,7 +41,7 @@ const AuthLayout = ({
               sm={6}
               md={8}
               component="main"
-              minHeight="calc(100vh - 10em)"
+              minHeight="calc(100vh - 8em)"
               display="flex"
               flexDirection="column"
               justifyContent="center"
@@ -79,4 +79,4 @@ const AuthLayout = ({
   );
 };
 
-export default AuthLayout;
+export default BasicLayout;

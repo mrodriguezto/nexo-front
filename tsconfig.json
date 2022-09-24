@@ -16,7 +16,9 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/auth/*": ["modules/auth/*"]
+      "@/layouts/*": ["common/layouts/*"],
+      "@/auth/*": ["modules/auth/*"],
+      "@/new-profile/*": ["modules/new-profile/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

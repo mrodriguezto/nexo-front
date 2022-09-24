@@ -21,12 +21,15 @@ export const components: Components = {
     defaultProps: {
       variant: 'contained',
       disableElevation: true,
+      size: 'large',
     },
     styleOverrides: {
       root: {
         fontWeight: 600,
         textTransform: 'none',
         borderRadius: '9999px',
+      },
+      sizeLarge: {
         padding: '0.6em 4em',
       },
     },

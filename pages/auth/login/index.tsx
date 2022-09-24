@@ -2,13 +2,13 @@ import { NextPage } from 'next';
 import Image from 'next/image';
 
 import { Box, Typography } from '@mui/material';
-import AuthLayout from 'common/layouts/AuthLayout';
+import BasicLayout from 'common/layouts/BasicLayout';
 import LoginForm from 'modules/auth/components/LoginForm';
 import { loginPage as pageStrings } from 'modules/auth/strings';
 
 const LoginPage: NextPage = () => {
   return (
-    <AuthLayout
+    <BasicLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}

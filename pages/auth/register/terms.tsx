@@ -1,12 +1,13 @@
 import type { NextPage } from 'next';
 import { Box, Button, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-import AuthLayout from 'common/layouts/AuthLayout';
+
+import BasicLayout from 'common/layouts/BasicLayout';
 import { termsPage as pageStrings } from 'modules/auth/strings';
 
 const TermsPage: NextPage = () => {
   return (
-    <AuthLayout
+    <BasicLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}

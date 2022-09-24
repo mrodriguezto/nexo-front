@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 
-import AuthLayout from 'common/layouts/AuthLayout';
+import BasicLayout from 'common/layouts/BasicLayout';
 import { resetPasswordPage as pageStrings } from 'modules/auth/strings';
 import EnterEmailContent from 'modules/auth/components/EnterEmailContent';
 import EnterEmailDecoration from 'modules/auth/components/EnterEmailDecoration';
@@ -25,7 +25,7 @@ const ResetPasswordPage: NextPage = () => {
   const [currentStep, setCurrentStep] = useState<Step>('enterEmail');
 
   return (
-    <AuthLayout
+    <BasicLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={content[currentStep]}

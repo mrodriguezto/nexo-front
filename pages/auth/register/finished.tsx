@@ -3,12 +3,12 @@ import Image from 'next/image';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { withStyles } from 'tss-react/mui';
 
-import AuthLayout from 'common/layouts/AuthLayout';
+import BasicLayout from 'common/layouts/BasicLayout';
 import { finishedRegistrationPage as pageStrings } from 'modules/auth/strings';
 
 const RegisterFinishedPage: NextPage = () => {
   return (
-    <AuthLayout
+    <BasicLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}

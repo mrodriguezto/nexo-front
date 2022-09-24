@@ -1,12 +1,12 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import AuthLayout from 'common/layouts/AuthLayout';
+import BasicLayout from 'common/layouts/BasicLayout';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { verifyEmailPage as pageStrings } from 'modules/auth/strings';
 
 const VerifyEmailPage: NextPage = () => {
   return (
-    <AuthLayout
+    <BasicLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}
