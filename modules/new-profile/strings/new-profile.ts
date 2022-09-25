@@ -99,6 +99,21 @@ const descriptionSideinfo = {
   next_btn: 'Siguiente',
 };
 
+const uploadsContent = {
+  title: '¡Por último! Carga las fotos y los vídeos que demuestren tu talento',
+  info: 'Puede ser un reel actoral, un video de presentación o de alguna obra en donde hayas participado.',
+  upload_field_lbl: 'Sube fotos y videos',
+  do_later_link: 'Lo haré después',
+  next_step_btn: 'Siguiente',
+};
+
+const uploadsSideinfo = {
+  title: 'Ten en cuenta que:',
+  desc: `Estas imágenes y videos serán lo primero que las personas verán cuando visiten tu perfil pues van a estar en la parte superior de este.
+  ¡No te preocupes! Si estás indecisx con la elección de las imágenes y los videos, recuerda que lo puedes hacer luego.`,
+  next_btn: 'Siguiente',
+};
+
 export {
   newProfilePage,
   beginContent,
@@ -112,4 +127,6 @@ export {
   topicsSideinfo,
   descriptionContent,
   descriptionSideinfo,
+  uploadsContent,
+  uploadsSideinfo,
 };

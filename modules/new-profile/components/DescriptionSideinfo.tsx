@@ -17,7 +17,7 @@ const DescriptionSideinfo = () => {
         <Typography color="primary" gutterBottom>
           {strings.example_lbl}
         </Typography>
-        <Box sx={{ padding: 4, backgroundColor: '#E7E7E7', borderRadius: 2 }}>
+        <Box sx={{ padding: 4, backgroundColor: '#F3F3F3', borderRadius: 2 }}>
           <Stack flexDirection="row" alignItems="center" gap={1} marginBottom={2}>
             <Box
               width={64}
