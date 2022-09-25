@@ -83,6 +83,22 @@ const topicsSideinfo = {
   next_btn: 'Siguiente',
 };
 
+const descriptionContent = {
+  title: '¡Ya casi!',
+  title2: 'Ahora cuentale a todos, ¿quién eres?',
+  info: 'Cuéntale al mundo quién eres. Recuerda comunicarlo de manera clara y concisa ya que esta información aparecerá al inicio de tu perfil. Ayuda a que otros artistas estén interesades en tu trabajo puedan llevarse la mejor impresión de ti.',
+  placeholder: 'Escribe un poco sobre ti',
+  next_step_btn: 'Siguiente',
+};
+
+const descriptionSideinfo = {
+  example_lbl: 'Ejemplo:',
+  example_username: 'Adriana Brañez',
+  example_calification: '4.86',
+  example_description: `Ej: Hola! Me llamo Adriana Brañez, soy Creadora y Productora escénica egresada de la PUPC con [Experiencia] más de 3 años de experiencia en las áreas de producción, dirección y docencia. [Aspiraciones] Busco desarrollar mi línea de trabajo en la docencia y en la gestión cultural. [Pasiones] Me apasionan los proyectos vinculados a la discapacidad y la comunidad LGTBIQ+. [Actualidad] Actualmente me desempeño como productora escénica en Kinesfera danza.`,
+  next_btn: 'Siguiente',
+};
+
 export {
   newProfilePage,
   beginContent,
@@ -94,4 +110,6 @@ export {
   keywordsSideinfo,
   topicsContent,
   topicsSideinfo,
+  descriptionContent,
+  descriptionSideinfo,
 };

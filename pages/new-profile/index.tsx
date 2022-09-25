@@ -13,6 +13,8 @@ import KeywordsContent from '@/new-profile/components/KeywordsContent';
 import KeywordsSideinfo from '@/new-profile/components/KeywordsSideinfo';
 import TopicsSideinfo from '../../modules/new-profile/components/TopicsSideinfo';
 import TopicsContent from '@/new-profile/components/TopicsContent';
+import DescriptionContent from '@/new-profile/components/DescriptionContent';
+import DescriptionSideinfo from '@/new-profile/components/DescriptionSideinfo';
 
 type Step =
   | 'begin'
@@ -29,7 +31,7 @@ const content: { [key in Step]: React.ReactNode } = {
   disciplines: <DisciplinesContent />,
   keywords: <KeywordsContent />,
   topics: <TopicsContent />,
-  description: undefined,
+  description: <DescriptionContent />,
   uploads: undefined,
 };
 
@@ -39,12 +41,12 @@ const sideinfo: { [key in Step]: React.ReactNode } = {
   disciplines: <DisciplinesSideinfo />,
   keywords: <KeywordsSideinfo />,
   topics: <TopicsSideinfo />,
-  description: undefined,
+  description: <DescriptionSideinfo />,
   uploads: undefined,
 };
 
 const NewProfilePage: NextPage = () => {
-  const [currentStep, setCurrentStep] = useState<Step>('topics');
+  const [currentStep, setCurrentStep] = useState<Step>('description');
 
   return (
     <BasicLayout
