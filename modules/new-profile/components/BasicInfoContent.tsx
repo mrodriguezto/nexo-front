@@ -12,6 +12,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import { withStyles } from 'tss-react/mui';
 
 import { basicInfoContent as strings } from '../strings';
+import { AddAPhoto } from '@mui/icons-material';
 
 const BasicInfoContent = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -34,11 +35,16 @@ const BasicInfoContent = () => {
         sm: 'left',
       }}
     >
-      <Typography variant="h1" color="primary" fontWeight={500}>
+      <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
         {strings.title}
       </Typography>
       <Box marginY={4}>
         <Typography variant="body1">{strings.info}</Typography>
+      </Box>
+      <Box marginY={4}>
+        <UploadImageButton>
+          <AddAPhoto fontSize="large" color="inherit" />
+        </UploadImageButton>
       </Box>
 
       <Grid
@@ -113,6 +119,19 @@ const BasicInfoContent = () => {
     </Box>
   );
 };
+
+const UploadImageButton = withStyles(IconButton, (theme) => ({
+  root: {
+    backgroundColor: theme.palette.grey[200],
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '120px',
+    height: '120px',
+    '&:hover': {
+      backgroundColor: theme.palette.grey[300],
+    },
+  },
+}));
 
 const PopoverText = withStyles(Typography, (theme) => ({
   root: {
