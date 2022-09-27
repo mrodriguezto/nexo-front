@@ -28,12 +28,7 @@ const TopicsContent = () => {
   };
 
   return (
-    <Box
-      textAlign={{
-        xs: 'center',
-        sm: 'left',
-      }}
-    >
+    <Box>
       <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
         {strings.title}
       </Typography>
@@ -41,7 +36,7 @@ const TopicsContent = () => {
         <Box marginY={4}>
           <Typography variant="body1">{strings.info}</Typography>
         </Box>
-        <Box>
+        <Box maxWidth={520}>
           <TextField
             placeholder={strings.placeholder}
             InputProps={{
@@ -61,7 +56,7 @@ const TopicsContent = () => {
                     }}
                     transformOrigin={{
                       vertical: 'center',
-                      horizontal: 'left',
+                      horizontal: -16,
                     }}
                     elevation={2}
                   >

@@ -33,9 +33,9 @@ const LoginForm = () => {
           spacing={1}
           sx={{ textAlign: 'center' }}
         >
-          <Typography>{strings.no_account.info}</Typography>
+          <Typography variant="body2">{strings.no_account.info}</Typography>
           <NextLink href={routes.register} passHref>
-            <Link>{strings.no_account.link}</Link>
+            <Link variant="body2">{strings.no_account.link}</Link>
           </NextLink>
         </Stack>
       </Stack>

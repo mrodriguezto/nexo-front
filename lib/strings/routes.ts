@@ -1,3 +1,5 @@
+const authPrefix = '/auth';
+
 export const routes = {
   home: '/',
 

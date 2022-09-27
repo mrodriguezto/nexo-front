@@ -10,9 +10,9 @@ import {
 } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { withStyles } from 'tss-react/mui';
+import { AddAPhoto } from '@mui/icons-material';
 
 import { basicInfoContent as strings } from '../strings';
-import { AddAPhoto } from '@mui/icons-material';
 
 const BasicInfoContent = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -29,19 +29,14 @@ const BasicInfoContent = () => {
   };
 
   return (
-    <Box
-      textAlign={{
-        xs: 'center',
-        sm: 'left',
-      }}
-    >
+    <Box>
       <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
         {strings.title}
       </Typography>
       <Box marginY={4}>
         <Typography variant="body1">{strings.info}</Typography>
       </Box>
-      <Box marginY={4}>
+      <Box marginY={4} textAlign="center" display={{ xs: 'block', sm: 'none' }}>
         <UploadImageButton>
           <AddAPhoto fontSize="large" color="inherit" />
         </UploadImageButton>
@@ -54,7 +49,7 @@ const BasicInfoContent = () => {
           md: 5,
         }}
         columnSpacing={2}
-        maxWidth={680}
+        maxWidth={600}
       >
         <Grid xs={12} md={6} item>
           <TextField label={strings.inputs.card_name_lbl} />
@@ -74,8 +69,12 @@ const BasicInfoContent = () => {
                     anchorEl={anchorEl}
                     onClose={handleClose}
                     anchorOrigin={{
-                      vertical: 'bottom',
+                      vertical: 'center',
                       horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'center',
+                      horizontal: -16,
                     }}
                     elevation={2}
                   >
@@ -136,7 +135,6 @@ const UploadImageButton = withStyles(IconButton, (theme) => ({
 const PopoverText = withStyles(Typography, (theme) => ({
   root: {
     backgroundColor: theme.palette.warning.main,
-    color: theme.palette.secondary.main,
   },
 }));
 

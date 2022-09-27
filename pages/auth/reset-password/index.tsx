@@ -22,7 +22,7 @@ const decoration: { [key in Step]: React.ReactNode } = {
 
 const ResetPasswordPage: NextPage = () => {
   // TODO: change local state for global context
-  const [currentStep, setCurrentStep] = useState<Step>('enterEmail');
+  const [currentStep, setCurrentStep] = useState<Step>('emailSent');
 
   return (
     <BasicLayout

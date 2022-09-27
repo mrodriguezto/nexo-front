@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
+import { Box, Button, Stack } from '@mui/material';
 
-import BasicLayout from '@/layouts/BasicLayout';
 import { newProfilePage as strings } from '@/new-profile/strings';
+import BasicLayout from '@/layouts/BasicLayout';
 import BeginContent from '@/new-profile/components/BeginContent';
 import BeginSideinfo from '@/new-profile/components/BeginSideinfo';
 import BasicInfoContent from '@/new-profile/components/BasicInfoContent';
@@ -50,12 +51,33 @@ const sideinfo: { [key in Step]: React.ReactNode } = {
 const NewProfilePage: NextPage = () => {
   const [currentStep, setCurrentStep] = useState<Step>('uploads');
 
+  const SideinfoWrapper = ({ children }: { children: React.ReactNode }) => {
+    return (
+      <Stack alignItems="center" justifyContent="center" height="100%">
+        <Stack
+          alignItems="center"
+          justifyContent="center"
+          height="100%"
+          width="100%"
+        >
+          {children}
+        </Stack>
+        <Box flex={1} />
+        {currentStep !== 'begin' && (
+          <Button fullWidth>
+            {currentStep === 'uploads' ? strings.finish_btn : strings.next_btn}
+          </Button>
+        )}
+      </Stack>
+    );
+  };
+
   return (
     <BasicLayout
       pageTitle={strings.title}
       pageDescription={strings.description}
       mainContent={content[currentStep]}
-      sideinfo={sideinfo[currentStep]}
+      sideinfo={<SideinfoWrapper>{sideinfo[currentStep]}</SideinfoWrapper>}
     />
   );
 };

@@ -9,6 +9,7 @@ const BeginContent = () => {
         xs: 'center',
         sm: 'left',
       }}
+      maxWidth={600}
     >
       <Typography variant="h1" color="primary" fontWeight={500}>
         {strings.title}

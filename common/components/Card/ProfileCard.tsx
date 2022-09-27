@@ -22,7 +22,7 @@ const ProfileCard = ({ profile }: Props) => {
     <Paper
       variant="outlined"
       elevation={0}
-      sx={{ position: 'relative', marginTop: 16 }}
+      sx={{ position: 'relative', width: '100%', maxWidth: 320 }}
     >
       <UploadImageButton>
         <AddAPhoto fontSize="large" color="inherit" />
