@@ -1,9 +1,9 @@
 const registerPage = {
   title: 'Registro',
   description: 'Empieza la experiencia nexo ahora',
-  content: {
-    title: 'Empieza la experiencia nexo ahora',
-  },
+};
+const registerContent = {
+  title: 'Empieza la experiencia nexo ahora',
 };
 
 const registerForm = {
@@ -40,15 +40,15 @@ const finishedRegistrationPage = {
 const verifyEmailPage = {
   title: 'Verificación de cuenta',
   description: 'Verifica tu correo electrónico',
+};
 
-  content: {
-    title: 'Ya casi terminamos, verifica tu cuenta',
-    info1:
-      'Hemos enviado un mensaje de confirmación a tu correo, revisa tu bandeja, y haz click en',
-    info2: 'Si no recibiste el correo, da click en reenviar',
-    email_verification_btn: '"CONFIRMAR"',
-    resend_btn: 'Reenviar',
-  },
+const verifyEmailContent = {
+  title: 'Ya casi terminamos, verifica tu cuenta',
+  info1:
+    'Hemos enviado un mensaje de confirmación a tu correo, revisa tu bandeja, y haz click en',
+  info2: 'Si no recibiste el correo, da click en reenviar',
+  email_verification_btn: '"CONFIRMAR"',
+  resend_btn: 'Reenviar',
 };
 
 const termsPage = {
@@ -69,8 +69,10 @@ const termsPage = {
 
 export {
   registerPage,
+  registerContent,
   registerForm,
   finishedRegistrationPage,
   verifyEmailPage,
+  verifyEmailContent,
   termsPage,
 };

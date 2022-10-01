@@ -11,3 +11,7 @@ body::-webkit-scrollbar-thumb {
   border: 2px solid #fff;
   border-radius: 10px;
 }
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

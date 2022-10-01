@@ -1,11 +1,42 @@
 import NextLink from 'next/link';
-import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
-import { registerForm as strings } from '../strings';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { routes } from 'lib/strings';
+import { useForm } from 'react-hook-form';
+
+import { registerForm as strings } from '../strings';
+import { registerResolver } from '../utils';
+import { useToggle } from 'common/hooks';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+
+type FormData = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+};
 
 const RegisterForm = () => {
+  const { isActive: isPasswordVisible, toggle: togglePasswordVisibility } =
+    useToggle();
+
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: registerResolver,
+  }); // prettier-ignore
+
+  const onLoginUser = async (data: FormData) => {
+    console.log({ data });
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onLoginUser)} noValidate>
       <Box marginY={4}>
         <Typography textAlign="center">{strings.btns.google_login}</Typography>
       </Box>
@@ -19,17 +50,52 @@ const RegisterForm = () => {
         }}
       >
         <Grid xs={12} md={6} item>
-          <TextField type="text" label={strings.inputs.firstname_lbl} />
+          <TextField
+            type="text"
+            label={strings.inputs.firstname_lbl}
+            {...register('firstname')}
+            error={Boolean(errors.firstname)}
+            helperText={errors.firstname?.message}
+          />
         </Grid>
         <Grid xs={12} md={6} item>
-          <TextField type="text" label={strings.inputs.lastname_lbl} />
+          <TextField
+            type="text"
+            label={strings.inputs.lastname_lbl}
+            {...register('lastname')}
+            error={Boolean(errors.lastname)}
+            helperText={errors.lastname?.message}
+          />
         </Grid>
         <Grid xs={12} md={6} item>
-          <TextField type="email" label={strings.inputs.email_lbl} />
+          <TextField
+            type="email"
+            label={strings.inputs.email_lbl}
+            {...register('email')}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+          />
         </Grid>
-        {/* TODO: add eye icon to show */}
         <Grid xs={12} md={6} item>
-          <TextField type="password" label={strings.inputs.pass_lbl} />
+          <TextField
+            type={isPasswordVisible ? 'text' : 'password'}
+            label={strings.inputs.pass_lbl}
+            {...register('password')}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={togglePasswordVisibility}
+                  size="small"
+                  sx={{ position: 'relative', left: 8 }}
+                >
+                  {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              ),
+            }}
+          />
         </Grid>
       </Grid>
 

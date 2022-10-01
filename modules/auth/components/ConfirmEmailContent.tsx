@@ -1,23 +1,8 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import BasicLayout from 'common/layouts/BasicLayout';
-import type { NextPage } from 'next';
+import { verifyEmailContent as strings } from 'modules/auth/strings';
 import Image from 'next/image';
-import { verifyEmailPage as pageStrings } from 'modules/auth/strings';
 
-const VerifyEmailPage: NextPage = () => {
-  return (
-    <BasicLayout
-      pageTitle={pageStrings.title}
-      pageDescription={pageStrings.description}
-      mainContent={<MainContent />}
-      sideinfo={<Decoration />}
-    />
-  );
-};
-
-const MainContent = () => {
-  const { content: strings } = pageStrings;
-
+const ConfirmEmailContent = () => {
   return (
     <Stack
       rowGap={4}
@@ -69,18 +54,4 @@ const MainContent = () => {
   );
 };
 
-const Decoration = () => {
-  return (
-    <Box position="relative" width="100%" height="100%" maxHeight={400}>
-      <Image
-        style={{ rotate: '8.72deg' }}
-        src="/images/auth-lock.svg"
-        alt=""
-        layout="fill"
-        objectFit="contain"
-      />
-    </Box>
-  );
-};
-
-export default VerifyEmailPage;
+export default ConfirmEmailContent;

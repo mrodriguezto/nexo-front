@@ -1,47 +1,35 @@
 import type { NextPage } from 'next';
-import Image from 'next/image';
-import { Box, Typography } from '@mui/material';
 
 import BasicLayout from 'common/layouts/BasicLayout';
-import RegisterForm from 'modules/auth/components/RegisterForm';
 import { registerPage } from 'modules/auth/strings';
+import { useState } from 'react';
+import RegisterContent from '@/auth/components/RegisterContent';
+import RegisterDecoration from '@/auth/components/RegisterDecoration';
+import ConfirmEmailContent from '@/auth/components/ConfirmEmailContent';
+import ConfirmEmailDecoration from '@/auth/components/ConfirmEmailDecoration';
+
+type Step = 'register' | 'confirmEmail';
+
+const content: { [key in Step]: React.ReactNode } = {
+  register: <RegisterContent />,
+  confirmEmail: <ConfirmEmailContent />,
+};
+
+const sideinfo: { [key in Step]: React.ReactNode } = {
+  register: <RegisterDecoration />,
+  confirmEmail: <ConfirmEmailDecoration />,
+};
 
 const RegisterPage: NextPage = () => {
+  const [currentStep, setCurrentStep] = useState<Step>('register');
+
   return (
     <BasicLayout
       pageTitle={registerPage.title}
       pageDescription={registerPage.description}
-      mainContent={<MainContent />}
-      sideinfo={<Sideinfo />}
+      mainContent={content[currentStep]}
+      sideinfo={sideinfo[currentStep]}
     />
-  );
-};
-
-const MainContent = () => {
-  return (
-    <>
-      <Typography
-        variant="h1"
-        color="primary"
-        textTransform="uppercase"
-        textAlign={{
-          xs: 'center',
-          sm: 'left',
-        }}
-      >
-        {registerPage.content.title}
-      </Typography>
-      <RegisterForm />
-      {/* TODO: Implement Google OAuth */}
-    </>
-  );
-};
-
-const Sideinfo = () => {
-  return (
-    <Box position="relative" width="100%" height="100%">
-      <Image src="/images/auth-1.svg" alt=" " layout="fill" objectFit="contain" />
-    </Box>
   );
 };
 

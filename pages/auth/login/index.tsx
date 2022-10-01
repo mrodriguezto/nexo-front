@@ -31,8 +31,6 @@ const MainContent = () => {
         {pageStrings.content.title}
       </Typography>
 
-      {/* TODO: Implement Google OAuth */}
-
       <LoginForm />
     </>
   );

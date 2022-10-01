@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { Box, Button, Stack } from '@mui/material';
+import { GetServerSideProps } from 'next';
 
-import { newProfilePage as strings } from '@/new-profile/strings';
 import BasicLayout from '@/layouts/BasicLayout';
+import { newProfilePage as strings } from '@/new-profile/strings';
 import BeginContent from '@/new-profile/components/BeginContent';
 import BeginSideinfo from '@/new-profile/components/BeginSideinfo';
 import BasicInfoContent from '@/new-profile/components/BasicInfoContent';
@@ -12,7 +13,7 @@ import DisciplinesContent from '@/new-profile/components/DisciplinesContent';
 import DisciplinesSideinfo from '@/new-profile/components/DisciplinesSideinfo';
 import KeywordsContent from '@/new-profile/components/KeywordsContent';
 import KeywordsSideinfo from '@/new-profile/components/KeywordsSideinfo';
-import TopicsSideinfo from '../../modules/new-profile/components/TopicsSideinfo';
+import TopicsSideinfo from '@/new-profile/components/TopicsSideinfo';
 import TopicsContent from '@/new-profile/components/TopicsContent';
 import DescriptionContent from '@/new-profile/components/DescriptionContent';
 import DescriptionSideinfo from '@/new-profile/components/DescriptionSideinfo';
@@ -49,7 +50,7 @@ const sideinfo: { [key in Step]: React.ReactNode } = {
 };
 
 const NewProfilePage: NextPage = () => {
-  const [currentStep, setCurrentStep] = useState<Step>('uploads');
+  const [currentStep, setCurrentStep] = useState<Step>('topics');
 
   const SideinfoWrapper = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -80,6 +81,15 @@ const NewProfilePage: NextPage = () => {
       sideinfo={<SideinfoWrapper>{sideinfo[currentStep]}</SideinfoWrapper>}
     />
   );
+};
+
+// TODO: Verify access token from local storage or cookies before accesing the page
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  // const { data } = await  // your fetch function here
+
+  return {
+    props: {},
+  };
 };
 
 export default NewProfilePage;
