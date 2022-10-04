@@ -1,8 +1,51 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-import { verifyEmailContent as strings } from 'modules/auth/strings';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { verifyEmailContent as strings } from '@/auth/strings';
+
+const RESEND_DELAY = 5;
 
 const ConfirmEmailContent = () => {
+  const [countDown, setCountDown] = useState(RESEND_DELAY);
+  const [canResendEmail, setCanResendEmail] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (canResendEmail) return;
+
+    const interval = setInterval(() => {
+      if (countDown > 1) {
+        setCountDown((value) => value - 1);
+        return;
+      }
+
+      setCanResendEmail(true);
+      setCountDown(RESEND_DELAY);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [canResendEmail, countDown]);
+
+  const handleResend = async () => {
+    if (!canResendEmail) return;
+
+    try {
+      // TODO: Request for resending the confirmation email
+      // await sendEmail()
+
+      enqueueSnackbar(strings.feedback.success, {
+        variant: 'success',
+      });
+
+      setCanResendEmail(false);
+    } catch (error) {
+      enqueueSnackbar(strings.feedback.error, {
+        variant: 'error',
+      });
+    }
+  };
+
   return (
     <Stack
       rowGap={4}
@@ -48,7 +91,9 @@ const ConfirmEmailContent = () => {
           sm: 'flex-start',
         }}
       >
-        <Button variant="outlined">{strings.resend_btn}</Button>
+        <Button variant="outlined" onClick={handleResend} disabled={!canResendEmail}>
+          {canResendEmail ? strings.resend_btn : `${countDown} s para reenviar`}
+        </Button>
       </Box>
     </Stack>
   );

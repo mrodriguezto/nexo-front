@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
 import type { NextPage } from 'next';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, IconButton, Stack } from '@mui/material';
 import { GetServerSideProps } from 'next';
 
 import BasicLayout from '@/layouts/BasicLayout';
@@ -19,17 +18,12 @@ import DescriptionContent from '@/new-profile/components/DescriptionContent';
 import DescriptionSideinfo from '@/new-profile/components/DescriptionSideinfo';
 import UploadsContent from '@/new-profile/components/UploadsContent';
 import UploadsSideinfo from '@/new-profile/components/UploadsSideinfo';
+import { INewProfileStep as IStep } from '@/new-profile/types';
+import { useAppDispatch, useAppSelector } from 'store';
+import { ArrowBack } from '@mui/icons-material';
+import { updateStep } from '@/new-profile/state';
 
-type Step =
-  | 'begin'
-  | 'basicInfo'
-  | 'disciplines'
-  | 'keywords'
-  | 'topics'
-  | 'description'
-  | 'uploads';
-
-const content: { [key in Step]: React.ReactNode } = {
+const content: { [key in IStep]: React.ReactNode } = {
   begin: <BeginContent />,
   basicInfo: <BasicInfoContent />,
   disciplines: <DisciplinesContent />,
@@ -39,7 +33,7 @@ const content: { [key in Step]: React.ReactNode } = {
   uploads: <UploadsContent />,
 };
 
-const sideinfo: { [key in Step]: React.ReactNode } = {
+const sideinfo: { [key in IStep]: React.ReactNode } = {
   begin: <BeginSideinfo />,
   basicInfo: <BasicInfoSideinfo />,
   disciplines: <DisciplinesSideinfo />,
@@ -50,25 +44,54 @@ const sideinfo: { [key in Step]: React.ReactNode } = {
 };
 
 const NewProfilePage: NextPage = () => {
-  const [currentStep, setCurrentStep] = useState<Step>('topics');
+  const currentStep = useAppSelector((state) => state.newProfile.step);
+  const dispatch = useAppDispatch();
 
   const SideinfoWrapper = ({ children }: { children: React.ReactNode }) => {
+    const canContinue = useAppSelector((state) => state.newProfile.canContinue);
+
     return (
       <Stack alignItems="center" justifyContent="center" height="100%">
         <Stack
           alignItems="center"
-          justifyContent="center"
+          justifyContent={currentStep === IStep.Begin ? 'center' : 'flex-start'}
           height="100%"
           width="100%"
+          paddingTop={currentStep === IStep.Begin ? 0 : 16}
         >
           {children}
         </Stack>
         <Box flex={1} />
-        {currentStep !== 'begin' && (
-          <Button fullWidth>
-            {currentStep === 'uploads' ? strings.finish_btn : strings.next_btn}
+        {currentStep !== IStep.Begin && (
+          <Button fullWidth disabled={!canContinue}>
+            {currentStep === IStep.Uploads ? strings.finish_btn : strings.next_btn}
           </Button>
         )}
+      </Stack>
+    );
+  };
+
+  const MainContentWrapper = ({ children }: { children: React.ReactNode }) => {
+    return (
+      <Stack
+        justifyContent={currentStep === IStep.Begin ? 'center' : 'flex-start'}
+        paddingY={4}
+        height="100%"
+      >
+        {currentStep !== IStep.Begin && (
+          <Box>
+            <IconButton
+              aria-label="Volver"
+              color="primary"
+              sx={{ position: 'relative', right: 8 }}
+              onClick={() => dispatch(updateStep('prev'))}
+            >
+              <ArrowBack />
+            </IconButton>
+          </Box>
+        )}
+
+        {children}
       </Stack>
     );
   };
@@ -77,7 +100,7 @@ const NewProfilePage: NextPage = () => {
     <BasicLayout
       pageTitle={strings.title}
       pageDescription={strings.description}
-      mainContent={content[currentStep]}
+      mainContent={<MainContentWrapper>{content[currentStep]}</MainContentWrapper>}
       sideinfo={<SideinfoWrapper>{sideinfo[currentStep]}</SideinfoWrapper>}
     />
   );

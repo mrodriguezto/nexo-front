@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { newPasswordPage } from 'modules/auth/strings';
+import { newPasswordPage } from '@/auth/strings';
 
 const ResetCompletedContent = () => {
   const { resetCompletedContent: strings } = newPasswordPage;

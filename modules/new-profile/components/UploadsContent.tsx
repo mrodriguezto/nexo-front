@@ -117,7 +117,7 @@ const UploadsContent = () => {
           marginTop={12}
           display={{
             xs: 'block',
-            sm: 'none',
+            md: 'none',
           }}
         >
           <Button fullWidth>{strings.next_step_btn}</Button>
@@ -127,7 +127,7 @@ const UploadsContent = () => {
           marginTop={2}
           textAlign={{
             xs: 'center',
-            sm: 'left',
+            md: 'left',
           }}
         >
           <NextLink href="/" passHref>

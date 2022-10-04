@@ -1,5 +1,7 @@
+export * from './profile';
+
 export type IProfileCardInfo = {
-  name: string;
+  display_name: string;
   title: string;
   location: string;
   calification: number | string;

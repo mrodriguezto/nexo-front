@@ -39,7 +39,7 @@ const ProfileCard = ({ profile }: Props) => {
         paddingTop={7}
       >
         <Stack textAlign="center" spacing={1}>
-          <Typography variant="h3">{profile.name}</Typography>
+          <Typography variant="h3">{profile.display_name}</Typography>
           <Typography variant="body1">{profile.title}</Typography>
         </Stack>
         <Stack textAlign="right">

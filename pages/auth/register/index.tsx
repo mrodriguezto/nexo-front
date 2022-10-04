@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 
-import BasicLayout from 'common/layouts/BasicLayout';
-import { registerPage } from 'modules/auth/strings';
 import { useState } from 'react';
+import BasicLayout from 'common/layouts/BasicLayout';
+import { registerPage } from '@/auth/strings';
 import RegisterContent from '@/auth/components/RegisterContent';
 import RegisterDecoration from '@/auth/components/RegisterDecoration';
 import ConfirmEmailContent from '@/auth/components/ConfirmEmailContent';
@@ -21,7 +21,7 @@ const sideinfo: { [key in Step]: React.ReactNode } = {
 };
 
 const RegisterPage: NextPage = () => {
-  const [currentStep, setCurrentStep] = useState<Step>('register');
+  const [currentStep, setCurrentStep] = useState<Step>('confirmEmail');
 
   return (
     <BasicLayout

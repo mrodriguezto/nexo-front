@@ -24,22 +24,29 @@ const BasicLayout = ({
         <meta name="description" content={pageDescription} />
       </Head>
       <AuthNavbar />
-      <Container sx={{ paddingTop: 8 }} disableGutters fixed>
+      <Container sx={{ paddingTop: 10 }} disableGutters fixed>
         {sideinfo ? (
           <Grid
             container
-            paddingY={2}
+            columnSpacing={{
+              xs: 0,
+              md: 4,
+              lg: 0,
+            }}
+            paddingY={0}
             paddingX={{
               xs: 3,
               sm: 2,
-              md: 0,
+              md: 1,
+              lg: 2,
+              xl: 0,
             }}
           >
             <Grid
               item
               xs={12}
-              sm={6}
               md={8}
+              lg={9}
               component="main"
               minHeight="calc(100vh - 8em)"
               display="flex"
@@ -52,9 +59,9 @@ const BasicLayout = ({
               paddingLeft={2}
               item
               xs={12}
-              sm={6}
               md={4}
-              display={{ xs: 'none', sm: 'flex' }}
+              lg={3}
+              display={{ xs: 'none', md: 'flex' }}
               minHeight="calc(100vh - 10em)"
               flexDirection="column"
               justifyContent="center"

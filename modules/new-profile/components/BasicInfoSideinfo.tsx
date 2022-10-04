@@ -1,10 +1,20 @@
 import ProfileCard from 'common/components/Card/ProfileCard';
-import { basicInfoSideinfo as strings } from '../strings';
-
-const profile = strings.profile;
+import { useAppSelector } from 'store';
 
 const BasicInfoSideinfo = () => {
-  return <ProfileCard profile={profile} />;
+  const profile = useAppSelector((state) => state.newProfile.profile);
+
+  return (
+    <ProfileCard
+      profile={{
+        display_name: profile.display_name,
+        calification: 'Calificación',
+        contacts: 0,
+        location: profile.location,
+        title: profile.title,
+      }}
+    />
+  );
 };
 
 export default BasicInfoSideinfo;

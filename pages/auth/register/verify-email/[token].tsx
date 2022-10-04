@@ -1,10 +1,12 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
+import NextLink from 'next/link';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { withStyles } from 'tss-react/mui';
 
 import BasicLayout from 'common/layouts/BasicLayout';
-import { finishedRegistrationPage as pageStrings } from 'modules/auth/strings';
+import { finishedRegistrationPage as pageStrings } from '@/auth/strings';
+import { routes } from 'lib/strings';
 
 const RegisterFinishedPage: NextPage = () => {
   return (
@@ -59,7 +61,11 @@ const MainContent = () => {
           sm: 'flex-start',
         }}
       >
-        <Button>{strings.begin_btn}</Button>
+        <NextLink href={routes.newProfile} passHref>
+          <a>
+            <Button>{strings.begin_btn}</Button>
+          </a>
+        </NextLink>
       </Box>
     </Stack>
   );

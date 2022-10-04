@@ -3,7 +3,7 @@ import { Box, Button, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
 import BasicLayout from 'common/layouts/BasicLayout';
-import { termsPage as pageStrings } from 'modules/auth/strings';
+import { termsPage as pageStrings } from '@/auth/strings';
 
 const TermsPage: NextPage = () => {
   return (

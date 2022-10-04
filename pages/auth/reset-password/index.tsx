@@ -2,11 +2,11 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 
 import BasicLayout from 'common/layouts/BasicLayout';
-import { resetPasswordPage as pageStrings } from 'modules/auth/strings';
-import EnterEmailContent from 'modules/auth/components/EnterEmailContent';
-import EnterEmailDecoration from 'modules/auth/components/EnterEmailDecoration';
-import EmailSentContent from 'modules/auth/components/EmailSentContent';
-import EmailSentDecoration from 'modules/auth/components/EmailSentDecoration';
+import { resetPasswordPage as pageStrings } from '@/auth/strings';
+import EnterEmailContent from '@/auth/components/EnterEmailContent';
+import EnterEmailDecoration from '@/auth/components/EnterEmailDecoration';
+import EmailSentContent from '@/auth/components/EmailSentContent';
+import EmailSentDecoration from '@/auth/components/EmailSentDecoration';
 
 type Step = 'enterEmail' | 'emailSent';
 

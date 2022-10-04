@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import NewPasswordForm from './NewPasswordForm';
-import { newPasswordPage } from 'modules/auth/strings';
+import { newPasswordPage } from '@/auth/strings';
 
 const NewPasswordContent = () => {
   const { newPasswordContent: strings } = newPasswordPage;

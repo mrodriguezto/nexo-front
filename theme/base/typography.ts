@@ -32,12 +32,12 @@ export const typography: TypographyOptions = {
     fontFamily: bodyFontFamily,
     fontSize: '1rem',
     '@media (max-width:600px)': {
-      fontSize: '0.875rem',
+      fontSize: '0.8125rem',
     },
   },
   body2: {
     fontFamily: bodyFontFamily,
-    fontSize: '0.875rem',
+    fontSize: '0.8125rem',
     '@media (max-width:600px)': {
       fontSize: '0.75rem',
     },

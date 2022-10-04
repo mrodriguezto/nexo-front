@@ -27,6 +27,7 @@ const LoginForm = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: loginResolver,
+    mode: 'onTouched'
   }); // prettier-ignore
 
   const onRegisterUser = async (data: FormData) => {

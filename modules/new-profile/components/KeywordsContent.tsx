@@ -1,33 +1,9 @@
-import { useState } from 'react';
-import InfoIcon from '@mui/icons-material/Info';
-import {
-  Box,
-  Button,
-  Chip,
-  IconButton,
-  Popover,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { withStyles } from 'tss-react/mui';
+import { Box, Button, Chip, Stack, TextField, Typography } from '@mui/material';
 import { keywordsContent as strings } from '../strings';
 import { Add } from '@mui/icons-material';
+import TipPopover from 'common/components/Popover/TipPopover';
 
 const KeywordsContent = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <Box>
       <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
@@ -42,35 +18,16 @@ const KeywordsContent = () => {
             placeholder={strings.placeholder}
             InputProps={{
               endAdornment: (
-                <>
-                  <IconButton onClick={handleClick} sx={{ padding: 0 }}>
-                    <InfoIcon color="secondary" />
-                  </IconButton>
-                  <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: 'center',
-                      horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                      vertical: 'center',
-                      horizontal: -16,
-                    }}
-                    elevation={2}
-                  >
-                    <PopoverWrapper padding={2}>
-                      <Typography variant="h3" marginBottom={2}>
-                        {strings.popover_title}
-                      </Typography>
-                      <Typography maxWidth={300} variant="body2">
-                        {strings.popover_text}
-                      </Typography>
-                    </PopoverWrapper>
-                  </Popover>
-                </>
+                <Box sx={{ position: 'absolute', top: -30, right: 0 }}>
+                  <TipPopover>
+                    <Typography variant="h3" marginBottom={2}>
+                      {strings.popover_title}
+                    </Typography>
+                    <Typography maxWidth={300} variant="body2">
+                      {strings.popover_text}
+                    </Typography>
+                  </TipPopover>
+                </Box>
               ),
             }}
           />
@@ -93,7 +50,7 @@ const KeywordsContent = () => {
           marginTop={16}
           display={{
             xs: 'block',
-            sm: 'none',
+            md: 'none',
           }}
         >
           <Button fullWidth>{strings.next_step_btn}</Button>
@@ -102,11 +59,5 @@ const KeywordsContent = () => {
     </Box>
   );
 };
-
-const PopoverWrapper = withStyles(Box, (theme) => ({
-  root: {
-    backgroundColor: theme.palette.warning.main,
-  },
-}));
 
 export default KeywordsContent;

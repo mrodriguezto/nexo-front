@@ -4,6 +4,7 @@ yup.setLocale({
   mixed: {
     default: 'Este campo no es válido',
     required: 'Este campo es requerido',
+    notType: 'Este campo no es válido',
   },
   number: {
     min: 'Ingresa al menos ${min} caracteres',

@@ -49,6 +49,10 @@ const verifyEmailContent = {
   info2: 'Si no recibiste el correo, da click en reenviar',
   email_verification_btn: '"CONFIRMAR"',
   resend_btn: 'Reenviar',
+  feedback: {
+    success: 'Correo enviado',
+    error: 'No se logró enviar el correo',
+  },
 };
 
 const termsPage = {

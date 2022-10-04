@@ -5,8 +5,8 @@ export const components: Components = {
     styleOverrides: {
       root: {
         backgroundColor: 'white',
-        height: '60px',
         boxShadow: '0px 4px 4px rgba(140, 124, 202, 0.1)',
+        justifyContent: 'center',
       },
     },
   },

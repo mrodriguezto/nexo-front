@@ -22,7 +22,7 @@ const DisciplinesContent = () => {
         marginTop={16}
         display={{
           xs: 'block',
-          sm: 'none',
+          md: 'none',
         }}
       >
         <Button fullWidth>{strings.next_step_btn}</Button>

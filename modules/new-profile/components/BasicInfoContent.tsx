@@ -1,121 +1,159 @@
-import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Typography,
-  Grid,
-  TextField,
-  IconButton,
-  Popover,
-} from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
-import { withStyles } from 'tss-react/mui';
+import { useEffect } from 'react';
+import { Box, Button, Typography, Grid, TextField, IconButton } from '@mui/material';
 import { AddAPhoto } from '@mui/icons-material';
+import { withStyles } from 'tss-react/mui';
 
 import { basicInfoContent as strings } from '../strings';
+import FadeIn from 'common/components/Transition/FadeIn';
+import { Controller, useForm } from 'react-hook-form';
+import { basicInfoResolver } from '../utils';
+import { useAppDispatch, useAppSelector } from 'store';
+import { updateBasicInfo, updateCanContinue, updateStep } from '../state';
+import TipPopover from 'common/components/Popover/TipPopover';
+import { DatePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
+
+type FormData = {
+  display_name: string;
+  title: string;
+  location: string;
+  birthday: string;
+};
 
 const BasicInfoContent = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const initialValues = useAppSelector((state) => state.newProfile.profile);
+  const { register, formState: {errors, isValid}, watch, control} = useForm<FormData>({
+    resolver: basicInfoResolver,
+    mode: 'onChange',
+  }); // prettier-ignore
+  const dispatch = useAppDispatch();
+  const canContinue = useAppSelector((state) => state.newProfile.canContinue);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    const subscription = watch((values) => {
+      dispatch(updateBasicInfo(values));
+    });
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+    return () => subscription.unsubscribe();
+  }, [dispatch, errors, watch]);
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  useEffect(() => {
+    if (isValid) dispatch(updateCanContinue(true));
+    else dispatch(updateCanContinue(false));
+  }, [isValid, dispatch]);
+
+  const handleNextStep = () => {
+    if (!canContinue) return;
+
+    dispatch(updateStep('next'));
   };
 
   return (
-    <Box>
-      <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
-        {strings.title}
-      </Typography>
-      <Box marginY={4}>
-        <Typography variant="body1">{strings.info}</Typography>
-      </Box>
-      <Box marginY={4} textAlign="center" display={{ xs: 'block', sm: 'none' }}>
-        <UploadImageButton>
-          <AddAPhoto fontSize="large" color="inherit" />
-        </UploadImageButton>
-      </Box>
+    <FadeIn>
+      <Box>
+        <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
+          {strings.title}
+        </Typography>
+        <Box marginY={4}>
+          <Typography variant="body1">{strings.info}</Typography>
+        </Box>
+        <Box marginY={4} textAlign="center" display={{ xs: 'block', sm: 'none' }}>
+          <UploadImageButton>
+            <AddAPhoto fontSize="large" color="inherit" />
+          </UploadImageButton>
+        </Box>
 
-      <Grid
-        container
-        rowSpacing={{
-          xs: 2,
-          md: 5,
-        }}
-        columnSpacing={2}
-        maxWidth={600}
-      >
-        <Grid xs={12} md={6} item>
-          <TextField label={strings.inputs.card_name_lbl} />
-        </Grid>
-        <Grid xs={12} md={6} item>
-          <TextField
-            label={strings.inputs.current_title_lbl}
-            InputProps={{
-              endAdornment: (
-                <>
-                  <IconButton onClick={handleClick} sx={{ padding: 0 }}>
-                    <InfoIcon color="secondary" />
-                  </IconButton>
-                  <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: 'center',
-                      horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                      vertical: 'center',
-                      horizontal: -16,
-                    }}
-                    elevation={2}
-                  >
-                    <PopoverText
-                      maxWidth={300}
-                      variant="body2"
-                      sx={{ p: 2, backgroundColor: 'warning' }}
-                    >
-                      {strings.inputs.current_title_popover}
-                    </PopoverText>
-                  </Popover>
-                </>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid xs={12} md={6} item>
-          <TextField label={strings.inputs.location_lbl} />
-        </Grid>
-        <Grid xs={12} md={6} item>
-          <TextField
-            type="date"
-            label={strings.inputs.bday_lbl}
-            InputLabelProps={{ shrink: true }}
-          />
-          <Typography variant="caption">
-            (**) Tu edad no se mostrará en el perfil
-          </Typography>
-        </Grid>
         <Grid
-          item
-          xs={12}
-          display={{
-            xs: 'block',
-            sm: 'none',
+          container
+          rowSpacing={{
+            xs: 2,
+            md: 5,
           }}
+          columnSpacing={2}
+          maxWidth={600}
         >
-          <Button fullWidth>{strings.next_step_btn}</Button>
+          <Grid xs={12} md={6} item>
+            <TextField
+              label={strings.inputs.card_name_lbl}
+              {...register('display_name')}
+              error={Boolean(errors.display_name)}
+              helperText={errors.display_name?.message}
+            />
+          </Grid>
+          <Grid xs={12} md={6} item>
+            <TextField
+              label={strings.inputs.current_title_lbl}
+              InputProps={{
+                endAdornment: (
+                  <TipPopover>
+                    <Typography variant="body2">
+                      {strings.inputs.current_title_popover}
+                    </Typography>
+                  </TipPopover>
+                ),
+              }}
+              {...register('title')}
+              error={Boolean(errors.title)}
+              helperText={errors.title?.message}
+            />
+          </Grid>
+          <Grid xs={12} md={6} item>
+            <TextField
+              label={strings.inputs.location_lbl}
+              {...register('location')}
+              error={Boolean(errors.location)}
+              helperText={errors.location?.message}
+            />
+          </Grid>
+          <Grid xs={12} md={6} item>
+            {/* <TextField
+              type="date"
+              label={strings.inputs.bday_lbl}
+              InputLabelProps={{ shrink: true }}
+              {...register('birthday')}
+              error={Boolean(errors.birthday)}
+              helperText={errors.birthday?.message}
+            /> */}
+            <Controller
+              control={control}
+              name="birthday"
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <DatePicker
+                  value={value}
+                  onChange={(value) => onChange(dayjs(value).format())}
+                  label={strings.inputs.bday_lbl}
+                  renderInput={(params) => (
+                    <TextField
+                      helperText={error?.message}
+                      id="birthday"
+                      name="birthday"
+                      {...params}
+                      error={Boolean(error)}
+                    />
+                  )}
+                />
+              )}
+            />
+
+            <Typography variant="caption">
+              (**) Tu edad no se mostrará en el perfil
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            display={{
+              xs: 'block',
+              md: 'none',
+            }}
+          >
+            <Button onClick={handleNextStep} fullWidth disabled={!canContinue}>
+              {strings.next_step_btn}
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </FadeIn>
   );
 };
 
@@ -129,12 +167,6 @@ const UploadImageButton = withStyles(IconButton, (theme) => ({
     '&:hover': {
       backgroundColor: theme.palette.grey[300],
     },
-  },
-}));
-
-const PopoverText = withStyles(Typography, (theme) => ({
-  root: {
-    backgroundColor: theme.palette.warning.main,
   },
 }));
 
