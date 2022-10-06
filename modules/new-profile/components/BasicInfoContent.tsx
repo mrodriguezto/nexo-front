@@ -36,7 +36,7 @@ const BasicInfoContent = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [dispatch, errors, watch]);
+  }, [dispatch, watch]);
 
   useEffect(() => {
     if (isValid) dispatch(updateCanContinue(true));

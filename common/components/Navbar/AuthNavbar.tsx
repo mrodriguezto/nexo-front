@@ -6,7 +6,10 @@ const AuthNavbar = () => {
     <AppBar
       position="fixed"
       sx={{
-        height: '88px',
+        height: {
+          xs: '60px',
+          md: '88px',
+        },
       }}
     >
       <Container maxWidth="xl">

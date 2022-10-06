@@ -13,12 +13,12 @@ export const basicInfoResolver = yupResolver(
   }),
 );
 
-export const disciplinesResolver = yupResolver(
+export const descriptionResolver = yupResolver(
   yup.object({
-    disciplines: yup
-      .array()
-      .of(yup.string())
-      .min(1, 'Debe ingresar al menos una disciplina')
-      .max(2, 'Máximo 3 disciplinas'),
+    description: yup
+      .string()
+      .min(2)
+      .max(800, 'Se ha superado el límite de caracteres')
+      .required(),
   }),
 );

@@ -9,7 +9,7 @@ const DescriptionSideinfo = () => {
       <Typography color="primary" gutterBottom>
         {strings.example_lbl}
       </Typography>
-      <Box sx={{ padding: 4, backgroundColor: '#F3F3F3', borderRadius: 2 }}>
+      <Box sx={{ padding: 3.2, backgroundColor: '#F3F3F3', borderRadius: 2 }}>
         <Stack flexDirection="row" alignItems="center" gap={1} marginBottom={2}>
           <Box
             width={64}
@@ -18,15 +18,9 @@ const DescriptionSideinfo = () => {
           />
 
           <Stack>
-            <Typography
-              variant="h3"
-              color="primary"
-              fontSize="1.25rem"
-              fontWeight={700}
-              gutterBottom
-            >
+            <NameText variant="h3" color="primary" fontWeight={700} gutterBottom>
               {strings.example_username}
-            </Typography>{' '}
+            </NameText>{' '}
             <CalificationText>
               <Star fontSize="inherit" /> {strings.example_calification}
             </CalificationText>
@@ -43,6 +37,12 @@ const DescriptionSideinfo = () => {
 const CalificationText = withStyles(Typography, (theme) => ({
   root: {
     color: theme.palette.warning.main,
+  },
+}));
+
+const NameText = withStyles(Typography, (theme) => ({
+  h3: {
+    fontSize: '1.25rem !important',
   },
 }));
 

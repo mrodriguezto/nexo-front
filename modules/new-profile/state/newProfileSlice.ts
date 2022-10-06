@@ -22,7 +22,7 @@ const initialState: NewProfileState = {
     topics: [],
     avatar_profile: undefined,
   },
-  step: INewProfileStep.Topics,
+  step: INewProfileStep.Description,
   canContinue: false,
 };
 
@@ -69,6 +69,9 @@ export const newProfileSlice = createSlice({
     updateTopics: (state: NewProfileState, action: PayloadAction<string[]>) => {
       state.profile.topics = action.payload;
     },
+    updateBio: (state: NewProfileState, action: PayloadAction<string>) => {
+      state.profile.biography = action.payload;
+    },
   },
 });
 
@@ -79,6 +82,7 @@ export const {
   updateDisciplines,
   updateKeywords,
   updateTopics,
+  updateBio,
 } = newProfileSlice.actions;
 
 export const newProfileReducer = newProfileSlice.reducer;
