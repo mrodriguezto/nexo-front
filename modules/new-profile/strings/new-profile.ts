@@ -42,7 +42,7 @@ const basicInfoSideinfo = {
 const disciplinesContent = {
   title: 'Dile al mundo cuáles son tus principales disciplinas artísticas',
   info: 'Estas pueden ser aquellas que más te apasionen, con la que más te identifiques o de las que provenga tu mayor fuente de ingreso.',
-  placeholder: 'Escribe o seleciona tus principales oficios',
+  auto_complete_label: 'Escribe o seleciona tus principales oficios',
   info_max: '3 máx.',
   next_step_btn: 'Siguiente',
 };

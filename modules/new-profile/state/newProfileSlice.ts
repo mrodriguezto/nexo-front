@@ -12,9 +12,9 @@ export type NewProfileState = {
 const initialState: NewProfileState = {
   profile: {
     id: undefined,
-    display_name: 'Nombre',
-    title: 'Título actual',
-    location: 'Ubicación',
+    display_name: '',
+    title: '',
+    location: '',
     birthday: '',
     biography: '',
     disciplines: [],
@@ -22,7 +22,7 @@ const initialState: NewProfileState = {
     topics: [],
     avatar_profile: undefined,
   },
-  step: INewProfileStep.BasicInfo,
+  step: INewProfileStep.Topics,
   canContinue: false,
 };
 
@@ -50,19 +50,35 @@ export const newProfileSlice = createSlice({
       state.step = steps[index];
       state.canContinue = false;
     },
+
+    updateCanContinue: (state: NewProfileState, action: PayloadAction<boolean>) => {
+      state.canContinue = action.payload;
+    },
     updateBasicInfo: (
       state: NewProfileState,
       action: PayloadAction<Partial<IBasicInfo>>,
     ) => {
       state.profile = { ...state.profile, ...action.payload };
     },
-    updateCanContinue: (state: NewProfileState, action: PayloadAction<boolean>) => {
-      state.canContinue = action.payload;
+    updateDisciplines: (state: NewProfileState, action: PayloadAction<string[]>) => {
+      state.profile.disciplines = action.payload;
+    },
+    updateKeywords: (state: NewProfileState, action: PayloadAction<string[]>) => {
+      state.profile.keywords = action.payload;
+    },
+    updateTopics: (state: NewProfileState, action: PayloadAction<string[]>) => {
+      state.profile.topics = action.payload;
     },
   },
 });
 
-export const { updateBasicInfo, updateStep, updateCanContinue } =
-  newProfileSlice.actions;
+export const {
+  updateBasicInfo,
+  updateStep,
+  updateCanContinue,
+  updateDisciplines,
+  updateKeywords,
+  updateTopics,
+} = newProfileSlice.actions;
 
 export const newProfileReducer = newProfileSlice.reducer;

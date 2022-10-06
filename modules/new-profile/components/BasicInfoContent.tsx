@@ -23,6 +23,7 @@ type FormData = {
 const BasicInfoContent = () => {
   const initialValues = useAppSelector((state) => state.newProfile.profile);
   const { register, formState: {errors, isValid}, watch, control} = useForm<FormData>({
+    defaultValues: initialValues,
     resolver: basicInfoResolver,
     mode: 'onChange',
   }); // prettier-ignore
@@ -49,111 +50,103 @@ const BasicInfoContent = () => {
   };
 
   return (
-    <FadeIn>
-      <Box>
-        <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
-          {strings.title}
-        </Typography>
-        <Box marginY={4}>
-          <Typography variant="body1">{strings.info}</Typography>
-        </Box>
-        <Box marginY={4} textAlign="center" display={{ xs: 'block', sm: 'none' }}>
-          <UploadImageButton>
-            <AddAPhoto fontSize="large" color="inherit" />
-          </UploadImageButton>
-        </Box>
+    <Box>
+      <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
+        {strings.title}
+      </Typography>
+      <Box marginY={4}>
+        <Typography variant="body1">{strings.info}</Typography>
+      </Box>
+      <Box marginY={4} textAlign="center" display={{ xs: 'block', md: 'none' }}>
+        <UploadImageButton>
+          <AddAPhoto fontSize="large" color="inherit" />
+        </UploadImageButton>
+      </Box>
 
-        <Grid
-          container
-          rowSpacing={{
-            xs: 2,
-            md: 5,
-          }}
-          columnSpacing={2}
-          maxWidth={600}
-        >
-          <Grid xs={12} md={6} item>
-            <TextField
-              label={strings.inputs.card_name_lbl}
-              {...register('display_name')}
-              error={Boolean(errors.display_name)}
-              helperText={errors.display_name?.message}
-            />
-          </Grid>
-          <Grid xs={12} md={6} item>
-            <TextField
-              label={strings.inputs.current_title_lbl}
-              InputProps={{
-                endAdornment: (
+      <Grid
+        container
+        rowSpacing={{
+          xs: 2,
+          md: 5,
+        }}
+        columnSpacing={2}
+        maxWidth={600}
+      >
+        <Grid xs={12} md={6} item>
+          <TextField
+            label={strings.inputs.card_name_lbl}
+            {...register('display_name')}
+            error={Boolean(errors.display_name)}
+            helperText={errors.display_name?.message}
+          />
+        </Grid>
+        <Grid xs={12} md={6} item>
+          <TextField
+            label={strings.inputs.current_title_lbl}
+            InputProps={{
+              endAdornment: (
+                <Box>
                   <TipPopover>
                     <Typography variant="body2">
                       {strings.inputs.current_title_popover}
                     </Typography>
                   </TipPopover>
-                ),
-              }}
-              {...register('title')}
-              error={Boolean(errors.title)}
-              helperText={errors.title?.message}
-            />
-          </Grid>
-          <Grid xs={12} md={6} item>
-            <TextField
-              label={strings.inputs.location_lbl}
-              {...register('location')}
-              error={Boolean(errors.location)}
-              helperText={errors.location?.message}
-            />
-          </Grid>
-          <Grid xs={12} md={6} item>
-            {/* <TextField
-              type="date"
-              label={strings.inputs.bday_lbl}
-              InputLabelProps={{ shrink: true }}
-              {...register('birthday')}
-              error={Boolean(errors.birthday)}
-              helperText={errors.birthday?.message}
-            /> */}
-            <Controller
-              control={control}
-              name="birthday"
-              render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <DatePicker
-                  value={value}
-                  onChange={(value) => onChange(dayjs(value).format())}
-                  label={strings.inputs.bday_lbl}
-                  renderInput={(params) => (
-                    <TextField
-                      helperText={error?.message}
-                      id="birthday"
-                      name="birthday"
-                      {...params}
-                      error={Boolean(error)}
-                    />
-                  )}
-                />
-              )}
-            />
-
-            <Typography variant="caption">
-              (**) Tu edad no se mostrará en el perfil
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            display={{
-              xs: 'block',
-              md: 'none',
+                </Box>
+              ),
             }}
-          >
-            <Button onClick={handleNextStep} fullWidth disabled={!canContinue}>
-              {strings.next_step_btn}
-            </Button>
-          </Grid>
+            {...register('title')}
+            error={Boolean(errors.title)}
+            helperText={errors.title?.message}
+          />
         </Grid>
-      </Box>
-    </FadeIn>
+        <Grid xs={12} md={6} item>
+          <TextField
+            label={strings.inputs.location_lbl}
+            {...register('location')}
+            error={Boolean(errors.location)}
+            helperText={errors.location?.message}
+          />
+        </Grid>
+        <Grid xs={12} md={6} item>
+          <Controller
+            control={control}
+            name="birthday"
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <DatePicker
+                value={value}
+                onChange={(value) => onChange(dayjs(value).format())}
+                label={strings.inputs.bday_lbl}
+                renderInput={(params) => (
+                  <TextField
+                    helperText={error?.message}
+                    id="birthday"
+                    name="birthday"
+                    {...params}
+                    error={Boolean(error)}
+                  />
+                )}
+              />
+            )}
+          />
+
+          <Typography variant="caption">
+            (**) Tu edad no se mostrará en el perfil
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          display={{
+            xs: 'block',
+            md: 'none',
+          }}
+        >
+          <Button onClick={handleNextStep} fullWidth disabled={!canContinue}>
+            {strings.next_step_btn}
+          </Button>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 

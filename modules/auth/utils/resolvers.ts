@@ -3,9 +3,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 export const registerResolver = yupResolver(
   yup.object({
-    firstname: yup.string().min(2).max(80).required('Ingresa tu nombre'),
-    lastname: yup.string().min(2).max(80).required('Ingresa tu apellido'),
-    email: yup.string().email().max(80).required('Ingresa tu correo'),
+    firstname: yup.string().min(2).max(50).required('Ingresa tu nombre'),
+    lastname: yup.string().min(2).max(50).required('Ingresa tu apellido'),
+    email: yup.string().email().max(50).required('Ingresa tu correo'),
     password: yup
       .string()
       .min(8)
@@ -20,7 +20,7 @@ export const registerResolver = yupResolver(
 
 export const loginResolver = yupResolver(
   yup.object({
-    email: yup.string().email().max(80).required('Ingresa tu correo'),
+    email: yup.string().email().max(50).required('Ingresa tu correo'),
     password: yup
       .string()
       .min(8)

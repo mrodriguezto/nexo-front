@@ -1,27 +1,30 @@
 import type { NextPage } from 'next';
 import { Box, Button, IconButton, Stack } from '@mui/material';
 import { GetServerSideProps } from 'next';
+import { ArrowBack } from '@mui/icons-material';
 
 import BasicLayout from '@/layouts/BasicLayout';
 import { newProfilePage as strings } from '@/new-profile/strings';
-import BeginContent from '@/new-profile/components/BeginContent';
-import BeginSideinfo from '@/new-profile/components/BeginSideinfo';
-import BasicInfoContent from '@/new-profile/components/BasicInfoContent';
-import BasicInfoSideinfo from '@/new-profile/components/BasicInfoSideinfo';
-import DisciplinesContent from '@/new-profile/components/DisciplinesContent';
-import DisciplinesSideinfo from '@/new-profile/components/DisciplinesSideinfo';
-import KeywordsContent from '@/new-profile/components/KeywordsContent';
-import KeywordsSideinfo from '@/new-profile/components/KeywordsSideinfo';
-import TopicsSideinfo from '@/new-profile/components/TopicsSideinfo';
-import TopicsContent from '@/new-profile/components/TopicsContent';
-import DescriptionContent from '@/new-profile/components/DescriptionContent';
-import DescriptionSideinfo from '@/new-profile/components/DescriptionSideinfo';
-import UploadsContent from '@/new-profile/components/UploadsContent';
-import UploadsSideinfo from '@/new-profile/components/UploadsSideinfo';
+import {
+  BeginContent,
+  BeginSideinfo,
+  BasicInfoContent,
+  BasicInfoSideinfo,
+  DisciplinesContent,
+  DisciplinesSideinfo,
+  KeywordsContent,
+  KeywordsSideinfo,
+  TopicsSideinfo,
+  TopicsContent,
+  DescriptionContent,
+  DescriptionSideinfo,
+  UploadsContent,
+  UploadsSideinfo,
+} from '@/new-profile/components';
 import { INewProfileStep as IStep } from '@/new-profile/types';
-import { useAppDispatch, useAppSelector } from 'store';
-import { ArrowBack } from '@mui/icons-material';
 import { updateStep } from '@/new-profile/state';
+import { useAppDispatch, useAppSelector } from 'store';
+import FadeIn from 'common/components/Transition/FadeIn';
 
 const content: { [key in IStep]: React.ReactNode } = {
   begin: <BeginContent />,
@@ -49,6 +52,11 @@ const NewProfilePage: NextPage = () => {
 
   const SideinfoWrapper = ({ children }: { children: React.ReactNode }) => {
     const canContinue = useAppSelector((state) => state.newProfile.canContinue);
+    const handleNextStep = () => {
+      if (!canContinue) return;
+
+      dispatch(updateStep('next'));
+    };
 
     return (
       <Stack alignItems="center" justifyContent="center" height="100%">
@@ -63,7 +71,7 @@ const NewProfilePage: NextPage = () => {
         </Stack>
         <Box flex={1} />
         {currentStep !== IStep.Begin && (
-          <Button fullWidth disabled={!canContinue}>
+          <Button onClick={handleNextStep} fullWidth disabled={!canContinue}>
             {currentStep === IStep.Uploads ? strings.finish_btn : strings.next_btn}
           </Button>
         )}
@@ -90,8 +98,9 @@ const NewProfilePage: NextPage = () => {
             </IconButton>
           </Box>
         )}
-
-        {children}
+        <FadeIn>
+          <Box>{children}</Box>
+        </FadeIn>
       </Stack>
     );
   };
