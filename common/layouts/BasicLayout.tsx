@@ -24,7 +24,16 @@ const BasicLayout = ({
         <meta name="description" content={pageDescription} />
       </Head>
       <AuthNavbar />
-      <Container sx={{ paddingTop: 10 }} disableGutters fixed>
+      <Container
+        sx={{
+          paddingTop: {
+            xs: 5,
+            md: 10,
+          },
+        }}
+        disableGutters
+        fixed
+      >
         {sideinfo ? (
           <Grid
             container

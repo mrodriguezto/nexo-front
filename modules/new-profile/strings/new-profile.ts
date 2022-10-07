@@ -104,7 +104,11 @@ const descriptionSideinfo = {
 const uploadsContent = {
   title: '¡Por último! Carga las fotos y los vídeos que demuestren tu talento',
   info: 'Puede ser un reel actoral, un video de presentación o de alguna obra en donde hayas participado.',
-  upload_field_lbl: 'Sube fotos y videos',
+  uploads: {
+    input_lbl: 'Sube fotos y videos',
+    type_not_valid: 'El tipo de archivo no es válido',
+    success: 'Cargado exitosamente',
+  },
   popover: {
     title: 'Ten en cuenta que:',
     desc: `Estas imágenes y videos serán lo primero que las personas verán cuando visiten tu perfil pues van a estar en la parte superior de este.

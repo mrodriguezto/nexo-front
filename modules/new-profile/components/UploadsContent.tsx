@@ -1,34 +1,20 @@
-import { useRef, useState } from 'react';
-import NextLink from 'next/link';
-import {
-  Box,
-  Button,
-  ButtonBase,
-  IconButton,
-  Link,
-  Paper,
-  Popover,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { uploadsContent as strings } from '../strings';
-import { withStyles } from 'tss-react/mui';
-import { AddCircleOutline, Info } from '@mui/icons-material';
+import TipPopover from 'common/components/Popover/TipPopover';
+import ProfileMediaUploader from './ProfileMediaUploader';
+import { useAppSelector } from 'store';
 
 const UploadsContent = () => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const canContinue = useAppSelector((state) => state.newProfile.canContinue);
 
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const handleFinalize = () => {
+    if (!canContinue) return;
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    // TODO: finalize the creation
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleSkip = () => {
+    // TODO: finalize the creation
   };
 
   return (
@@ -50,7 +36,7 @@ const UploadsContent = () => {
           <Box
             display={{
               xs: 'block',
-              sm: 'none',
+              md: 'none',
             }}
             sx={{
               position: 'absolute',
@@ -58,59 +44,27 @@ const UploadsContent = () => {
               right: 0,
             }}
           >
-            <IconButton onClick={handleClick} sx={{ padding: 0 }}>
-              <Info color="secondary" />
-            </IconButton>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
+            <TipPopover
               anchorOrigin={{
+                horizontal: 'left',
                 vertical: 'center',
-                horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'center',
-                horizontal: -16,
+                horizontal: 'right',
+                vertical: 12,
               }}
-              elevation={2}
             >
-              <PopoverText
+              <Typography
                 maxWidth={300}
                 variant="body2"
-                sx={{ p: 2, backgroundColor: 'warning' }}
+                sx={{ backgroundColor: 'warning' }}
               >
                 {strings.popover.desc}
-              </PopoverText>
-            </Popover>
+              </Typography>
+            </TipPopover>
           </Box>
 
-          <Stack
-            flexDirection={{
-              xs: 'column',
-              md: 'row',
-            }}
-            alignItems="center"
-          >
-            <Uploader onClick={() => fileInputRef.current?.click()}>
-              <AddCircleOutline color="inherit" />
-              <Typography
-                variant="caption"
-                color="primary"
-                fontWeight={500}
-                marginTop={2}
-              >
-                {strings.upload_field_lbl}
-              </Typography>
-            </Uploader>
-            <input
-              accept="video/*, image/*"
-              type="file"
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-            />
-          </Stack>
+          <ProfileMediaUploader />
         </Box>
 
         <Box
@@ -120,7 +74,9 @@ const UploadsContent = () => {
             md: 'none',
           }}
         >
-          <Button fullWidth>{strings.next_step_btn}</Button>
+          <Button onClick={handleFinalize} disabled={!canContinue} fullWidth>
+            {strings.next_step_btn}
+          </Button>
         </Box>
 
         <Box
@@ -130,35 +86,11 @@ const UploadsContent = () => {
             md: 'left',
           }}
         >
-          <NextLink href="/" passHref>
-            <Link>{strings.do_later_link}</Link>
-          </NextLink>
+          <Link onClick={handleSkip}>{strings.do_later_link}</Link>
         </Box>
       </Box>
     </Box>
   );
 };
-
-const Uploader = withStyles(ButtonBase, (theme) => ({
-  root: {
-    backgroundColor: '#8C7CCA24',
-    padding: '3em 4em',
-    color: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
-    borderRadius: 4,
-    borderStyle: 'dashed',
-    borderWidth: 2,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-}));
-
-const PopoverText = withStyles(Typography, (theme) => ({
-  root: {
-    backgroundColor: theme.palette.warning.main,
-  },
-}));
 
 export default UploadsContent;

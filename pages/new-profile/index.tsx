@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Box, Button, IconButton, Stack } from '@mui/material';
+import { Box, Button, IconButton, Stack, Step } from '@mui/material';
 import { GetServerSideProps } from 'next';
 import { ArrowBack } from '@mui/icons-material';
 
@@ -55,7 +55,12 @@ const NewProfilePage: NextPage = () => {
     const handleNextStep = () => {
       if (!canContinue) return;
 
-      dispatch(updateStep('next'));
+      if (currentStep !== IStep.Uploads) {
+        dispatch(updateStep('next'));
+        return;
+      }
+
+      // TODO: finish profile creation
     };
 
     return (

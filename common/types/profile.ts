@@ -12,4 +12,10 @@ export type INewProfile = IBasicInfo & {
   keywords: string[];
   topics: string[];
   avatar_profile?: string;
+  media: IMedia[];
+};
+
+export type IMedia = {
+  type: 'video' | 'image';
+  url: string;
 };

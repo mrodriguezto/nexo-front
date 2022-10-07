@@ -6,9 +6,24 @@ import { withStyles } from 'tss-react/mui';
 
 type Props = {
   children: React.ReactNode;
+  anchorOrigin?: {
+    horizontal: number | 'left' | 'right' | 'center';
+    vertical: number | 'center' | 'top' | 'bottom';
+  };
+  transformOrigin?: {
+    horizontal: number | 'left' | 'right' | 'center';
+    vertical: number | 'center' | 'top' | 'bottom';
+  };
 };
 
-const TipPopover = ({ children }: Props) => {
+const TipPopover = ({
+  children,
+  anchorOrigin = { horizontal: 'right', vertical: 'center' },
+  transformOrigin = {
+    vertical: 12,
+    horizontal: -16,
+  },
+}: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -31,14 +46,8 @@ const TipPopover = ({ children }: Props) => {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 12,
-          horizontal: -16,
-        }}
+        anchorOrigin={anchorOrigin}
+        transformOrigin={transformOrigin}
         elevation={2}
       >
         <IconButton

@@ -22,7 +22,7 @@ const DescriptionContent = () => {
   const canContinue = useAppSelector((state) => state.newProfile.canContinue);
   const dispatch = useAppDispatch();
 
-  const { register, formState: { errors, isValid }, watch, } = useForm({
+  const { register, formState: { errors, isValid }, watch, } = useForm<FormData>({
     defaultValues: {
       description: currentDescription,
     },
@@ -39,6 +39,8 @@ const DescriptionContent = () => {
   }, [dispatch, watch]);
 
   useEffect(() => {
+    console.log({ isValid });
+
     if (isValid) dispatch(updateCanContinue(true));
     else dispatch(updateCanContinue(false));
   }, [isValid, dispatch]);
