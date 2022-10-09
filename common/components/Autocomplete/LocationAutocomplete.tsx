@@ -111,6 +111,8 @@ const LocationAutocomplete = ({
       <Autocomplete
         id={id}
         autoComplete
+        noOptionsText="No hay coincidencias"
+        loadingText="Buscando..."
         includeInputInList
         filterSelectedOptions
         filterOptions={(x) => x}
