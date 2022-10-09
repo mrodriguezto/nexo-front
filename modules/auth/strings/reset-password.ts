@@ -11,6 +11,10 @@ const resetPasswordPage = {
     info: 'Te hemos enviado un correo de recuperación de contraseña al correo:',
     info2: 'Si tienes problemas con el correo',
     resend_btn: 'Reenviar enlace',
+    feedback: {
+      success: 'Correo enviado',
+      error: 'No se logró enviar el correo',
+    },
   },
 };
 

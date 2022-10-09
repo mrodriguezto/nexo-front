@@ -22,7 +22,7 @@ const sideinfo = {
 
 const NewPasswordPage: NextPage = () => {
   // TODO: change local state for global context
-  const [currentStep, setCurrentStep] = useState<Step>('resetCompleted');
+  const [currentStep, setCurrentStep] = useState<Step>('newPassword');
 
   return (
     <BasicLayout

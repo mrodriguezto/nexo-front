@@ -4,7 +4,7 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { verifyEmailContent as strings } from '@/auth/strings';
 
-const RESEND_DELAY = 5;
+const RESEND_DELAY = 30;
 
 const ConfirmEmailContent = () => {
   const [countDown, setCountDown] = useState(RESEND_DELAY);

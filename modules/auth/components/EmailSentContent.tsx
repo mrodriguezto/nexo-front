@@ -1,9 +1,51 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
+import { useSnackbar } from 'notistack';
+import { useEffect, useState } from 'react';
 import { resetPasswordPage as pageStrings } from '../strings';
+
+const RESEND_DELAY = 30;
 
 const EmailSentContent = () => {
   const { emailSentContent: strings } = pageStrings;
+  const [countDown, setCountDown] = useState(RESEND_DELAY);
+  const [canResendEmail, setCanResendEmail] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (canResendEmail) return;
+
+    const interval = setInterval(() => {
+      if (countDown > 1) {
+        setCountDown((value) => value - 1);
+        return;
+      }
+
+      setCanResendEmail(true);
+      setCountDown(RESEND_DELAY);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [canResendEmail, countDown]);
+
+  const handleResend = () => {
+    if (!canResendEmail) return;
+
+    try {
+      // TODO: Request for resending the confirmation email
+      // await sendEmail()
+
+      enqueueSnackbar(strings.feedback.success, {
+        variant: 'success',
+      });
+
+      setCanResendEmail(false);
+    } catch (error) {
+      enqueueSnackbar(strings.feedback.error, {
+        variant: 'error',
+      });
+    }
+  };
 
   return (
     <Box
@@ -60,7 +102,9 @@ const EmailSentContent = () => {
           spacing={2}
         >
           <Typography>{strings.info2}</Typography>
-          <Button>{strings.resend_btn}</Button>
+          <Button onClick={handleResend} disabled={!canResendEmail}>
+            {canResendEmail ? strings.resend_btn : `${countDown} s para reenviar`}
+          </Button>
         </Stack>
       </Stack>
     </Box>

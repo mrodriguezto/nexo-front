@@ -19,7 +19,7 @@ const registerForm = {
   },
   terms: {
     info: 'Al dar clic en REGISTRARME estás aceptando nuestros',
-    link: 'Términas y condiciones',
+    link: 'Términos y condiciones',
   },
   has_account: {
     info: '¿Ya tienes una cuenta?',

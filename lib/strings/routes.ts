@@ -2,7 +2,7 @@ export const routes = {
   home: '/',
 
   // TODO:
-  restore_password: '/',
+  restore_password: '/auth/reset-password',
 
   // AUTH
   login: '/auth/login',
