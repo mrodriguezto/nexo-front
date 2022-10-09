@@ -1,16 +1,30 @@
+import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
 import { Box, Button, Link, Typography } from '@mui/material';
 import { uploadsContent as strings } from '../strings';
 import TipPopover from 'common/components/Popover/TipPopover';
 import ProfileMediaUploader from './ProfileMediaUploader';
 import { useAppSelector } from 'store';
+import { createProfile } from '../services';
 
 const UploadsContent = () => {
   const canContinue = useAppSelector((state) => state.newProfile.canContinue);
+  const profile = useAppSelector((state) => state.newProfile.profile);
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleFinalize = () => {
     if (!canContinue) return;
 
-    // TODO: finalize the creation
+    createProfile(profile)
+      .then(() => {
+        // router.replace('/profile');
+      })
+      .catch(() => {
+        enqueueSnackbar('Algo salió mal', {
+          variant: 'error',
+        });
+      });
   };
 
   const handleSkip = () => {

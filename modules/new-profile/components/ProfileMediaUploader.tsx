@@ -69,6 +69,8 @@ const ProfileMediaUploader = () => {
         ...mediaFiles,
         {
           type: fileType,
+          metaType: file.type,
+          name: file.name,
           url: URL.createObjectURL(file),
         },
       ]),

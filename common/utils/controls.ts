@@ -1,3 +1,11 @@
+export const createFile = async (url: string, name: string, type: string) => {
+  const response = await fetch(url);
+  const data = await response.blob();
+  return new File([data], name, {
+    type,
+  });
+};
+
 export const throttle = <Args extends unknown[]>(
   fn: (...args: Args) => void,
   cooldown: number,

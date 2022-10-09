@@ -23,8 +23,10 @@ import {
 } from '@/new-profile/components';
 import { INewProfileStep as IStep } from '@/new-profile/types';
 import { updateStep } from '@/new-profile/state';
-import { useAppDispatch, useAppSelector } from 'store';
+import { store, useAppDispatch, useAppSelector } from 'store';
 import FadeIn from 'common/components/Transition/FadeIn';
+import { createProfile } from '@/new-profile/services';
+import { useSnackbar } from 'notistack';
 
 const content: { [key in IStep]: React.ReactNode } = {
   begin: <BeginContent />,
@@ -49,6 +51,7 @@ const sideinfo: { [key in IStep]: React.ReactNode } = {
 const NewProfilePage: NextPage = () => {
   const currentStep = useAppSelector((state) => state.newProfile.step);
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const SideinfoWrapper = ({ children }: { children: React.ReactNode }) => {
     const canContinue = useAppSelector((state) => state.newProfile.canContinue);
@@ -61,6 +64,19 @@ const NewProfilePage: NextPage = () => {
       }
 
       // TODO: finish profile creation
+      if (!canContinue) return;
+
+      const state = store.getState();
+
+      createProfile(state.newProfile.profile)
+        .then(() => {
+          // router.replace('/profile');
+        })
+        .catch(() => {
+          enqueueSnackbar('Algo salió mal', {
+            variant: 'error',
+          });
+        });
     };
 
     return (

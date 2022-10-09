@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { IBasicInfo, IMedia, INewProfile } from 'common/types';
+import { IBasicInfo, IMedia, INewProfile, IProfileImage } from 'common/types';
 import { INewProfileStep } from '../types';
 
 export type NewProfileState = {
@@ -16,15 +16,14 @@ const initialState: NewProfileState = {
     title: '',
     location: null,
     birthday: '',
-    image: '',
+    image: null,
     biography: '',
     disciplines: [],
     keywords: [],
     topics: [],
-    avatar_profile: undefined,
     media: [],
   },
-  step: INewProfileStep.Keywords,
+  step: INewProfileStep.Begin,
   canContinue: false,
 };
 
@@ -76,7 +75,10 @@ export const newProfileSlice = createSlice({
     updateMedia: (state: NewProfileState, action: PayloadAction<IMedia[]>) => {
       state.profile.media = action.payload;
     },
-    updateProfileImg: (state: NewProfileState, action: PayloadAction<string>) => {
+    updateProfileImg: (
+      state: NewProfileState,
+      action: PayloadAction<IProfileImage>,
+    ) => {
       state.profile.image = action.payload;
     },
   },

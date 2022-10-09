@@ -41,7 +41,13 @@ const ProfileImageUploader = () => {
       return;
     }
 
-    dispatch(updateProfileImg(URL.createObjectURL(file)));
+    dispatch(
+      updateProfileImg({
+        name: file.name,
+        type: file.type,
+        url: URL.createObjectURL(file),
+      }),
+    );
     enqueueSnackbar(strings.upload_image.success, { variant: 'success' });
   };
 
@@ -51,9 +57,9 @@ const ProfileImageUploader = () => {
         aria-label={strings.upload_image.aria}
         onClick={() => fileInputRef.current?.click()}
       >
-        {profileImg.length > 0 ? (
+        {profileImg ? (
           <Image
-            src={profileImg}
+            src={profileImg.url}
             alt="your image profile"
             layout="fill"
             objectFit="cover"
