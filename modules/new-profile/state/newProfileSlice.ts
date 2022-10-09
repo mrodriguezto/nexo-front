@@ -23,7 +23,7 @@ const initialState: NewProfileState = {
     avatar_profile: undefined,
     media: [],
   },
-  step: INewProfileStep.Uploads,
+  step: INewProfileStep.BasicInfo,
   canContinue: false,
 };
 

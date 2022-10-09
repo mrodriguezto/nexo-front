@@ -19,3 +19,11 @@ export type IMedia = {
   type: 'video' | 'image';
   url: string;
 };
+
+export type IProfileCardInfo = {
+  display_name: string;
+  title: string;
+  location: string;
+  calification: number | string;
+  contacts: number | string;
+};

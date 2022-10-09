@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
-import { Box, Button, Typography, Grid, TextField, IconButton } from '@mui/material';
+import { Box, Typography, Grid, TextField, IconButton } from '@mui/material';
 import { AddAPhoto } from '@mui/icons-material';
 import { withStyles } from 'tss-react/mui';
 
 import { basicInfoContent as strings } from '../strings';
-import FadeIn from 'common/components/Transition/FadeIn';
 import { Controller, useForm } from 'react-hook-form';
 import { basicInfoResolver } from '../utils';
 import { useAppDispatch, useAppSelector } from 'store';
-import { updateBasicInfo, updateCanContinue, updateStep } from '../state';
+import { updateBasicInfo } from '../state';
 import TipPopover from 'common/components/Popover/TipPopover';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
+import NextStepButton from './NextStepButton';
+import LocationAutocomplete from 'common/components/Autocomplete/LocationAutocomplete';
+import { PlaceType } from 'common/types';
 
 type FormData = {
   display_name: string;
@@ -22,13 +24,12 @@ type FormData = {
 
 const BasicInfoContent = () => {
   const initialValues = useAppSelector((state) => state.newProfile.profile);
-  const { register, formState: {errors, isValid}, watch, control} = useForm<FormData>({
+  const { register, formState: {errors, isValid}, watch, control, setValue, getValues} = useForm<FormData>({
     defaultValues: initialValues,
     resolver: basicInfoResolver,
     mode: 'onChange',
   }); // prettier-ignore
   const dispatch = useAppDispatch();
-  const canContinue = useAppSelector((state) => state.newProfile.canContinue);
 
   useEffect(() => {
     const subscription = watch((values) => {
@@ -38,15 +39,11 @@ const BasicInfoContent = () => {
     return () => subscription.unsubscribe();
   }, [dispatch, watch]);
 
-  useEffect(() => {
-    if (isValid) dispatch(updateCanContinue(true));
-    else dispatch(updateCanContinue(false));
-  }, [isValid, dispatch]);
+  const handleLocationUpdate = (location: PlaceType | null) => {
+    const newLocation = !location ? '' : location.description;
 
-  const handleNextStep = () => {
-    if (!canContinue) return;
-
-    dispatch(updateStep('next'));
+    setValue('location', newLocation, { shouldValidate: true });
+    dispatch(updateBasicInfo({ ...getValues(), location: newLocation }));
   };
 
   return (
@@ -67,7 +64,7 @@ const BasicInfoContent = () => {
         container
         rowSpacing={{
           xs: 2,
-          md: 5,
+          md: 4,
         }}
         columnSpacing={2}
         maxWidth={600}
@@ -85,13 +82,11 @@ const BasicInfoContent = () => {
             label={strings.inputs.current_title_lbl}
             InputProps={{
               endAdornment: (
-                <Box>
-                  <TipPopover>
-                    <Typography variant="body2">
-                      {strings.inputs.current_title_popover}
-                    </Typography>
-                  </TipPopover>
-                </Box>
+                <TipPopover>
+                  <Typography variant="body2">
+                    {strings.inputs.current_title_popover}
+                  </Typography>
+                </TipPopover>
               ),
             }}
             {...register('title')}
@@ -100,9 +95,10 @@ const BasicInfoContent = () => {
           />
         </Grid>
         <Grid xs={12} md={6} item>
-          <TextField
+          <LocationAutocomplete
+            id="user-location-autocomplete"
             label={strings.inputs.location_lbl}
-            {...register('location')}
+            updateValue={handleLocationUpdate}
             error={Boolean(errors.location)}
             helperText={errors.location?.message}
           />
@@ -141,9 +137,7 @@ const BasicInfoContent = () => {
             md: 'none',
           }}
         >
-          <Button onClick={handleNextStep} fullWidth disabled={!canContinue}>
-            {strings.next_step_btn}
-          </Button>
+          <NextStepButton isValid={isValid} btnLabel={strings.next_step_btn} />
         </Grid>
       </Grid>
     </Box>
