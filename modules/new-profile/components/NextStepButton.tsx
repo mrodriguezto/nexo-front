@@ -18,7 +18,7 @@ const NextStepButton = ({ isValid, btnLabel }: Props) => {
   }, [isValid, dispatch]);
 
   const handleNextStep = () => {
-    if (!canContinue) return;
+    if (!canContinue && !isValid) return;
 
     dispatch(updateStep('next'));
   };

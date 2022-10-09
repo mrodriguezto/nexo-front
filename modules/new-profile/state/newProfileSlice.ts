@@ -24,7 +24,7 @@ const initialState: NewProfileState = {
     avatar_profile: undefined,
     media: [],
   },
-  step: INewProfileStep.BasicInfo,
+  step: INewProfileStep.Keywords,
   canContinue: false,
 };
 

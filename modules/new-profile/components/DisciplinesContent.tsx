@@ -1,27 +1,27 @@
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import TagsAutocomplete from 'common/components/Autocomplete/TagsAutocomplete';
 import { disciplines } from 'common/constants';
 import { disciplinesContent as strings } from '../strings';
 import { useAppSelector, useAppDispatch } from 'store';
-import { updateCanContinue, updateDisciplines, updateStep } from '../state';
+import { updateDisciplines } from '../state';
+import NextStepButton from './NextStepButton';
+import { useEffect, useState } from 'react';
+import { MAX_DISCIPLINES, MIN_TAGS } from '../utils';
 
 const DisciplinesContent = () => {
   const selectedDisciplines = useAppSelector(
     (state) => state.newProfile.profile.disciplines,
   );
-  const canContinue = useAppSelector((state) => state.newProfile.canContinue);
+  const [isValid, setIsValid] = useState(false);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (selectedDisciplines.length >= 1) setIsValid(true);
+    else setIsValid(false);
+  }, [selectedDisciplines]);
 
   const handleUpdate = (values: string[]) => {
     dispatch(updateDisciplines(values));
-    if (values.length >= 1) dispatch(updateCanContinue(true));
-    else dispatch(updateCanContinue(false));
-  };
-
-  const handleNextStep = () => {
-    if (!canContinue) return;
-
-    dispatch(updateStep('next'));
   };
 
   return (
@@ -41,8 +41,8 @@ const DisciplinesContent = () => {
           options={disciplines}
           onUpdate={handleUpdate}
           initialValues={selectedDisciplines}
-          maxTags={3}
-          minTags={1}
+          maxTags={MAX_DISCIPLINES}
+          minTags={MIN_TAGS}
           freeSolo
         />
         <Typography display="block" textAlign="right" variant="caption">
@@ -56,9 +56,7 @@ const DisciplinesContent = () => {
           md: 'none',
         }}
       >
-        <Button onClick={handleNextStep} disabled={!canContinue} fullWidth>
-          {strings.next_step_btn}
-        </Button>
+        <NextStepButton btnLabel={strings.next_step_btn} isValid={isValid} />
       </Box>
     </Box>
   );

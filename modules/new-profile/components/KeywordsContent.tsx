@@ -1,29 +1,29 @@
-import { Box, Button, Chip, Stack, TextField, Typography } from '@mui/material';
+import { Box, Chip, Stack, Typography } from '@mui/material';
 import { keywordsContent as strings } from '../strings';
 import { Add } from '@mui/icons-material';
 import TipPopover from 'common/components/Popover/TipPopover';
 import TagsAutoComplete from 'common/components/Autocomplete/TagsAutocomplete';
 import { keywords } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'store';
-import { updateCanContinue, updateKeywords, updateStep } from '../state';
+import { updateKeywords } from '../state';
+import { useEffect, useState } from 'react';
+import NextStepButton from './NextStepButton';
+import { MAX_KEYWORDS, MIN_TAGS } from '../utils';
 
 const KeywordsContent = () => {
   const selectedKeywords = useAppSelector(
     (state) => state.newProfile.profile.keywords,
   );
-  const canContinue = useAppSelector((state) => state.newProfile.canContinue);
   const dispatch = useAppDispatch();
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    if (selectedKeywords.length >= 1) setIsValid(true);
+    else setIsValid(false);
+  }, [selectedKeywords]);
 
   const handleUpdate = (values: string[]) => {
     dispatch(updateKeywords(values));
-    if (values.length >= 1) dispatch(updateCanContinue(true));
-    else dispatch(updateCanContinue(false));
-  };
-
-  const handleNextStep = () => {
-    if (!canContinue) return;
-
-    dispatch(updateStep('next'));
   };
 
   return (
@@ -52,8 +52,8 @@ const KeywordsContent = () => {
               options={keywords}
               label={strings.placeholder}
               initialValues={selectedKeywords}
-              maxTags={6}
-              minTags={1}
+              maxTags={MAX_KEYWORDS}
+              minTags={MIN_TAGS}
               onUpdate={handleUpdate}
               freeSolo
             />
@@ -86,9 +86,7 @@ const KeywordsContent = () => {
             md: 'none',
           }}
         >
-          <Button onClick={handleNextStep} fullWidth disabled={!canContinue}>
-            {strings.next_step_btn}
-          </Button>
+          <NextStepButton btnLabel={strings.next_step_btn} isValid={isValid} />
         </Box>
       </Box>
     </Box>
