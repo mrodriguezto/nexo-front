@@ -7,6 +7,7 @@ const BasicInfoSideinfo = () => {
   return (
     <ProfileCard
       profile={{
+        image: profile.image,
         display_name: profile.display_name,
         calification: 'Calificación',
         contacts: 0,

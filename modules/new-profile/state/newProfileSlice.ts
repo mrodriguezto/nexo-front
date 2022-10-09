@@ -14,8 +14,9 @@ const initialState: NewProfileState = {
     id: undefined,
     display_name: '',
     title: '',
-    location: '',
+    location: null,
     birthday: '',
+    image: '',
     biography: '',
     disciplines: [],
     keywords: [],
@@ -49,7 +50,6 @@ export const newProfileSlice = createSlice({
       if (index < 0 || index > steps.length - 1) return;
 
       state.step = steps[index];
-      state.canContinue = false;
     },
 
     updateCanContinue: (state: NewProfileState, action: PayloadAction<boolean>) => {
@@ -76,6 +76,9 @@ export const newProfileSlice = createSlice({
     updateMedia: (state: NewProfileState, action: PayloadAction<IMedia[]>) => {
       state.profile.media = action.payload;
     },
+    updateProfileImg: (state: NewProfileState, action: PayloadAction<string>) => {
+      state.profile.image = action.payload;
+    },
   },
 });
 
@@ -88,6 +91,7 @@ export const {
   updateTopics,
   updateBio,
   updateMedia,
+  updateProfileImg,
 } = newProfileSlice.actions;
 
 export const newProfileReducer = newProfileSlice.reducer;

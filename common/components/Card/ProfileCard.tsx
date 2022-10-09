@@ -1,9 +1,10 @@
-import { Button, IconButton, Paper, Stack, Typography } from '@mui/material';
+import { Box, Button, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { withStyles } from 'tss-react/mui';
 
 import { IProfileCardInfo } from 'common/types';
 import { profileCard as strings } from 'common/constants';
-import { Star, Place, Person, MoreHoriz, AddAPhoto } from '@mui/icons-material';
+import { Star, Place, Person, MoreHoriz } from '@mui/icons-material';
+import ProfileImageUploader from '@/new-profile/components/ProfileImageUploader';
 
 type Props = {
   profile: IProfileCardInfo;
@@ -16,9 +17,9 @@ const ProfileCard = ({ profile }: Props) => {
       elevation={0}
       sx={{ position: 'relative', width: '100%', maxWidth: 320 }}
     >
-      <UploadImageButton>
-        <AddAPhoto fontSize="large" color="inherit" />
-      </UploadImageButton>
+      <Uploader>
+        <ProfileImageUploader />
+      </Uploader>
 
       <FloatingMenuButton>
         <MoreHoriz color="disabled" fontSize="large" />
@@ -71,7 +72,7 @@ const ProfileCard = ({ profile }: Props) => {
             width="100%"
           >
             <Typography variant="caption" noWrap={true}>
-              {profile.location || 'Ubicación'}
+              {profile.location?.description || 'Ubicación'}
             </Typography>
             <Place fontSize="inherit" />
           </Stack>
@@ -111,20 +112,15 @@ const FloatingMenuButton = withStyles(IconButton, (theme) => ({
   },
 }));
 
-const UploadImageButton = withStyles(IconButton, (theme) => ({
+const Uploader = withStyles(Box, (theme) => ({
   root: {
+    display: 'flex',
     position: 'absolute',
-    backgroundColor: theme.palette.grey[200],
     right: '0',
     left: '0',
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '120px',
-    height: '120px',
     top: '-80px',
-    '&:hover': {
-      backgroundColor: theme.palette.grey[300],
-    },
   },
 }));
 

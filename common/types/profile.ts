@@ -1,12 +1,15 @@
+import { PlaceType } from './location';
+
 export type IBasicInfo = {
   display_name: string;
   title: string;
-  location: string;
+  location: PlaceType | null;
   birthday: string;
 };
 
 export type INewProfile = IBasicInfo & {
   id?: string;
+  image: string;
   biography: string;
   disciplines: string[];
   keywords: string[];
@@ -23,7 +26,8 @@ export type IMedia = {
 export type IProfileCardInfo = {
   display_name: string;
   title: string;
-  location: string;
+  image: string;
+  location: PlaceType | null;
   calification: number | string;
   contacts: number | string;
 };

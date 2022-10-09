@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Autocomplete, Grid, TextField, Typography } from '@mui/material';
 import { PlaceType } from 'common/types';
 import { loadScript, throttle } from 'common/utils';
@@ -17,6 +17,7 @@ const restrictions = {
 
 type Props = {
   id: string;
+  initialValue: PlaceType | null;
   updateValue: (newValue: PlaceType | null) => void;
   label: string;
   helperText?: string;
@@ -25,21 +26,23 @@ type Props = {
 
 const LocationAutocomplete = ({
   id,
+  initialValue,
   updateValue,
   label,
   error,
   helperText,
 }: Props) => {
-  const [value, setValue] = useState<PlaceType | null>(null);
+  const [value, setValue] = useState<PlaceType | null>(initialValue);
   const [options, setOptions] = useState<readonly PlaceType[]>([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(
+    initialValue ? initialValue.description : '',
+  );
   const loaded = useRef(false);
 
   if (typeof window !== 'undefined' && !loaded.current) {
     if (!document.querySelector('#google-maps')) {
       const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
 
-      console.log(API_KEY);
       loadScript(
         `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`,
         document.querySelector('head'),
@@ -49,17 +52,24 @@ const LocationAutocomplete = ({
 
     loaded.current = true;
   }
+  const fetch = useMemo(
+    () =>
+      throttle(
+        (
+          request: { input: string },
+          callback: (results?: readonly PlaceType[]) => void,
+        ) => {
+          (autocompleteService.current as any).getPlacePredictions(
+            request,
+            callback,
+          );
+        },
+        400,
+      ),
+    [],
+  );
 
   useEffect(() => {
-    const fetch = throttle(
-      (
-        request: { input: string },
-        callback: (results?: readonly PlaceType[]) => void,
-      ) =>
-        (autocompleteService.current as any).getPlacePredictions(request, callback),
-      400,
-    );
-
     let active = true;
 
     if (!autocompleteService.current && (window as any).google) {
@@ -94,7 +104,7 @@ const LocationAutocomplete = ({
     return () => {
       active = false;
     };
-  }, [value, inputValue]);
+  }, [value, inputValue, fetch]);
 
   const handleValueChange = (e: any, newValue: PlaceType | null) => {
     setOptions(newValue ? [newValue, ...options] : options);
@@ -117,6 +127,7 @@ const LocationAutocomplete = ({
         filterSelectedOptions
         filterOptions={(x) => x}
         value={value}
+        inputValue={inputValue}
         options={options}
         getOptionLabel={(option) =>
           typeof option === 'string' ? option : option.description

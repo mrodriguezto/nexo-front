@@ -23,6 +23,10 @@ const basicInfoContent = {
     current_title_popover:
       'Aquí puedes poner tu cargo actual o tu profesión principal',
   },
+  upload_image: {
+    aria: 'Subir imagen de perfil',
+    success: 'Cargado exitosamente',
+  },
   next_step_btn: 'Siguiente',
 };
 

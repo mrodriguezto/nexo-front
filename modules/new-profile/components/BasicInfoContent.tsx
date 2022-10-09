@@ -1,19 +1,18 @@
 import { useEffect } from 'react';
-import { Box, Typography, Grid, TextField, IconButton } from '@mui/material';
-import { AddAPhoto } from '@mui/icons-material';
-import { withStyles } from 'tss-react/mui';
-
-import { basicInfoContent as strings } from '../strings';
+import { Box, Typography, Grid, TextField } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import { Controller, useForm } from 'react-hook-form';
+import dayjs from 'dayjs';
+
+import TipPopover from 'common/components/Popover/TipPopover';
+import { basicInfoContent as strings } from '../strings';
 import { basicInfoResolver } from '../utils';
 import { useAppDispatch, useAppSelector } from 'store';
 import { updateBasicInfo } from '../state';
-import TipPopover from 'common/components/Popover/TipPopover';
-import { DatePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
 import NextStepButton from './NextStepButton';
 import LocationAutocomplete from 'common/components/Autocomplete/LocationAutocomplete';
 import { PlaceType } from 'common/types';
+import ProfileImageUploader from './ProfileImageUploader';
 
 type FormData = {
   display_name: string;
@@ -25,7 +24,7 @@ type FormData = {
 const BasicInfoContent = () => {
   const initialValues = useAppSelector((state) => state.newProfile.profile);
   const { register, formState: {errors, isValid}, watch, control, setValue, getValues} = useForm<FormData>({
-    defaultValues: initialValues,
+    defaultValues: {...initialValues, location: initialValues.location?.description},
     resolver: basicInfoResolver,
     mode: 'onChange',
   }); // prettier-ignore
@@ -33,17 +32,17 @@ const BasicInfoContent = () => {
 
   useEffect(() => {
     const subscription = watch((values) => {
-      dispatch(updateBasicInfo(values));
+      dispatch(updateBasicInfo({ ...values, location: initialValues.location }));
     });
 
     return () => subscription.unsubscribe();
-  }, [dispatch, watch]);
+  }, [dispatch, watch, initialValues]);
 
   const handleLocationUpdate = (location: PlaceType | null) => {
-    const newLocation = !location ? '' : location.description;
+    if (!location) return;
 
-    setValue('location', newLocation, { shouldValidate: true });
-    dispatch(updateBasicInfo({ ...getValues(), location: newLocation }));
+    setValue('location', location.description, { shouldValidate: true });
+    dispatch(updateBasicInfo({ ...getValues(), location: location }));
   };
 
   return (
@@ -55,9 +54,7 @@ const BasicInfoContent = () => {
         <Typography variant="body1">{strings.info}</Typography>
       </Box>
       <Box marginY={4} textAlign="center" display={{ xs: 'block', md: 'none' }}>
-        <UploadImageButton>
-          <AddAPhoto fontSize="large" color="inherit" />
-        </UploadImageButton>
+        <ProfileImageUploader />
       </Box>
 
       <Grid
@@ -96,6 +93,7 @@ const BasicInfoContent = () => {
         </Grid>
         <Grid xs={12} md={6} item>
           <LocationAutocomplete
+            initialValue={initialValues.location}
             id="user-location-autocomplete"
             label={strings.inputs.location_lbl}
             updateValue={handleLocationUpdate}
@@ -143,18 +141,5 @@ const BasicInfoContent = () => {
     </Box>
   );
 };
-
-const UploadImageButton = withStyles(IconButton, (theme) => ({
-  root: {
-    backgroundColor: theme.palette.grey[200],
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    width: '120px',
-    height: '120px',
-    '&:hover': {
-      backgroundColor: theme.palette.grey[300],
-    },
-  },
-}));
 
 export default BasicInfoContent;
