@@ -1,13 +1,12 @@
+import { useEffect, useState } from 'react';
 import { Box, Chip, Stack, Typography } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import { withStyles } from 'tss-react/mui';
 import { topicsContent as strings } from '../strings';
 import TipPopover from 'common/components/Popover/TipPopover';
 import TagsAutoComplete from 'common/components/Autocomplete/TagsAutocomplete';
 import { topics } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'store';
 import { updateTopics } from '../state';
-import { useEffect, useState } from 'react';
 import NextStepButton from './NextStepButton';
 import { MAX_TOPICS, MIN_TAGS } from '../utils';
 
@@ -85,11 +84,5 @@ const TopicsContent = () => {
     </Box>
   );
 };
-
-const PopoverWrapper = withStyles(Box, (theme) => ({
-  root: {
-    backgroundColor: theme.palette.warning.main,
-  },
-}));
 
 export default TopicsContent;

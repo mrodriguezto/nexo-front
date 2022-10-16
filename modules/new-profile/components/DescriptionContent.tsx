@@ -39,8 +39,6 @@ const DescriptionContent = () => {
   }, [dispatch, watch]);
 
   useEffect(() => {
-    console.log({ isValid });
-
     if (isValid) dispatch(updateCanContinue(true));
     else dispatch(updateCanContinue(false));
   }, [isValid, dispatch]);

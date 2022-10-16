@@ -60,7 +60,7 @@ const BasicInfoContent = () => {
       <Grid
         container
         rowSpacing={{
-          xs: 2,
+          xs: 3,
           md: 4,
         }}
         columnSpacing={2}
@@ -79,11 +79,19 @@ const BasicInfoContent = () => {
             label={strings.inputs.current_title_lbl}
             InputProps={{
               endAdornment: (
-                <TipPopover>
-                  <Typography variant="body2">
-                    {strings.inputs.current_title_popover}
-                  </Typography>
-                </TipPopover>
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: -28,
+                    right: 0,
+                  }}
+                >
+                  <TipPopover>
+                    <Typography variant="body2">
+                      {strings.inputs.current_title_popover}
+                    </Typography>
+                  </TipPopover>
+                </Box>
               ),
             }}
             {...register('title')}

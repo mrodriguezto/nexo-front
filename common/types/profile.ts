@@ -18,9 +18,9 @@ export type INewProfile = IBasicInfo & {
 };
 
 export type IMedia = {
-  type: 'video' | 'image';
-  metaType: string;
-  name: string;
+  type: 'video' | 'image' | 'youtube';
+  metaType?: string;
+  name?: string;
   url: string;
 };
 
