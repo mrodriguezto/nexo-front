@@ -1,7 +1,7 @@
 import { AppBar, Box, Container, Toolbar } from '@mui/material';
 import Image from 'next/image';
 
-const AuthNavbar = () => {
+const CleanNavbar = () => {
   return (
     <AppBar
       position="fixed"
@@ -39,4 +39,4 @@ const AuthNavbar = () => {
   );
 };
 
-export default AuthNavbar;
+export default CleanNavbar;
