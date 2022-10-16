@@ -1,16 +1,20 @@
-import { Box, Button, Stack } from '@mui/material';
 import ProfileCard from 'common/components/Card/ProfileCard';
-import { basicInfoSideinfo as strings } from '../strings';
-
-const profile = strings.profile;
+import { useAppSelector } from 'store';
 
 const BasicInfoSideinfo = () => {
+  const profile = useAppSelector((state) => state.newProfile.profile);
+
   return (
-    <Stack height="100%">
-      <ProfileCard profile={profile} />
-      <Box flex={1} />
-      <Button>{strings.btns.next_step}</Button>
-    </Stack>
+    <ProfileCard
+      profile={{
+        image: profile.image,
+        display_name: profile.display_name,
+        calification: 'Calificación',
+        contacts: 0,
+        location: profile.location,
+        title: profile.title,
+      }}
+    />
   );
 };
 

@@ -1,84 +1,63 @@
-import { useState } from 'react';
-import InfoIcon from '@mui/icons-material/Info';
-import {
-  Box,
-  Button,
-  Chip,
-  IconButton,
-  Popover,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { withStyles } from 'tss-react/mui';
+import { Box, Chip, Stack, Typography } from '@mui/material';
 import { keywordsContent as strings } from '../strings';
 import { Add } from '@mui/icons-material';
+import TipPopover from 'common/components/Popover/TipPopover';
+import TagsAutoComplete from 'common/components/Autocomplete/TagsAutocomplete';
+import { keywords } from 'common/constants';
+import { useAppDispatch, useAppSelector } from 'store';
+import { updateKeywords } from '../state';
+import { useEffect, useState } from 'react';
+import NextStepButton from './NextStepButton';
+import { MAX_KEYWORDS, MIN_TAGS } from '../utils';
 
 const KeywordsContent = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const selectedKeywords = useAppSelector(
+    (state) => state.newProfile.profile.keywords,
+  );
+  const dispatch = useAppDispatch();
+  const [isValid, setIsValid] = useState(false);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    if (selectedKeywords.length >= 1) setIsValid(true);
+    else setIsValid(false);
+  }, [selectedKeywords]);
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleUpdate = (values: string[]) => {
+    dispatch(updateKeywords(values));
   };
 
   return (
-    <Box
-      textAlign={{
-        xs: 'center',
-        sm: 'left',
-      }}
-    >
+    <Box>
       <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
         {strings.title}
       </Typography>
       <Box maxWidth={600}>
-        <Box marginY={4}>
+        <Box marginTop={3} marginBottom={1}>
           <Typography variant="body1">{strings.info}</Typography>
         </Box>
-        <Box>
-          <TextField
-            placeholder={strings.placeholder}
-            InputProps={{
-              endAdornment: (
-                <>
-                  <IconButton onClick={handleClick} sx={{ padding: 0 }}>
-                    <InfoIcon color="secondary" />
-                  </IconButton>
-                  <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: 'center',
-                      horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                      vertical: 'center',
-                      horizontal: 'left',
-                    }}
-                    elevation={2}
-                  >
-                    <PopoverWrapper padding={2}>
-                      <Typography variant="h3" marginBottom={2}>
-                        {strings.popover_title}
-                      </Typography>
-                      <Typography maxWidth={300} variant="body2">
-                        {strings.popover_text}
-                      </Typography>
-                    </PopoverWrapper>
-                  </Popover>
-                </>
-              ),
-            }}
-          />
+        <Box maxWidth={520}>
+          <Box position="relative">
+            <Box display="flex" justifyContent="flex-end">
+              <TipPopover>
+                <Typography variant="h3" marginBottom={2}>
+                  {strings.popover_title}
+                </Typography>
+                <Typography maxWidth={300} variant="body2">
+                  {strings.popover_text}
+                </Typography>
+              </TipPopover>
+            </Box>
+            <TagsAutoComplete
+              id="keywords-autocomplete"
+              options={keywords}
+              label={strings.placeholder}
+              initialValues={selectedKeywords}
+              maxTags={MAX_KEYWORDS}
+              minTags={MIN_TAGS}
+              onUpdate={handleUpdate}
+              freeSolo
+            />
+          </Box>
           <Typography display="block" textAlign="right" variant="caption">
             {strings.info_max}
           </Typography>
@@ -90,7 +69,13 @@ const KeywordsContent = () => {
           </Typography>
           <Stack flexDirection="row" gap={1} flexWrap="wrap">
             {strings.suggested_tags.map((tag) => (
-              <Chip key={tag} label={tag} deleteIcon={<Add />} onDelete={() => {}} />
+              <Chip
+                onClick={() => {}}
+                key={tag}
+                label={tag}
+                deleteIcon={<Add />}
+                onDelete={() => {}}
+              />
             ))}
           </Stack>
         </Box>
@@ -98,20 +83,14 @@ const KeywordsContent = () => {
           marginTop={16}
           display={{
             xs: 'block',
-            sm: 'none',
+            md: 'none',
           }}
         >
-          <Button fullWidth>{strings.next_step_btn}</Button>
+          <NextStepButton btnLabel={strings.next_step_btn} isValid={isValid} />
         </Box>
       </Box>
     </Box>
   );
 };
-
-const PopoverWrapper = withStyles(Box, (theme) => ({
-  root: {
-    backgroundColor: theme.palette.warning.main,
-  },
-}));
 
 export default KeywordsContent;

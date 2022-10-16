@@ -3,7 +3,15 @@ import Image from 'next/image';
 
 const AuthNavbar = () => {
   return (
-    <AppBar position="fixed">
+    <AppBar
+      position="fixed"
+      sx={{
+        height: {
+          xs: '60px',
+          md: '88px',
+        },
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar>
           <Box

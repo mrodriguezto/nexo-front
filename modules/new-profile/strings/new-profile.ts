@@ -2,6 +2,8 @@ const newProfilePage = {
   title: 'Crea tu perfil',
   description:
     'Permítenos conocerte a profundidad para ofrecerte información que te interese.',
+  next_btn: 'Siguiente',
+  finish_btn: 'Finalizar',
 };
 
 const beginContent = {
@@ -20,6 +22,10 @@ const basicInfoContent = {
     bday_lbl: 'Fecha de nacimiento**',
     current_title_popover:
       'Aquí puedes poner tu cargo actual o tu profesión principal',
+  },
+  upload_image: {
+    aria: 'Subir imagen de perfil',
+    success: 'Cargado exitosamente',
   },
   next_step_btn: 'Siguiente',
 };
@@ -40,7 +46,7 @@ const basicInfoSideinfo = {
 const disciplinesContent = {
   title: 'Dile al mundo cuáles son tus principales disciplinas artísticas',
   info: 'Estas pueden ser aquellas que más te apasionen, con la que más te identifiques o de las que provenga tu mayor fuente de ingreso.',
-  placeholder: 'Escribe o seleciona tus principales oficios',
+  auto_complete_label: 'Escribe o seleciona tus principales oficios',
   info_max: '3 máx.',
   next_step_btn: 'Siguiente',
 };
@@ -50,7 +56,7 @@ const disciplinesSideinfo = {
 };
 
 const keywordsContent = {
-  title: 'Dile al mundo cuáles son tus principales disciplinas artísticas',
+  title: '¿Qué palabras claves definen tu arte?',
   info: 'Estas palabras pueden ser disciplinas o subdisciplinas artísticas , estilos de danza, instrumentos musicales, etc.',
   placeholder: 'Escribe o seleciona tus palabras clave',
   info_max: '6 máx.',
@@ -84,10 +90,10 @@ const topicsSideinfo = {
 };
 
 const descriptionContent = {
-  title: '¡Ya casi!',
-  title2: 'Ahora cuentale a todos, ¿quién eres?',
+  title: '¡Ya casi terminamos! Cuéntale al mundo quién eres',
   info: 'Cuéntale al mundo quién eres. Recuerda comunicarlo de manera clara y concisa ya que esta información aparecerá al inicio de tu perfil. Ayuda a que otros artistas estén interesades en tu trabajo puedan llevarse la mejor impresión de ti.',
   placeholder: 'Escribe un poco sobre ti',
+  example_description: `Ej: Hola! Me llamo Adriana Brañez, soy Creadora y Productora escénica egresada de la PUPC con [Experiencia] más de 3 años de experiencia en las áreas de producción, dirección y docencia. [Aspiraciones] Busco desarrollar mi línea de trabajo en la docencia y en la gestión cultural. [Pasiones] Me apasionan los proyectos vinculados a la discapacidad y la comunidad LGTBIQ+. [Actualidad] Actualmente me desempeño como productora escénica en Kinesfera danza.`,
   next_step_btn: 'Siguiente',
 };
 
@@ -102,7 +108,16 @@ const descriptionSideinfo = {
 const uploadsContent = {
   title: '¡Por último! Carga las fotos y los vídeos que demuestren tu talento',
   info: 'Puede ser un reel actoral, un video de presentación o de alguna obra en donde hayas participado.',
-  upload_field_lbl: 'Sube fotos y videos',
+  uploads: {
+    input_lbl: 'Sube fotos y videos',
+    type_not_valid: 'El tipo de archivo no es válido',
+    success: 'Cargado exitosamente',
+  },
+  popover: {
+    title: 'Ten en cuenta que:',
+    desc: `Estas imágenes y videos serán lo primero que las personas verán cuando visiten tu perfil pues van a estar en la parte superior de este.
+    ¡No te preocupes! Si estás indecisx con la elección de las imágenes y los videos, recuerda que lo puedes hacer luego.`,
+  },
   do_later_link: 'Lo haré después',
   next_step_btn: 'Siguiente',
 };

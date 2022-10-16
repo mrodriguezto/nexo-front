@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { newPasswordPage } from 'modules/auth/strings';
+import { newPasswordPage } from '@/auth/strings';
+import NextLink from 'next/link';
+import { routes } from 'lib/strings';
 
 const ResetCompletedContent = () => {
   const { resetCompletedContent: strings } = newPasswordPage;
@@ -52,7 +54,11 @@ const ResetCompletedContent = () => {
           }}
           spacing={2}
         >
-          <Button>{strings.access_btn}</Button>
+          <NextLink href={routes.login} passHref>
+            <a>
+              <Button>{strings.access_btn}</Button>
+            </a>
+          </NextLink>
         </Stack>
       </Stack>
     </Box>

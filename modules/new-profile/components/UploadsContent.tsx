@@ -1,96 +1,110 @@
-import { useRef } from 'react';
-import NextLink from 'next/link';
-import {
-  Box,
-  Button,
-  ButtonBase,
-  Link,
-  Paper,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { uploadsContent as strings } from '../strings';
-import { withStyles } from 'tss-react/mui';
-import { AddCircleOutline } from '@mui/icons-material';
+import TipPopover from 'common/components/Popover/TipPopover';
+import ProfileMediaUploader from './ProfileMediaUploader';
+import { useAppSelector } from 'store';
+import { createProfile } from '../services';
 
 const UploadsContent = () => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const canContinue = useAppSelector((state) => state.newProfile.canContinue);
+  const profile = useAppSelector((state) => state.newProfile.profile);
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleFinalize = () => {
+    if (!canContinue) return;
+
+    createProfile(profile)
+      .then(() => {
+        // router.replace('/profile');
+      })
+      .catch(() => {
+        enqueueSnackbar('Algo salió mal', {
+          variant: 'error',
+        });
+      });
+  };
+
+  const handleSkip = () => {
+    // TODO: finalize the creation
+  };
 
   return (
-    <Box
-      textAlign={{
-        xs: 'center',
-        sm: 'left',
-      }}
-    >
-      <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
+    <Box>
+      <Typography
+        variant="h2"
+        component="h1"
+        color="primary"
+        fontWeight={600}
+        maxWidth={700}
+      >
         {strings.title}
       </Typography>
       <Box maxWidth={600}>
         <Box marginY={4}>
           <Typography variant="body1">{strings.info}</Typography>
         </Box>
-
-        <Stack
-          flexDirection={{
-            xs: 'column',
-            md: 'row',
-          }}
-          alignItems="center"
-        >
-          <Uploader onClick={() => fileInputRef.current?.click()}>
-            <AddCircleOutline color="inherit" />
-            <Typography
-              variant="caption"
-              color="primary"
-              fontWeight={500}
-              marginTop={2}
+        <Box position="relative">
+          <Box
+            display={{
+              xs: 'block',
+              md: 'none',
+            }}
+            sx={{
+              position: 'absolute',
+              top: -20,
+              right: 0,
+            }}
+          >
+            <TipPopover
+              anchorOrigin={{
+                horizontal: 'left',
+                vertical: 'center',
+              }}
+              transformOrigin={{
+                horizontal: 'right',
+                vertical: 12,
+              }}
             >
-              {strings.upload_field_lbl}
-            </Typography>
-          </Uploader>
-          <input
-            accept="video/*, image/*"
-            type="file"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-          />
-        </Stack>
+              <Typography
+                maxWidth={300}
+                variant="body2"
+                sx={{ backgroundColor: 'warning' }}
+              >
+                {strings.popover.desc}
+              </Typography>
+            </TipPopover>
+          </Box>
+
+          <ProfileMediaUploader />
+        </Box>
 
         <Box
           marginTop={12}
           display={{
             xs: 'block',
-            sm: 'none',
+            md: 'none',
           }}
         >
-          <Button fullWidth>{strings.next_step_btn}</Button>
+          <Button onClick={handleFinalize} disabled={!canContinue} fullWidth>
+            {strings.next_step_btn}
+          </Button>
         </Box>
 
-        <Box marginTop={4}>
-          <NextLink href="/" passHref>
-            <Link>{strings.do_later_link}</Link>
-          </NextLink>
+        <Box
+          marginTop={2}
+          textAlign={{
+            xs: 'center',
+            md: 'left',
+          }}
+        >
+          <Link onClick={handleSkip}>{strings.do_later_link}</Link>
         </Box>
       </Box>
     </Box>
   );
 };
-
-const Uploader = withStyles(ButtonBase, (theme) => ({
-  root: {
-    backgroundColor: '#8C7CCA24',
-    padding: '3em 4em',
-    color: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
-    borderRadius: 4,
-    borderStyle: 'dashed',
-    borderWidth: 2,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-}));
 
 export default UploadsContent;

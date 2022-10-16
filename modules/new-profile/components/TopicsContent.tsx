@@ -1,83 +1,61 @@
-import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Chip,
-  IconButton,
-  Popover,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { Add, Info } from '@mui/icons-material';
-import { withStyles } from 'tss-react/mui';
+import { useEffect, useState } from 'react';
+import { Box, Chip, Stack, Typography } from '@mui/material';
+import { Add } from '@mui/icons-material';
 import { topicsContent as strings } from '../strings';
+import TipPopover from 'common/components/Popover/TipPopover';
+import TagsAutoComplete from 'common/components/Autocomplete/TagsAutocomplete';
+import { topics } from 'common/constants';
+import { useAppDispatch, useAppSelector } from 'store';
+import { updateTopics } from '../state';
+import NextStepButton from './NextStepButton';
+import { MAX_TOPICS, MIN_TAGS } from '../utils';
 
 const TopicsContent = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const selectedTopics = useAppSelector((state) => state.newProfile.profile.topics);
+  const [isValid, setIsValid] = useState(false);
+  const dispatch = useAppDispatch();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    if (selectedTopics.length >= 1) setIsValid(true);
+    else setIsValid(false);
+  }, [selectedTopics]);
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleUpdate = (values: string[]) => {
+    dispatch(updateTopics(values));
   };
 
   return (
-    <Box
-      textAlign={{
-        xs: 'center',
-        sm: 'left',
-      }}
-    >
+    <Box>
       <Typography variant="h2" component="h1" color="primary" fontWeight={600}>
         {strings.title}
       </Typography>
       <Box maxWidth={600}>
-        <Box marginY={4}>
+        <Box marginTop={3} marginBottom={2}>
           <Typography variant="body1">{strings.info}</Typography>
         </Box>
-        <Box>
-          <TextField
-            placeholder={strings.placeholder}
-            InputProps={{
-              endAdornment: (
-                <>
-                  <IconButton onClick={handleClick} sx={{ padding: 0 }}>
-                    <Info color="secondary" />
-                  </IconButton>
-                  <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: 'center',
-                      horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                      vertical: 'center',
-                      horizontal: 'left',
-                    }}
-                    elevation={2}
-                  >
-                    <PopoverWrapper padding={2}>
-                      <Typography variant="h3" marginBottom={2}>
-                        {strings.popover_title}
-                      </Typography>
-                      <Typography maxWidth={300} variant="body2">
-                        {strings.popover_text}
-                      </Typography>
-                    </PopoverWrapper>
-                  </Popover>
-                </>
-              ),
-            }}
-          />
+        <Box maxWidth={520}>
+          <Box position="relative">
+            <Box display="flex" justifyContent="flex-end">
+              <TipPopover>
+                <Typography variant="h3" marginBottom={2}>
+                  {strings.popover_title}
+                </Typography>
+                <Typography maxWidth={300} variant="body2">
+                  {strings.popover_text}
+                </Typography>
+              </TipPopover>
+            </Box>
+            <TagsAutoComplete
+              id="keywords-autocomplete"
+              options={topics}
+              label={strings.placeholder}
+              initialValues={selectedTopics}
+              maxTags={MAX_TOPICS}
+              minTags={MIN_TAGS}
+              onUpdate={handleUpdate}
+              freeSolo
+            />
+          </Box>
           <Typography display="block" textAlign="right" variant="caption">
             {strings.info_max}
           </Typography>
@@ -97,20 +75,14 @@ const TopicsContent = () => {
           marginTop={16}
           display={{
             xs: 'block',
-            sm: 'none',
+            md: 'none',
           }}
         >
-          <Button fullWidth>{strings.next_step_btn}</Button>
+          <NextStepButton btnLabel={strings.next_step_btn} isValid={isValid} />
         </Box>
       </Box>
     </Box>
   );
 };
-
-const PopoverWrapper = withStyles(Box, (theme) => ({
-  root: {
-    backgroundColor: theme.palette.warning.main,
-  },
-}));
 
 export default TopicsContent;

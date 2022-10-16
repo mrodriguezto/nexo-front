@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 import { Box, Typography } from '@mui/material';
 import BasicLayout from 'common/layouts/BasicLayout';
-import LoginForm from 'modules/auth/components/LoginForm';
-import { loginPage as pageStrings } from 'modules/auth/strings';
+import LoginForm from '@/auth/components/LoginForm';
+import { loginPage as pageStrings } from '@/auth/strings';
 
 const LoginPage: NextPage = () => {
   return (
@@ -30,8 +30,6 @@ const MainContent = () => {
       >
         {pageStrings.content.title}
       </Typography>
-
-      {/* TODO: Implement Google OAuth */}
 
       <LoginForm />
     </>

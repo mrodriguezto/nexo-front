@@ -1,16 +1,20 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-import BasicLayout from 'common/layouts/BasicLayout';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { verifyEmailPage as pageStrings } from 'modules/auth/strings';
+import NextLink from 'next/link';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { withStyles } from 'tss-react/mui';
 
-const VerifyEmailPage: NextPage = () => {
+import BasicLayout from 'common/layouts/BasicLayout';
+import { finishedRegistrationPage as pageStrings } from '@/auth/strings';
+import { routes } from 'lib/strings';
+
+const RegisterFinishedPage: NextPage = () => {
   return (
     <BasicLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}
-      sideinfo={<Decoration />}
+      sideinfo={<Sideinfo />}
     />
   );
 };
@@ -27,9 +31,9 @@ const MainContent = () => {
         sm: 'left',
       }}
     >
-      <Typography variant="h1" color="primary">
+      <Title variant="h1" color="primary">
         {strings.title}
-      </Typography>
+      </Title>
 
       <Box
         display={{
@@ -42,20 +46,14 @@ const MainContent = () => {
         minHeight={200}
       >
         <Image
-          style={{ rotate: '8.72deg' }}
-          src="/images/auth-lock.svg"
+          src="/images/auth-thumbs.svg"
           alt=""
           layout="fill"
           objectFit="contain"
         />
       </Box>
 
-      <Typography>
-        {strings.info1} <strong>{strings.email_verification_btn}</strong>
-        <br />
-        <br />
-        {strings.info2}
-      </Typography>
+      <Typography>{strings.info}</Typography>
       <Box
         display="flex"
         justifyContent={{
@@ -63,18 +61,21 @@ const MainContent = () => {
           sm: 'flex-start',
         }}
       >
-        <Button variant="outlined">{strings.resend_btn}</Button>
+        <NextLink href={routes.newProfile} passHref>
+          <a>
+            <Button>{strings.begin_btn}</Button>
+          </a>
+        </NextLink>
       </Box>
     </Stack>
   );
 };
 
-const Decoration = () => {
+const Sideinfo = () => {
   return (
-    <Box position="relative" width="100%" height="100%" maxHeight={400}>
+    <Box position="relative" width="100%" height="100%" maxHeight={500}>
       <Image
-        style={{ rotate: '8.72deg' }}
-        src="/images/auth-lock.svg"
+        src="/images/auth-thumbs.svg"
         alt=""
         layout="fill"
         objectFit="contain"
@@ -83,4 +84,10 @@ const Decoration = () => {
   );
 };
 
-export default VerifyEmailPage;
+const Title = withStyles(Typography, (theme) => ({
+  root: {
+    color: theme.palette.success.main,
+  },
+}));
+
+export default RegisterFinishedPage;

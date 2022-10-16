@@ -19,7 +19,7 @@ const loginForm = {
     forgot_pass_link: 'Olvidé mi contraseña',
   },
   no_account: {
-    info: 'No tienes una cuenta',
+    info: '¿No tienes una cuenta?',
     link: 'Regístrate',
   },
 };

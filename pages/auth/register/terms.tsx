@@ -3,7 +3,9 @@ import { Box, Button, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
 import BasicLayout from 'common/layouts/BasicLayout';
-import { termsPage as pageStrings } from 'modules/auth/strings';
+import { termsPage as pageStrings } from '@/auth/strings';
+import { useRouter } from 'next/router';
+import { routes } from 'lib/strings';
 
 const TermsPage: NextPage = () => {
   return (
@@ -17,6 +19,7 @@ const TermsPage: NextPage = () => {
 
 const MainContent = () => {
   const { content: strings } = pageStrings;
+  const router = useRouter();
 
   return (
     <Box maxWidth={720} marginX="auto">
@@ -24,6 +27,7 @@ const MainContent = () => {
         sx={{ maxWidth: 300, padding: '0.6em 1.2em' }}
         variant="text"
         startIcon={<ArrowBack />}
+        onClick={() => router.push(routes.register)}
       >
         {strings.go_back_btn}
       </Button>

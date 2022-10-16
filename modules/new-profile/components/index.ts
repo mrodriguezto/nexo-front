@@ -1,0 +1,14 @@
+export { default as BasicInfoContent } from './BasicInfoContent';
+export { default as BasicInfoSideinfo } from './BasicInfoSideinfo';
+export { default as BeginContent } from './BeginContent';
+export { default as BeginSideinfo } from './BeginSideinfo';
+export { default as DescriptionContent } from './DescriptionContent';
+export { default as DescriptionSideinfo } from './DescriptionSideinfo';
+export { default as DisciplinesContent } from './DisciplinesContent';
+export { default as DisciplinesSideinfo } from './DisciplinesSideinfo';
+export { default as KeywordsContent } from './KeywordsContent';
+export { default as KeywordsSideinfo } from './KeywordsSideinfo';
+export { default as TopicsContent } from './TopicsContent';
+export { default as TopicsSideinfo } from './TopicsSideinfo';
+export { default as UploadsContent } from './UploadsContent';
+export { default as UploadsSideinfo } from './UploadsSideinfo';

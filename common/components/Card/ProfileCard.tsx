@@ -1,17 +1,10 @@
-import {
-  Box,
-  Button,
-  ButtonBase,
-  IconButton,
-  Paper,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Box, Button, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { withStyles } from 'tss-react/mui';
 
 import { IProfileCardInfo } from 'common/types';
-import { profileCard as strings } from 'common/strings';
-import { Star, Place, Person, MoreHoriz, AddAPhoto } from '@mui/icons-material';
+import { profileCard as strings } from 'common/constants';
+import { Star, Place, Person, MoreHoriz } from '@mui/icons-material';
+import ProfileImageUploader from '@/new-profile/components/ProfileImageUploader';
 
 type Props = {
   profile: IProfileCardInfo;
@@ -22,14 +15,18 @@ const ProfileCard = ({ profile }: Props) => {
     <Paper
       variant="outlined"
       elevation={0}
-      sx={{ position: 'relative', marginTop: 16 }}
+      sx={{ position: 'relative', width: '100%', maxWidth: 320 }}
     >
-      <UploadImageButton>
-        <AddAPhoto fontSize="large" color="inherit" />
-      </UploadImageButton>
+      <Uploader>
+        <ProfileImageUploader />
+      </Uploader>
+
       <FloatingMenuButton>
         <MoreHoriz color="disabled" fontSize="large" />
       </FloatingMenuButton>
+
+      {/* CARD BODY */}
+
       <Stack
         alignItems="center"
         color="gray"
@@ -38,23 +35,57 @@ const ProfileCard = ({ profile }: Props) => {
         paddingY={2}
         paddingTop={7}
       >
-        <Stack textAlign="center" spacing={1}>
-          <Typography variant="h3">{profile.name}</Typography>
-          <Typography variant="body1">{profile.title}</Typography>
-        </Stack>
-        <Stack textAlign="right">
-          <CalificationText variant="caption">
-            {profile.calification} <Star fontSize="inherit" />
-          </CalificationText>
-          <Typography variant="caption">
-            {profile.location} <Place fontSize="inherit" />
+        <Stack textAlign="center" spacing={1} position="relative" width="100%">
+          <Typography variant="h3" noWrap={true}>
+            {profile.display_name || 'Nombre'}
           </Typography>
+          <Typography variant="body1" noWrap={true}>
+            {profile.title || 'Título'}
+          </Typography>
+        </Stack>
+        <Stack
+          alignItems="center"
+          justifyContent="center"
+          position="relative"
+          width="100%"
+          rowGap={0.5}
+        >
+          <Stack
+            textAlign="center"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="row"
+            width="100%"
+          >
+            <CalificationText variant="caption">
+              {profile.calification || 'Calificación'}
+            </CalificationText>
+
+            <Star fontSize="inherit" color="warning" />
+          </Stack>
+
+          <Stack
+            textAlign="center"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="row"
+            width="100%"
+          >
+            <Typography variant="caption" noWrap={true}>
+              {profile.location?.description || 'Ubicación'}
+            </Typography>
+            <Place fontSize="inherit" />
+          </Stack>
+
           <Typography variant="caption">
             {profile.contacts}{' '}
             {profile.contacts > 0 ? `${strings.contact_lbl}s` : strings.contact_lbl}{' '}
             <Person fontSize="inherit" />
           </Typography>
         </Stack>
+
+        {/* CARD ACTIONS */}
+
         <Stack spacing={1} width="100%">
           <Button size="medium" disabled>
             {strings.btns.add}
@@ -81,20 +112,15 @@ const FloatingMenuButton = withStyles(IconButton, (theme) => ({
   },
 }));
 
-const UploadImageButton = withStyles(IconButton, (theme) => ({
+const Uploader = withStyles(Box, (theme) => ({
   root: {
+    display: 'flex',
     position: 'absolute',
-    backgroundColor: theme.palette.grey[200],
     right: '0',
     left: '0',
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '120px',
-    height: '120px',
-    top: '-25%',
-    '&:hover': {
-      backgroundColor: theme.palette.grey[300],
-    },
+    top: '-80px',
   },
 }));
 
