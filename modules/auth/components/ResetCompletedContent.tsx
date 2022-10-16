@@ -31,7 +31,7 @@ const ResetCompletedContent = () => {
         marginY={4}
       >
         <Image
-          src="/images/auth-thumbs.svg"
+          src="/images/auth/thumbs.svg"
           alt=""
           layout="fill"
           objectFit="contain"

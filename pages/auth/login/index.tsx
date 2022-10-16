@@ -2,13 +2,13 @@ import { NextPage } from 'next';
 import Image from 'next/image';
 
 import { Box, Typography } from '@mui/material';
-import BasicLayout from 'common/layouts/BasicLayout';
+import SimpleLayout from '@/layouts/SimpleLayout';
 import LoginForm from '@/auth/components/LoginForm';
 import { loginPage as pageStrings } from '@/auth/strings';
 
 const LoginPage: NextPage = () => {
   return (
-    <BasicLayout
+    <SimpleLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}
@@ -39,7 +39,7 @@ const MainContent = () => {
 const Sideinfo = () => {
   return (
     <Box position="relative" width="100%" height="100%">
-      <Image src="/images/auth-1.svg" alt="" layout="fill" objectFit="contain" />
+      <Image src="/images/auth/1.svg" alt="" layout="fill" objectFit="contain" />
     </Box>
   );
 };

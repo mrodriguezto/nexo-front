@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 
 import { useState } from 'react';
-import BasicLayout from 'common/layouts/BasicLayout';
+import SimpleLayout from '@/layouts/SimpleLayout';
 import { registerPage } from '@/auth/strings';
 import RegisterContent from '@/auth/components/RegisterContent';
 import RegisterDecoration from '@/auth/components/RegisterDecoration';
@@ -24,7 +24,7 @@ const RegisterPage: NextPage = () => {
   const [currentStep, setCurrentStep] = useState<Step>('confirmEmail');
 
   return (
-    <BasicLayout
+    <SimpleLayout
       pageTitle={registerPage.title}
       pageDescription={registerPage.description}
       mainContent={content[currentStep]}

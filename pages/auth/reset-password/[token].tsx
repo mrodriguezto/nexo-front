@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
 
-import BasicLayout from 'common/layouts/BasicLayout';
+import SimpleLayout from '@/layouts/SimpleLayout';
 import { newPasswordPage as pageStrings } from '@/auth/strings';
 import NewPasswordContent from '@/auth/components/NewPasswordContent';
 import NewPasswordDecoration from '@/auth/components/NewPasswordDecoration';
@@ -25,7 +25,7 @@ const NewPasswordPage: NextPage = () => {
   const [currentStep, setCurrentStep] = useState<Step>('newPassword');
 
   return (
-    <BasicLayout
+    <SimpleLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={content[currentStep]}

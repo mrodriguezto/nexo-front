@@ -32,7 +32,7 @@ const BeginContent = () => {
         marginY={4}
       >
         <Image
-          src="/images/profile-1.svg"
+          src="/images/profile/1.svg"
           alt=""
           layout="fill"
           objectFit="contain"

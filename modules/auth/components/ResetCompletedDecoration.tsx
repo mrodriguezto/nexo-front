@@ -5,7 +5,7 @@ const ResetCompletedDecoration = () => {
   return (
     <Box position="relative" width="100%" height="100%" maxHeight={500}>
       <Image
-        src="/images/auth-thumbs.svg"
+        src="/images/auth/thumbs.svg"
         alt=""
         layout="fill"
         objectFit="contain"

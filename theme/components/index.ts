@@ -9,6 +9,10 @@ export const components: Components = {
         justifyContent: 'center',
       },
     },
+    defaultProps: {
+      elevation: 0,
+      color: 'transparent',
+    },
   },
   MuiTextField: {
     defaultProps: {
@@ -32,6 +36,11 @@ export const components: Components = {
       sizeLarge: {
         padding: '0.6em 4em',
       },
+    },
+  },
+  MuiIcon: {
+    defaultProps: {
+      color: 'inherit',
     },
   },
 };

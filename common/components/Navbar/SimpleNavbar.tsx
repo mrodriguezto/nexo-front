@@ -27,7 +27,7 @@ const CleanNavbar = () => {
             }}
           >
             <Image
-              src="/images/nexo-isotipo.svg"
+              src="/images/logo/nexo-isotipo.svg"
               width="100%"
               height="100%"
               alt="Nexo logo"

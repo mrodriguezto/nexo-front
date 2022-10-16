@@ -71,7 +71,7 @@ const ConfirmEmailContent = () => {
       >
         <Image
           style={{ rotate: '8.72deg' }}
-          src="/images/auth-lock.svg"
+          src="/images/auth/lock.svg"
           alt=""
           layout="fill"
           objectFit="contain"

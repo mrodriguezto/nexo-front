@@ -3,7 +3,7 @@ import { Box, Button, IconButton, Stack, Step } from '@mui/material';
 import { GetServerSideProps } from 'next';
 import { ArrowBack } from '@mui/icons-material';
 
-import BasicLayout from '@/layouts/BasicLayout';
+import SimpleLayout from '@/layouts/SimpleLayout';
 import { newProfilePage as strings } from '@/new-profile/strings';
 import {
   BeginContent,
@@ -127,7 +127,7 @@ const NewProfilePage: NextPage = () => {
   };
 
   return (
-    <BasicLayout
+    <SimpleLayout
       pageTitle={strings.title}
       pageDescription={strings.description}
       mainContent={<MainContentWrapper>{content[currentStep]}</MainContentWrapper>}

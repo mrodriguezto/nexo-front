@@ -71,7 +71,7 @@ const EmailSentContent = () => {
         marginY={4}
       >
         <Image
-          src="/images/auth-cannon.svg"
+          src="/images/auth/cannon.svg"
           alt=""
           layout="fill"
           objectFit="contain"

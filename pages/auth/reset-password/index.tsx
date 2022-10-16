@@ -1,35 +1,39 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 
-import BasicLayout from 'common/layouts/BasicLayout';
+import SimpleLayout from '@/layouts/SimpleLayout';
 import { resetPasswordPage as pageStrings } from '@/auth/strings';
 import EnterEmailContent from '@/auth/components/EnterEmailContent';
 import EnterEmailDecoration from '@/auth/components/EnterEmailDecoration';
 import EmailSentContent from '@/auth/components/EmailSentContent';
 import EmailSentDecoration from '@/auth/components/EmailSentDecoration';
 
-type Step = 'enterEmail' | 'emailSent';
-
-const content: { [key in Step]: React.ReactNode } = {
-  enterEmail: <EnterEmailContent />,
-  emailSent: <EmailSentContent />,
+type Step = {
+  content: React.ReactNode;
+  sideinfo: React.ReactNode;
 };
 
-const decoration: { [key in Step]: React.ReactNode } = {
-  enterEmail: <EnterEmailDecoration />,
-  emailSent: <EmailSentDecoration />,
-};
+const stepsComponent: Step[] = [
+  {
+    content: <EnterEmailContent />,
+    sideinfo: <EnterEmailDecoration />,
+  },
+  {
+    content: <EmailSentContent />,
+    sideinfo: <EmailSentDecoration />,
+  },
+];
 
 const ResetPasswordPage: NextPage = () => {
   // TODO: change local state for global context
-  const [currentStep, setCurrentStep] = useState<Step>('enterEmail');
+  const [currentStep, setCurrentStep] = useState<number>(0);
 
   return (
-    <BasicLayout
+    <SimpleLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
-      mainContent={content[currentStep]}
-      sideinfo={decoration[currentStep]}
+      mainContent={stepsComponent[currentStep].content}
+      sideinfo={stepsComponent[currentStep].sideinfo}
     />
   );
 };

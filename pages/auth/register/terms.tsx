@@ -2,14 +2,14 @@ import type { NextPage } from 'next';
 import { Box, Button, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
-import BasicLayout from 'common/layouts/BasicLayout';
+import SimpleLayout from '@/layouts/SimpleLayout';
 import { termsPage as pageStrings } from '@/auth/strings';
 import { useRouter } from 'next/router';
 import { routes } from 'lib/strings';
 
 const TermsPage: NextPage = () => {
   return (
-    <BasicLayout
+    <SimpleLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}

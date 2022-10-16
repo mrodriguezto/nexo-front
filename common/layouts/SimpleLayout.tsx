@@ -1,6 +1,6 @@
 import { Box, Container, Grid } from '@mui/material';
 import Head from 'next/head';
-import CleanNavbar from 'common/components/Navbar/CleanNavbar';
+import SimpleNavbar from 'common/components/Navbar/SimpleNavbar';
 
 type Props = {
   mainContent: React.ReactNode;
@@ -23,7 +23,7 @@ const BasicLayout = ({
         <title>{title}</title>
         <meta name="description" content={pageDescription} />
       </Head>
-      <CleanNavbar />
+      <SimpleNavbar />
       <Container
         sx={{
           paddingTop: {
