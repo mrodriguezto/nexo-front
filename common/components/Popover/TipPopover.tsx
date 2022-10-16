@@ -5,6 +5,7 @@ import { Close } from '@mui/icons-material';
 import { withStyles } from 'tss-react/mui';
 
 type Props = {
+  id?: string;
   children: React.ReactNode;
   anchorOrigin?: {
     horizontal: number | 'left' | 'right' | 'center';
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const TipPopover = ({
+  id = 'tip-popover',
   children,
   anchorOrigin = { horizontal: 'right', vertical: 'center' },
   transformOrigin = {
@@ -26,29 +28,38 @@ const TipPopover = ({
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
+  const open = Boolean(anchorEl);
+  const ID = open ? id : undefined;
+
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   const handleClose = () => {
     setAnchorEl(null);
   };
   return (
     <>
-      <IconButton onClick={handleOpen} sx={{ padding: 0 }}>
+      <IconButton
+        onClick={handleOpen}
+        onMouseEnter={handleOpen}
+        onMouseLeave={handleClose}
+        sx={{ padding: 0 }}
+      >
         <InfoIcon color="secondary" />
       </IconButton>
       <Popover
-        id={id}
+        id={ID}
+        sx={{
+          pointerEvents: 'none',
+        }}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={anchorOrigin}
         transformOrigin={transformOrigin}
         elevation={2}
+        disableRestoreFocus
       >
         <IconButton
           size="small"
