@@ -31,13 +31,15 @@ export const typography: TypographyOptions = {
   body1: {
     fontFamily: bodyFontFamily,
     fontSize: '1rem',
+    color: 'gray',
     '@media (max-width:600px)': {
       fontSize: '0.8125rem',
     },
   },
   body2: {
     fontFamily: bodyFontFamily,
-    fontSize: '0.8125rem',
+    fontSize: '0.875rem',
+    color: 'gray',
     '@media (max-width:600px)': {
       fontSize: '0.75rem',
     },

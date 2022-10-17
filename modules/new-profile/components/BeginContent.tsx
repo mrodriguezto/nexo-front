@@ -1,4 +1,4 @@
-import { Button, Box, Typography, Grow } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import Image from 'next/image';
 
 import { useAppDispatch } from 'store';

@@ -7,14 +7,31 @@ type Props = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   accept?: string;
   multiple?: boolean;
+  width?: number | string;
+  height?: number | string;
 };
 
-const UploaderButton = ({ children, onChange, accept, multiple = false }: Props) => {
+const UploaderButton = ({
+  children,
+  onChange,
+  accept,
+  multiple = false,
+  height,
+  width,
+}: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
-      <Uploader onClick={() => fileInputRef.current?.click()}>{children}</Uploader>
+      <Uploader
+        sx={{
+          height: height || '150px',
+          width: width || '180px',
+        }}
+        onClick={() => fileInputRef.current?.click()}
+      >
+        {children}
+      </Uploader>
       <input
         accept={accept}
         type="file"
@@ -30,8 +47,7 @@ const UploaderButton = ({ children, onChange, accept, multiple = false }: Props)
 const Uploader = withStyles(ButtonBase, (theme) => ({
   root: {
     backgroundColor: '#8C7CCA24',
-    height: '150px',
-    width: '180px',
+
     color: theme.palette.primary.main,
     borderColor: theme.palette.primary.main,
     borderRadius: 10,

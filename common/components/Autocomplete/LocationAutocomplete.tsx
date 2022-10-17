@@ -17,7 +17,7 @@ const restrictions = {
 
 type Props = {
   id: string;
-  initialValue: PlaceType | null;
+  initialValue?: PlaceType | null;
   updateValue: (newValue: PlaceType | null) => void;
   label: string;
   helperText?: string;
@@ -26,7 +26,7 @@ type Props = {
 
 const LocationAutocomplete = ({
   id,
-  initialValue,
+  initialValue = null,
   updateValue,
   label,
   error,

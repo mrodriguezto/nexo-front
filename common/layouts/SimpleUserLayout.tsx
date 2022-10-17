@@ -55,7 +55,6 @@ const SimpleUserLayout = ({
               item
               xs={12}
               md={8}
-              lg={9}
               component="main"
               minHeight="calc(100vh - 8em)"
               display="flex"
@@ -69,7 +68,6 @@ const SimpleUserLayout = ({
               item
               xs={12}
               md={4}
-              lg={3}
               display={{ xs: 'none', md: 'flex' }}
               minHeight="calc(100vh - 10em)"
               flexDirection="column"
