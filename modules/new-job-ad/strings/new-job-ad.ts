@@ -32,7 +32,16 @@ const adDescriptionField = {
 
 const newAdSideinfo = {
   upload_lbl: 'Si deseas, añade imágenes',
+};
+
+const previewJobAd = {
   preview_btn: 'Vista previa',
+  title: '¡Tu anuncio está listo!',
+  subtitle: 'Así lucirá tu oferta laboral',
+  publish_btn: 'PUBLICAR ANUNCIO',
+  apply_btn: 'Postular',
+  expires_in: 'Vence en',
+  tags_lbl: 'Tags',
 };
 
 export {
@@ -41,4 +50,5 @@ export {
   newAdContent,
   adDescriptionField,
   newAdSideinfo,
+  previewJobAd,
 };

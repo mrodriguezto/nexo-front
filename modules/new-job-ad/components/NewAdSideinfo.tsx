@@ -1,6 +1,7 @@
 import { AddCircleOutline } from '@mui/icons-material';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import UploaderButton from 'common/components/Button/UploaderButton';
+import { PreviewJobAd } from '.';
 import { newAdSideinfo as strings } from '../strings';
 
 const NewAdSideinfo = () => {
@@ -26,7 +27,7 @@ const NewAdSideinfo = () => {
           </>
         </UploaderButton>
         <Box flex={1} />
-        <Button>{strings.preview_btn}</Button>
+        <PreviewJobAd />
       </Stack>
     </Box>
   );

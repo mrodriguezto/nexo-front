@@ -41,11 +41,12 @@ type FormData = {
 };
 
 const AddDetailsDialog = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const initialValues = useAppSelector((state) => state.newJobAd.ad);
 
+  const [isOpen, setIsOpen] = useState(false);
   const [tempData, setTempData] = useState<INewJobAdExtraInfo>(initialValues);
-  const { formState: {errors, isValid}, watch, control, setValue, getValues} = useForm<FormData>({
+
+  const { formState: {errors, isValid}, setValue} = useForm<FormData>({
     defaultValues: {...initialValues, location: initialValues.location?.description},
     mode: 'onChange',
     resolver: extraInfoResolver
