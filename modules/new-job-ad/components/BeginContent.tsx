@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import { Box, Button, Typography } from '@mui/material';
 import { beginContent as strings } from '../strings';
+import { useAppDispatch } from 'store';
+import { updateStep } from '../state';
 
 const BeginContent = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <Box
       textAlign={{
@@ -43,7 +47,7 @@ const BeginContent = () => {
         <Typography variant="body1" marginBottom={6}>
           {strings.info}
         </Typography>
-        <Button onClick={() => {}}>{strings.begin_btn}</Button>
+        <Button onClick={() => dispatch(updateStep(1))}>{strings.begin_btn}</Button>
       </Box>
     </Box>
   );

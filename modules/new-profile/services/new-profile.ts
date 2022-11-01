@@ -3,7 +3,7 @@ import { createFile } from 'common/utils';
 
 export const createProfile = async (profile: INewProfile): Promise<string> => {
   const mediaFilesPromises = profile.media.map((file) =>
-    createFile(file.url, file.name, file.metaType),
+    createFile(file.url, file.name!, file.metaType!),
   );
 
   let profileImgFile: null | File;

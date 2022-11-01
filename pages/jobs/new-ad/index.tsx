@@ -1,3 +1,5 @@
+import { Box, Stack } from '@mui/material';
+
 import SimpleUserLayout from '@/layouts/SimpleUserLayout';
 import {
   BeginContent,
@@ -6,9 +8,8 @@ import {
   NewAdSideinfo,
 } from '@/new-job-ad/components';
 import { newJobAdPage as strings } from '@/new-job-ad/strings';
-import { Box, Stack } from '@mui/material';
 import FadeIn from 'common/components/Transition/FadeIn';
-import { useState } from 'react';
+import { useAppSelector } from 'store';
 
 type Step = {
   content: React.ReactNode;
@@ -27,7 +28,7 @@ const stepsComponent: Step[] = [
 ];
 
 const NewJobAdPage = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const currentStep = useAppSelector((state) => state.newJobAd.step);
 
   const MainContentWrapper = ({ children }: { children: React.ReactNode }) => {
     return (

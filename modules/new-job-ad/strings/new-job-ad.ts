@@ -26,6 +26,8 @@ const adDescriptionField = {
   ad_lbl: 'Háblanos de tu oferta laboral',
   title_lbl: 'Escribe el título',
   description_lbl: 'Escribe la descripción',
+  save_btn: 'Guardar cambios',
+  max_tags: '5 como máximo',
 };
 
 const newAdSideinfo = {

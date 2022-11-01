@@ -1,144 +1,57 @@
-import {
-  Box,
-  Button,
-  ButtonBase,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  IconButton,
-  InputBase,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { useState } from 'react';
-import { adDescriptionField as strings } from '../strings';
+import { useEffect } from 'react';
+import { Box, InputBase, Stack, Typography } from '@mui/material';
+import { useForm } from 'react-hook-form';
 import { withStyles } from 'tss-react/mui';
-import {
-  CalendarMonth,
-  Close,
-  LocationOnOutlined,
-  SellOutlined,
-} from '@mui/icons-material';
-import TagsAutoComplete from 'common/components/Autocomplete/TagsAutocomplete';
-import { topics } from 'common/constants';
-import { disciplines, keywords } from '../../../common/constants/tags';
-import LocationAutocomplete from 'common/components/Autocomplete/LocationAutocomplete';
-import { Controller, useForm } from 'react-hook-form';
-import { DatePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
+import { adDescriptionField as strings } from '../strings';
+import AddDetailsDialog from './AddDetailsDialog';
+import { useAppDispatch } from 'store';
+import { updateDesc, updateIsValid } from '../state';
+import { descResolver } from '../utils';
 
 type FormData = {
-  expiration_date: string;
+  title: string;
+  description: string;
 };
 
 const AdDescriptionField = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const { register, formState: {errors, isValid}, watch, control, setValue, getValues} = useForm<FormData>({
+  const dispatch = useAppDispatch();
+
+  const { register, formState: {errors, isValid}, watch} = useForm<FormData>({
     mode: 'onChange',
+    resolver: descResolver
   }); // prettier-ignore
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+  useEffect(() => {
+    const subscription = watch((values) => {
+      dispatch(updateDesc({ ...values }));
+    });
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+    return () => subscription.unsubscribe();
+  }, [dispatch, watch]);
+
+  useEffect(() => {
+    dispatch(updateIsValid(isValid));
+  }, [dispatch, isValid]);
 
   return (
     <Box>
       <Box paddingLeft={1.5} marginBottom={1}>
         <Typography id="persona-select">{strings.ad_lbl}</Typography>
       </Box>
-      <AdFormControl fullWidth>
+      <ComposedInputBox>
         <Stack>
-          <TitleInput
-            placeholder={strings.title_lbl}
-            onChange={(event) => setTitle(event.target.value)}
-            value={title}
-          />
+          <TitleInput placeholder={strings.title_lbl} {...register('title')} />
 
           <DescriptionInput
             multiline
-            rows={10}
-            onChange={(event) => setDescription(event.target.value)}
+            rows={8}
             placeholder={strings.description_lbl}
-            value={description}
+            {...register('description')}
           />
 
-          <ExtraInputsButton onClick={handleOpen}>
-            <SellOutlined />
-            <LocationOnOutlined />
-            <CalendarMonth />
-          </ExtraInputsButton>
+          <AddDetailsDialog />
         </Stack>
-      </AdFormControl>
-      <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth="sm">
-        <Box paddingX={2} paddingY={4}>
-          <DialogTitle marginBottom={3}>
-            <Typography color="primary" variant="h2" component="h3">
-              Agregar detalles
-            </Typography>
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: 12,
-                right: 12,
-              }}
-              onClick={handleClose}
-            >
-              <Close />
-            </IconButton>
-          </DialogTitle>
-
-          <DialogContent>
-            <Stack gap={4}>
-              <TagsAutoComplete
-                label="Agrega tags"
-                maxTags={5}
-                freeSolo
-                minTags={1}
-                onUpdate={() => {}}
-                options={[...topics, ...disciplines, ...keywords]}
-              />
-              <LocationAutocomplete
-                id="job-ad-location"
-                label="Ubicación"
-                updateValue={() => {}}
-              />
-
-              <Controller
-                control={control}
-                name="expiration_date"
-                render={({ field: { onChange, value }, fieldState: { error } }) => (
-                  <DatePicker
-                    value={value}
-                    onChange={(value) => onChange(dayjs(value).format())}
-                    label="Fecha de vencimiento"
-                    renderInput={(params) => (
-                      <TextField
-                        helperText={error?.message}
-                        id="expiration_date"
-                        name="expiration_date"
-                        {...params}
-                        error={Boolean(error)}
-                      />
-                    )}
-                  />
-                )}
-              />
-            </Stack>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Confirmar</Button>
-          </DialogActions>
-        </Box>
-      </Dialog>
+      </ComposedInputBox>
     </Box>
   );
 };
@@ -164,7 +77,7 @@ const DescriptionInput = withStyles(InputBase, (theme) => ({
   },
 }));
 
-const AdFormControl = withStyles(FormControl, (theme) => ({
+const ComposedInputBox = withStyles(Box, (theme) => ({
   root: {
     border: '1px solid #cfcfcf',
     borderRadius: 5,
@@ -176,15 +89,6 @@ const AdFormControl = withStyles(FormControl, (theme) => ({
       borderColor: theme.palette.primary.main,
       outline: `1px solid ${theme.palette.primary.main}`,
     },
-  },
-}));
-
-const ExtraInputsButton = withStyles(ButtonBase, (theme) => ({
-  root: {
-    borderRadius: 8,
-    padding: '0.5em 0.5em',
-    justifyContent: 'flex-start',
-    color: theme.palette.primary.main,
   },
 }));
 

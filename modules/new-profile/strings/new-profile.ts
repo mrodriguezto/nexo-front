@@ -65,7 +65,12 @@ const keywordsContent = {
   popover_text:
     'Las palabras claves ayudarán a que otros artistas te encuentren más  fácilmente y que podamos sugerirte trabajos idóneos.',
   tags_subtitle: 'Tags sugeridos',
-  suggested_tags: ['Drama', 'Canto lírico'],
+  suggested_tags: [
+    'Iluminador técnico',
+    'Trabajadora social',
+    'Mezzosoprano',
+    'Comediante',
+  ],
 };
 
 const keywordsSideinfo = {

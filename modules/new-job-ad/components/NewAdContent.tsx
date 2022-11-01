@@ -1,8 +1,5 @@
 import {
-  Box,
   FormControl,
-  Input,
-  InputBase,
   InputLabel,
   MenuItem,
   Select,
@@ -10,9 +7,10 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
 import { newAdContent as strings } from '../strings';
 import AdDescriptionField from './AdDescriptionField';
+import { useAppDispatch, useAppSelector } from 'store';
+import { updatePersona } from '../state';
 
 const personas = [
   { lbl: 'Miguel Rodriguez', value: '2js72h3sdj9' },
@@ -20,10 +18,13 @@ const personas = [
 ];
 
 const NewAdContent = () => {
-  const [persona, setPersona] = useState('');
+  const persona = useAppSelector((state) => state.newJobAd.ad.persona);
+  const dispatch = useAppDispatch();
 
   const handleChange = (event: SelectChangeEvent) => {
-    setPersona(event.target.value as string);
+    const newPersona = event.target.value;
+
+    dispatch(updatePersona(newPersona));
   };
 
   return (
