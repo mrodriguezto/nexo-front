@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   Box,
@@ -20,16 +20,20 @@ import {
   SellOutlined,
 } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { withStyles } from 'tss-react/mui';
 import dayjs from 'dayjs';
 
 import LocationAutocomplete from 'common/components/Autocomplete/LocationAutocomplete';
 import TagsAutoComplete from 'common/components/Autocomplete/TagsAutocomplete';
-import { topics, disciplines, keywords } from 'common/constants';
-import { adDescriptionField as strings } from '../strings';
-import { useAppDispatch, useAppSelector } from 'store';
+import TipPopover from 'common/components/Popover/TipPopover';
 import { PlaceType } from 'common/types';
+import { topics, disciplines, keywords } from 'common/constants';
+import { dateFunctions } from 'common/utils';
+import { useToggle } from 'common/hooks';
+import { useAppDispatch, useAppSelector } from 'store';
+
+import { adDescriptionField as strings } from '../strings';
 import { updateExtraInfo } from '../state';
 import { extraInfoResolver } from '../utils';
 import { INewJobAdExtraInfo } from '../types';
@@ -42,9 +46,13 @@ type FormData = {
 
 const AddDetailsDialog = () => {
   const initialValues = useAppSelector((state) => state.newJobAd.ad);
+  const { isActive, toggle } = useToggle(false);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [tempData, setTempData] = useState<INewJobAdExtraInfo>(initialValues);
+  const [tempData, setTempData] = useState<INewJobAdExtraInfo>({
+    tags: initialValues.tags,
+    expiration_date: initialValues.expiration_date,
+    location: initialValues.location,
+  });
 
   const { formState: {errors, isValid}, setValue} = useForm<FormData>({
     defaultValues: {...initialValues, location: initialValues.location?.description},
@@ -53,10 +61,6 @@ const AddDetailsDialog = () => {
   }); // prettier-ignore
 
   const dispatch = useAppDispatch();
-
-  const handleOpen = () => setIsOpen(true);
-
-  const handleClose = () => setIsOpen(false);
 
   const handleTagsUpdate = (values: string[]) => {
     setValue('tags', values);
@@ -81,38 +85,52 @@ const AddDetailsDialog = () => {
 
   const handleSaveExtraInfo = () => {
     dispatch(updateExtraInfo({ ...tempData }));
-    setIsOpen(false);
+    toggle(false);
   };
+
+  const hasExtraInfo = Boolean(
+    initialValues.tags.length > 0 ||
+      initialValues.location ||
+      initialValues.expiration_date.length > 0,
+  );
 
   return (
     <>
-      <ExtraInputsButton onClick={handleOpen}>
-        <Stack spacing={1}>
-          <Stack flexDirection="row" columnGap={1}>
-            <SellOutlined />
-            <Stack columnGap={1} flexDirection="row">
-              {initialValues.tags.map((tag) => (
-                <Chip key={tag} label={tag} />
-              ))}
+      <ExtraInputsButton onClick={() => toggle(true)}>
+        {hasExtraInfo ? (
+          <Stack spacing={1}>
+            <Stack flexDirection="row" columnGap={1}>
+              <SellOutlined />
+              <Stack gap={1} flexDirection="row" flexWrap="wrap">
+                {initialValues.tags.map((tag) => (
+                  <Chip key={tag} label={tag} />
+                ))}
+              </Stack>
+            </Stack>
+            <Stack flexDirection="row" columnGap={1}>
+              <LocationOnOutlined />
+              <Typography variant="body2" color="primary">
+                {initialValues.location?.description}
+              </Typography>
+            </Stack>
+            <Stack flexDirection="row" columnGap={1}>
+              <CalendarMonth />
+              <Typography variant="body2" color="primary">
+                {initialValues.expiration_date
+                  ? dateFunctions.format(initialValues.expiration_date)
+                  : ''}
+              </Typography>
             </Stack>
           </Stack>
-          <Stack flexDirection="row" columnGap={1}>
+        ) : (
+          <Stack flexDirection="row">
+            <SellOutlined />
             <LocationOnOutlined />
-            <Typography variant="body2" color="primary">
-              {initialValues.location?.description}
-            </Typography>
-          </Stack>
-          <Stack flexDirection="row" columnGap={1}>
             <CalendarMonth />
-            <Typography variant="body2" color="primary">
-              {initialValues.expiration_date
-                ? dayjs(initialValues.expiration_date).format('DD/MM/YYYY')
-                : ''}
-            </Typography>
           </Stack>
-        </Stack>
+        )}
       </ExtraInputsButton>
-      <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth="sm">
+      <Dialog open={isActive} onClose={() => toggle(false)} fullWidth maxWidth="md">
         <Box paddingX={2} paddingY={4}>
           <DialogTitle marginBottom={3}>
             <Typography color="primary" variant="h2" component="h3">
@@ -124,7 +142,7 @@ const AddDetailsDialog = () => {
                 top: 12,
                 right: 12,
               }}
-              onClick={handleClose}
+              onClick={() => toggle(false)}
             >
               <Close />
             </IconButton>
@@ -133,6 +151,16 @@ const AddDetailsDialog = () => {
           <DialogContent>
             <Stack gap={4}>
               <Stack position="relative">
+                <Box display="flex" justifyContent="flex-end">
+                  <TipPopover
+                    anchorOrigin={{ vertical: 'center', horizontal: -8 }}
+                    transformOrigin={{ vertical: 24, horizontal: 'right' }}
+                  >
+                    <Typography maxWidth={300} variant="body2" color="black">
+                      {strings.tags_tip}
+                    </Typography>
+                  </TipPopover>
+                </Box>
                 <TagsAutoComplete
                   label="Agrega tags"
                   maxTags={5}
@@ -159,21 +187,32 @@ const AddDetailsDialog = () => {
                 error={Boolean(errors.location)}
                 helperText={errors.location?.message}
               />
-
-              <DatePicker
-                value={tempData.expiration_date}
-                onChange={handleDateUpdate}
-                label="Fecha de vencimiento"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    id="expiration_date"
-                    name="expiration_date"
-                    helperText={errors.expiration_date?.message}
-                    error={Boolean(errors.expiration_date)}
-                  />
-                )}
-              />
+              <Box>
+                <Box display="flex" justifyContent="flex-end">
+                  <TipPopover
+                    anchorOrigin={{ vertical: 'center', horizontal: -8 }}
+                    transformOrigin={{ vertical: 24, horizontal: 'right' }}
+                  >
+                    <Typography maxWidth={300} variant="body2" color="black">
+                      {strings.expiration_tip}
+                    </Typography>
+                  </TipPopover>
+                </Box>
+                <DatePicker
+                  value={tempData.expiration_date}
+                  onChange={handleDateUpdate}
+                  label="Fecha de vencimiento"
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      id="expiration_date"
+                      name="expiration_date"
+                      helperText={errors.expiration_date?.message}
+                      error={Boolean(errors.expiration_date)}
+                    />
+                  )}
+                />
+              </Box>
             </Stack>
           </DialogContent>
           <DialogActions>
@@ -191,6 +230,9 @@ const ExtraInputsButton = withStyles(ButtonBase, (theme) => ({
     padding: '0.5em 0.5em',
     justifyContent: 'flex-start',
     color: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: 'rgba(0,0,0,0.08)',
+    },
   },
 }));
 

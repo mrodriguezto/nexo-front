@@ -26,10 +26,7 @@ const SimpleUserLayout = ({
       <UserNavbar />
       <Container
         sx={{
-          paddingTop: {
-            xs: 5,
-            md: 10,
-          },
+          paddingTop: 5,
         }}
         disableGutters
         fixed
@@ -56,7 +53,7 @@ const SimpleUserLayout = ({
               xs={12}
               md={8}
               component="main"
-              minHeight="calc(100vh - 8em)"
+              minHeight="calc(100vh - 5em)"
               display="flex"
               flexDirection="column"
               justifyContent="center"

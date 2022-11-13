@@ -20,24 +20,15 @@ const UserNavbar = () => {
     <AppBar
       position="fixed"
       sx={{
-        height: {
-          xs: '60px',
-          md: '88px',
-        },
+        height: '55px',
       }}
     >
       <Container maxWidth="xl">
         <Toolbar>
           <Box
             sx={{
-              width: {
-                xs: 40,
-                sm: 50,
-              },
-              height: {
-                xs: 40,
-                sm: 50,
-              },
+              width: 40,
+              height: 40,
             }}
           >
             <Image
@@ -58,7 +49,7 @@ const UserNavbar = () => {
             }}
           >
             <IconButton sx={{ color: '#E7E7E7' }}>
-              <Search fontSize="large" color="inherit" />
+              <Search fontSize="medium" color="inherit" />
             </IconButton>
           </Box>
 

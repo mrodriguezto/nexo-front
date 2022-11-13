@@ -33,6 +33,9 @@ export const components: Components = {
         textTransform: 'none',
         borderRadius: '9999px',
       },
+      sizeMedium: {
+        padding: '0.5em 2em',
+      },
       sizeLarge: {
         padding: '0.6em 4em',
       },

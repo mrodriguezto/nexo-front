@@ -26,9 +26,9 @@ export const extraInfoResolver = yupResolver(
         'La fecha de vencimiento no puede ser anterior a la fecha de publicación',
       )
       .max(
-        new Date(Date.now() + 7.884e9),
+        new Date(Date.now() + 7776000000),
         'No se puede elegir una fecha que exceda los 3 meses',
-      )
+      ) // 90 days max
       .required('Ingresa una fecha'),
   }),
 );

@@ -20,6 +20,9 @@ const newAdContent = {
     persona_select: '¿Como quién crearás este aviso?',
     ad_lbl: 'Háblanos de tu oferta laboral',
   },
+  feedback: {
+    form_not_valid: 'Debe completar los campos requeridos',
+  },
 };
 
 const adDescriptionField = {
@@ -28,6 +31,10 @@ const adDescriptionField = {
   description_lbl: 'Escribe la descripción',
   save_btn: 'Guardar cambios',
   max_tags: '5 como máximo',
+  tags_tip:
+    'Añade tags de oficios, palabra clave o temáticas o cualquier palabra clave que posicione a tu oferta laboral',
+  expiration_tip:
+    'En caso de no colocar la fecha de vencimiento de tu oferta laboral, esta caducará en 2 semanas',
 };
 
 const newAdSideinfo = {
@@ -42,6 +49,9 @@ const previewJobAd = {
   apply_btn: 'Postular',
   expires_in: 'Vence en',
   tags_lbl: 'Tags',
+  feedback: {
+    form_not_valid: 'Debe completar los campos requeridos',
+  },
 };
 
 export {

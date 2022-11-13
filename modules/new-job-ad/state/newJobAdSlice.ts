@@ -5,6 +5,7 @@ export type NewJobAdState = {
   ad: INewJobAd;
   step: number;
   isValid: boolean;
+  isPreviewOpened: boolean;
 };
 
 const initialState: NewJobAdState = {
@@ -18,6 +19,7 @@ const initialState: NewJobAdState = {
   },
   step: 0,
   isValid: false,
+  isPreviewOpened: false,
 };
 
 export const newJobAdSlice = createSlice({
@@ -31,7 +33,7 @@ export const newJobAdSlice = createSlice({
       state.isValid = action.payload;
     },
     updatePersona: (state: NewJobAdState, action: PayloadAction<string>) => {
-      state.ad.persona = action.payload;
+      state.ad = { ...state.ad, persona: action.payload };
     },
     updateDesc: (
       state: NewJobAdState,
@@ -45,6 +47,9 @@ export const newJobAdSlice = createSlice({
     ) => {
       state.ad = { ...state.ad, ...action.payload };
     },
+    updatePreview: (state: NewJobAdState, action: PayloadAction<boolean>) => {
+      state.isPreviewOpened = action.payload;
+    },
   },
 });
 
@@ -54,6 +59,7 @@ export const {
   updatePersona,
   updateDesc,
   updateExtraInfo,
+  updatePreview,
 } = newJobAdSlice.actions;
 
 export const newJobAdReducer = newJobAdSlice.reducer;

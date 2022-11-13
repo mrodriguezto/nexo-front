@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { withStyles } from 'tss-react/mui';
 import { adDescriptionField as strings } from '../strings';
 import AddDetailsDialog from './AddDetailsDialog';
-import { useAppDispatch } from 'store';
+import { useAppDispatch, useAppSelector } from 'store';
 import { updateDesc, updateIsValid } from '../state';
 import { descResolver } from '../utils';
 
@@ -16,7 +16,13 @@ type FormData = {
 const AdDescriptionField = () => {
   const dispatch = useAppDispatch();
 
+  const currentAd = useAppSelector((state) => state.newJobAd.ad);
+
   const { register, formState: {errors, isValid}, watch} = useForm<FormData>({
+    defaultValues: {
+      title: currentAd.title,
+      description: currentAd.description
+    },
     mode: 'onChange',
     resolver: descResolver
   }); // prettier-ignore
@@ -34,9 +40,9 @@ const AdDescriptionField = () => {
   }, [dispatch, isValid]);
 
   return (
-    <Box>
+    <Stack height="100%">
       <Box paddingLeft={1.5} marginBottom={1}>
-        <Typography id="persona-select">{strings.ad_lbl}</Typography>
+        <Typography id="persona-select">{strings.ad_lbl + '*'}</Typography>
       </Box>
       <ComposedInputBox>
         <Stack>
@@ -52,7 +58,15 @@ const AdDescriptionField = () => {
           <AddDetailsDialog />
         </Stack>
       </ComposedInputBox>
-    </Box>
+      <Stack px={1} pt={1}>
+        <Typography color="error" variant="body2">
+          {errors.title?.message}
+        </Typography>
+        <Typography color="error" variant="body2">
+          {errors.description?.message}
+        </Typography>
+      </Stack>
+    </Stack>
   );
 };
 
