@@ -11,4 +11,5 @@ export type IJobAd = {
   imgs_url?: string[];
   tags?: string[];
   isAvailable?: boolean;
+  media: string[];
 };

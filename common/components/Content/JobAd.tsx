@@ -1,13 +1,17 @@
 import { Box, Button, Chip, IconButton, Stack, Typography } from '@mui/material';
-import { IJobAd } from 'common/types';
-import { jobAd as strings } from 'common/constants';
-import { dateFunctions } from 'common/utils';
 import {
   BookmarkBorderOutlined,
   ShareOutlined,
   Star,
   WarningAmberOutlined,
 } from '@mui/icons-material';
+
+import { IJobAd } from 'common/types';
+import { jobAd as strings } from 'common/constants';
+import { dateFunctions } from 'common/utils';
+import ReadMoreText from 'common/components/Text/ReadMoreText';
+import { Carousel } from 'react-responsive-carousel';
+import Image from 'next/image';
 
 type Props = {
   jobAd: IJobAd;
@@ -34,7 +38,7 @@ const JobAd = ({ jobAd }: Props) => {
             <ShareOutlined />
           </IconButton>
         </Box>
-        <Stack flexDirection="row" gap={1}>
+        <Stack flexDirection="row" flexWrap="wrap" gap={1}>
           <Button size="medium" variant="outlined" color="warning">
             {strings.be_first_btn}
           </Button>
@@ -64,16 +68,45 @@ const JobAd = ({ jobAd }: Props) => {
           <Typography variant="body2">• {jobAd.location}</Typography>
         </Stack>
 
-        <Typography variant="caption">{`${
-          strings.expires_in
-        } ${dateFunctions.fromNow(jobAd.expiration_date)}`}</Typography>
+        <Typography variant="caption">{`${strings.expires_in} ${dateFunctions.fromNow(
+          jobAd.expiration_date,
+        )}`}</Typography>
       </Stack>
 
-      <Box mb={3}>
-        <Typography>{jobAd.description}</Typography>
+      <Box mb={4}>
+        <ReadMoreText content={jobAd.description} variant="body2" />
       </Box>
 
-      {/* TODO: Ad images */}
+      {/* Ad images */}
+
+      <Box mb={3}>
+        <Carousel
+          infiniteLoop
+          swipeable
+          emulateTouch
+          showStatus={false}
+          showThumbs={false}
+        >
+          {jobAd.media.map((img, index) => (
+            <Box
+              position="relative"
+              key={img + index}
+              sx={{ borderRadius: 10 }}
+              width="100%"
+              minHeight={200}
+              height="35vh"
+            >
+              <Image
+                style={{ borderRadius: 10 }}
+                src={img}
+                alt=""
+                layout="fill"
+                objectFit="cover"
+              />
+            </Box>
+          ))}
+        </Carousel>
+      </Box>
 
       {/* Ad tags */}
 

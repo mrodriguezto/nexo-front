@@ -2,11 +2,11 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #8d7bdc #e7e7e7;
 }
-body::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 10px;
 }
 
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: #8d7bdc;
   border: 2px solid #fff;
   border-radius: 10px;

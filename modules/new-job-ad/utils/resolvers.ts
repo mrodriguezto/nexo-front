@@ -11,7 +11,7 @@ export const descResolver = yupResolver(
     description: yup
       .string()
       .min(2, 'La descripción es muy corta')
-      .max(800, 'Se ha superado el límite de caracteres'),
+      .max(800, 'Se ha superado el límite de caracteres: 800'),
   }),
 );
 

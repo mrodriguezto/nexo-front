@@ -10,6 +10,7 @@ import 'dayjs/locale/es';
 
 import { store } from 'store';
 import defaultTheme from 'theme';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
