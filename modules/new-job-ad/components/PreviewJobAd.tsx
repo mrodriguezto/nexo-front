@@ -4,38 +4,40 @@ import {
   Button,
   Dialog,
   DialogActions,
-  DialogContent,
   DialogTitle,
   IconButton,
   useMediaQuery,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useSnackbar } from 'notistack';
+
+import JobAd from 'common/components/Content/JobAd';
 import { useAppDispatch, useAppSelector } from 'store';
 import { previewJobAd as strings } from '../strings';
-import JobAd from 'common/components/Content/JobAd';
-import { updatePreview } from '../state';
+import { setDefaultDate, updatePreview } from '../state';
+
+const THIRTY_DAYS_IN_MS = 2592000000;
 
 const PreviewJobAd = () => {
   const dispatch = useAppDispatch();
   const adContent = useAppSelector((state) => state.newJobAd.ad);
   const isOpened = useAppSelector((state) => state.newJobAd.isPreviewOpened);
   const isValid = useAppSelector((state) => state.newJobAd.isValid);
-  const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const canPreview = Boolean(isValid && adContent.persona.length !== 0);
 
   const handleOpenPreview = () => {
-    if (!canPreview) {
-      enqueueSnackbar(strings.feedback.form_not_valid, {
-        variant: 'error',
-      });
-      return;
-    }
+    if (!canPreview) return;
+
+    if (adContent.expiration_date.length <= 0)
+      dispatch(setDefaultDate(new Date(Date.now() + THIRTY_DAYS_IN_MS).toISOString()));
 
     dispatch(updatePreview(true));
+  };
+
+  const handlePublish = () => {
+    // TODO: Verify required fields are filled
   };
 
   return (
@@ -49,8 +51,9 @@ const PreviewJobAd = () => {
         fullWidth
         maxWidth="md"
         fullScreen={fullScreen}
+        scroll="body"
       >
-        <Box padding={2}>
+        <Box padding={2} pt={4}>
           <DialogTitle>
             <IconButton
               sx={{ position: 'absolute', top: 12, right: 12 }}
@@ -77,7 +80,9 @@ const PreviewJobAd = () => {
             />
           </Box>
           <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button size="large">{strings.publish_btn}</Button>
+            <Button onClick={handlePublish} size="large">
+              {strings.publish_btn}
+            </Button>
           </DialogActions>
         </Box>
       </Dialog>

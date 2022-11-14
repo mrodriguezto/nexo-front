@@ -74,7 +74,13 @@ const JobAd = ({ jobAd }: Props) => {
       </Stack>
 
       <Box mb={4}>
-        <ReadMoreText content={jobAd.description} variant="body2" />
+        <ReadMoreText
+          content={jobAd.description}
+          variant="body2"
+          sx={{
+            whiteSpace: 'pre-wrap',
+          }}
+        />
       </Box>
 
       {/* Ad images */}

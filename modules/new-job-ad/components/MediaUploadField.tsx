@@ -22,8 +22,6 @@ const MediaUploadField = () => {
   const reader = new FileReader();
 
   const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('funcion');
-
     if (!e.target.files) return;
 
     const file = e.target.files[0];
@@ -51,8 +49,6 @@ const MediaUploadField = () => {
     }
 
     reader.onloadend = () => {
-      console.log('llamado');
-
       dispatch(updateMediaFiles([...files, String(reader.result)]));
     };
 

@@ -45,6 +45,9 @@ export const newJobAdSlice = createSlice({
     ) => {
       state.ad = { ...state.ad, ...action.payload };
     },
+    setDefaultDate: (state: NewJobAdState, action: PayloadAction<string>) => {
+      state.ad.expiration_date = action.payload;
+    },
     updatePreview: (state: NewJobAdState, action: PayloadAction<boolean>) => {
       state.isPreviewOpened = action.payload;
     },
@@ -62,6 +65,7 @@ export const {
   updateExtraInfo,
   updatePreview,
   updateMediaFiles,
+  setDefaultDate,
 } = newJobAdSlice.actions;
 
 export const newJobAdReducer = newJobAdSlice.reducer;

@@ -14,7 +14,7 @@ const ReadMoreText = ({ content, variant = 'body1', sx }: Props) => {
 
   if (isExpanded) {
     return (
-      <Typography sx={sx} variant={variant}>
+      <Typography sx={sx} variant={variant} display="inline">
         {content}
       </Typography>
     );
