@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { AddCircleOutline, Cancel } from '@mui/icons-material';
 import { Box, IconButton, Stack, Typography } from '@mui/material';
@@ -34,6 +34,8 @@ const ProfileMediaUploader = () => {
 
     if (!file) return;
 
+    if (mediaFiles.length >= 3) return;
+
     // VALIDATIONS
 
     let validation: { isValid: boolean; messages: string[] };
@@ -61,8 +63,6 @@ const ProfileMediaUploader = () => {
 
       return;
     }
-
-    if (mediaFiles.length >= 3) return;
 
     dispatch(
       updateMedia([

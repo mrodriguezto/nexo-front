@@ -14,5 +14,5 @@ export type INewJobAdExtraInfo = {
 export type INewJobAd = INewJobAdDesc &
   INewJobAdExtraInfo & {
     persona: string;
-    // TODO: Job Ad Images
+    media: string[];
   };

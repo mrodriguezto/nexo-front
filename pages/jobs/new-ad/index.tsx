@@ -1,6 +1,6 @@
 import { Box, Stack } from '@mui/material';
 
-import SimpleUserLayout from '@/layouts/SimpleUserLayout';
+import SimpleUserStackedLayout from '@/layouts/SimpleUserStackedLayout';
 import {
   BeginContent,
   BeginSideinfo,
@@ -45,13 +45,11 @@ const NewJobAdPage = () => {
   };
 
   return (
-    <SimpleUserLayout
+    <SimpleUserStackedLayout
       pageTitle={strings.title}
       pageDescription={strings.description}
       mainContent={
-        <MainContentWrapper>
-          {stepsComponent[currentStep].content}
-        </MainContentWrapper>
+        <MainContentWrapper>{stepsComponent[currentStep].content}</MainContentWrapper>
       }
       sideinfo={stepsComponent[currentStep].sideinfo}
     />

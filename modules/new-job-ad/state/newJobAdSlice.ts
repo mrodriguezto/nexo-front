@@ -16,6 +16,7 @@ const initialState: NewJobAdState = {
     location: null,
     expiration_date: '',
     tags: [],
+    media: [],
   },
   step: 0,
   isValid: false,
@@ -33,12 +34,9 @@ export const newJobAdSlice = createSlice({
       state.isValid = action.payload;
     },
     updatePersona: (state: NewJobAdState, action: PayloadAction<string>) => {
-      state.ad = { ...state.ad, persona: action.payload };
+      state.ad.persona = action.payload;
     },
-    updateDesc: (
-      state: NewJobAdState,
-      action: PayloadAction<Partial<INewJobAdDesc>>,
-    ) => {
+    updateDesc: (state: NewJobAdState, action: PayloadAction<Partial<INewJobAdDesc>>) => {
       state.ad = { ...state.ad, ...action.payload };
     },
     updateExtraInfo: (
@@ -50,6 +48,9 @@ export const newJobAdSlice = createSlice({
     updatePreview: (state: NewJobAdState, action: PayloadAction<boolean>) => {
       state.isPreviewOpened = action.payload;
     },
+    updateMediaFiles: (state: NewJobAdState, action: PayloadAction<string[]>) => {
+      state.ad.media = [...action.payload];
+    },
   },
 });
 
@@ -60,6 +61,7 @@ export const {
   updateDesc,
   updateExtraInfo,
   updatePreview,
+  updateMediaFiles,
 } = newJobAdSlice.actions;
 
 export const newJobAdReducer = newJobAdSlice.reducer;

@@ -39,6 +39,12 @@ export const components: Components = {
       sizeLarge: {
         padding: '0.6em 4em',
       },
+      outlined: {
+        borderWidth: 2,
+        '&:hover': {
+          borderWidth: 2,
+        },
+      },
     },
   },
   MuiIcon: {

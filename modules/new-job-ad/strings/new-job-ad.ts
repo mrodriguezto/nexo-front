@@ -39,10 +39,13 @@ const adDescriptionField = {
 
 const newAdSideinfo = {
   upload_lbl: 'Si deseas, añade imágenes',
+  upload_btn: 'Cargar Imágenes',
+  files_empty: 'Carga imágenes que brinden más información',
+  max_files_error: 'Se permiten 3 archivos como máximo',
 };
 
 const previewJobAd = {
-  preview_btn: 'Vista previa',
+  preview_btn: 'VISTA PREVIA',
   title: '¡Tu anuncio está listo!',
   subtitle: 'Así lucirá tu oferta laboral',
   publish_btn: 'PUBLICAR ANUNCIO',
