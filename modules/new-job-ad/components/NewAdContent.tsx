@@ -1,7 +1,6 @@
 import {
-  Box,
-  Button,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -12,8 +11,8 @@ import {
 import { newAdContent as strings } from '../strings';
 import AdDescriptionField from './AdDescriptionField';
 import { useAppDispatch, useAppSelector } from 'store';
-import { updatePersona, updatePreview } from '../state';
-import { useSnackbar } from 'notistack';
+import { updatePersona } from '../state';
+import { useState } from 'react';
 
 const personas = [
   { lbl: 'Miguel Rodriguez', value: 'miguel.rodriguez' },
@@ -22,13 +21,19 @@ const personas = [
 
 const NewAdContent = () => {
   const persona = useAppSelector((state) => state.newJobAd.ad.persona);
-  const isValid = useAppSelector((state) => state.newJobAd.isValid);
   const dispatch = useAppDispatch();
+  const [error, setError] = useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     const newPersona = event.target.value;
-
+    setError(false);
     dispatch(updatePersona(newPersona));
+  };
+
+  const handleBlurSelect = () => {
+    if (persona) return;
+
+    setError(true);
   };
 
   return (
@@ -44,6 +49,7 @@ const NewAdContent = () => {
           value={persona}
           label={strings.inputs.persona_select}
           onChange={handleChange}
+          onBlur={handleBlurSelect}
         >
           {personas.map((persona) => (
             <MenuItem key={persona.value} value={persona.value}>
@@ -51,6 +57,11 @@ const NewAdContent = () => {
             </MenuItem>
           ))}
         </Select>
+        {error && (
+          <FormHelperText error>
+            {strings.feedback.persona_select_not_valid}
+          </FormHelperText>
+        )}
       </FormControl>
       <AdDescriptionField />
     </Stack>

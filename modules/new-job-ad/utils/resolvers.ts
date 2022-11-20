@@ -7,18 +7,20 @@ export const descResolver = yupResolver(
       .string()
       .required('Es necesario que ingreses un título')
       .min(2, 'El título es muy corto')
-      .max(50, 'El título no puede exceder los 50 caracteres'),
+      .max(75, 'El título no puede exceder los 75 caracteres'),
     description: yup
       .string()
       .min(2, 'La descripción es muy corta')
-      .max(800, 'Se ha superado el límite de caracteres: 800'),
+      .max(2500, 'Se ha superado el límite de caracteres: 2500'),
   }),
 );
 
+const THREE_MONTHS_IN_MS = 7776000000;
+
 export const extraInfoResolver = yupResolver(
   yup.object({
-    tags: yup.array().required().of(yup.string()).min(1).max(5),
-    location: yup.string().required('Ingresa tu ubicación').min(2).max(80),
+    tags: yup.array().of(yup.string()).min(0).max(5),
+    location: yup.string().max(80),
     expiration_date: yup
       .date()
       .min(
@@ -26,9 +28,8 @@ export const extraInfoResolver = yupResolver(
         'La fecha de vencimiento no puede ser anterior a la fecha de publicación',
       )
       .max(
-        new Date(Date.now() + 7776000000),
+        new Date(Date.now() + THREE_MONTHS_IN_MS),
         'No se puede elegir una fecha que exceda los 3 meses',
-      ) // 90 days max
-      .required('Ingresa una fecha'),
+      ), // 90 days max,
   }),
 );

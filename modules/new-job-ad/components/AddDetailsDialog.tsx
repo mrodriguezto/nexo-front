@@ -10,18 +10,12 @@ import {
   TextField,
   DialogActions,
   Button,
-  ButtonBase,
-  Chip,
+  useMediaQuery,
 } from '@mui/material';
-import {
-  CalendarMonth,
-  Close,
-  LocationOnOutlined,
-  SellOutlined,
-} from '@mui/icons-material';
+import { Close } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useForm } from 'react-hook-form';
-import { withStyles } from 'tss-react/mui';
+import { useTheme } from '@mui/material/styles';
 import dayjs from 'dayjs';
 
 import LocationAutocomplete from 'common/components/Autocomplete/LocationAutocomplete';
@@ -29,14 +23,13 @@ import TagsAutoComplete from 'common/components/Autocomplete/TagsAutocomplete';
 import TipPopover from 'common/components/Popover/TipPopover';
 import { PlaceType } from 'common/types';
 import { topics, disciplines, keywords } from 'common/constants';
-import { dateFunctions } from 'common/utils';
-import { useToggle } from 'common/hooks';
 import { useAppDispatch, useAppSelector } from 'store';
 
 import { adDescriptionField as strings } from '../strings';
-import { updateExtraInfo } from '../state';
+import { toggleDetailsDialog, updateExtraInfo } from '../state';
 import { extraInfoResolver } from '../utils';
 import { INewJobAdExtraInfo } from '../types';
+import AddDetailsButtons from './AddDetailsButtons';
 
 type FormData = {
   tags: string[];
@@ -46,7 +39,9 @@ type FormData = {
 
 const AddDetailsDialog = () => {
   const initialValues = useAppSelector((state) => state.newJobAd.ad);
-  const { isActive, toggle } = useToggle(false);
+  const isOpened = useAppSelector((state) => state.newJobAd.isDetailsDialogOpened);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [tempData, setTempData] = useState<INewJobAdExtraInfo>({
     tags: initialValues.tags,
@@ -75,6 +70,10 @@ const AddDetailsDialog = () => {
   };
 
   const handleDateUpdate = (value: string | null) => {
+    if (!value) return;
+
+    if (!dayjs(value).isValid()) return;
+
     const formattedDate = dayjs(value).format();
 
     setValue('expiration_date', formattedDate, {
@@ -85,53 +84,30 @@ const AddDetailsDialog = () => {
 
   const handleSaveExtraInfo = () => {
     dispatch(updateExtraInfo({ ...tempData }));
-    toggle(false);
+    dispatch(toggleDetailsDialog(false));
   };
 
-  const hasExtraInfo = Boolean(
-    initialValues.tags.length > 0 ||
-      initialValues.location ||
-      initialValues.expiration_date.length > 0,
-  );
+  const handleCloseDialog = () => {
+    dispatch(toggleDetailsDialog(false));
+  };
 
   return (
     <>
-      <ExtraInputsButton onClick={() => toggle(true)}>
-        {hasExtraInfo ? (
-          <Stack spacing={1}>
-            <Stack flexDirection="row" columnGap={1}>
-              <SellOutlined />
-              <Stack gap={1} flexDirection="row" flexWrap="wrap">
-                {initialValues.tags.map((tag) => (
-                  <Chip key={tag} label={tag} />
-                ))}
-              </Stack>
-            </Stack>
-            <Stack flexDirection="row" columnGap={1}>
-              <LocationOnOutlined />
-              <Typography variant="body2" color="primary">
-                {initialValues.location?.description}
-              </Typography>
-            </Stack>
-            <Stack flexDirection="row" columnGap={1}>
-              <CalendarMonth />
-              <Typography variant="body2" color="primary">
-                {initialValues.expiration_date
-                  ? dateFunctions.format(initialValues.expiration_date)
-                  : ''}
-              </Typography>
-            </Stack>
-          </Stack>
-        ) : (
-          <Stack flexDirection="row">
-            <SellOutlined />
-            <LocationOnOutlined />
-            <CalendarMonth />
-          </Stack>
-        )}
-      </ExtraInputsButton>
-      <Dialog open={isActive} onClose={() => toggle(false)} fullWidth maxWidth="md">
-        <Box paddingX={2} paddingY={4}>
+      <AddDetailsButtons />
+      <Dialog
+        fullScreen={fullScreen}
+        open={isOpened}
+        onClose={handleCloseDialog}
+        fullWidth
+        maxWidth="md"
+      >
+        <Box
+          paddingY={3}
+          paddingX={{
+            xs: 0,
+            sm: 2,
+          }}
+        >
           <DialogTitle marginBottom={3}>
             <Typography color="primary" variant="h2" component="h3">
               Agregar detalles
@@ -142,7 +118,7 @@ const AddDetailsDialog = () => {
                 top: 12,
                 right: 12,
               }}
-              onClick={() => toggle(false)}
+              onClick={handleCloseDialog}
             >
               <Close />
             </IconButton>
@@ -223,17 +199,5 @@ const AddDetailsDialog = () => {
     </>
   );
 };
-
-const ExtraInputsButton = withStyles(ButtonBase, (theme) => ({
-  root: {
-    borderRadius: 8,
-    padding: '0.5em 0.5em',
-    justifyContent: 'flex-start',
-    color: theme.palette.primary.main,
-    '&:hover': {
-      backgroundColor: 'rgba(0,0,0,0.08)',
-    },
-  },
-}));
 
 export default AddDetailsDialog;

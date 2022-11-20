@@ -7,7 +7,6 @@ import AddDetailsDialog from './AddDetailsDialog';
 import { useAppDispatch, useAppSelector } from 'store';
 import { updateDesc, updateIsValid } from '../state';
 import { descResolver } from '../utils';
-import { useSnackbar } from 'notistack';
 
 type FormData = {
   title: string;
@@ -16,7 +15,6 @@ type FormData = {
 
 const AdDescriptionField = () => {
   const dispatch = useAppDispatch();
-  const { enqueueSnackbar } = useSnackbar();
 
   const currentAd = useAppSelector((state) => state.newJobAd.ad);
 

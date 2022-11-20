@@ -6,6 +6,7 @@ export type NewJobAdState = {
   step: number;
   isValid: boolean;
   isPreviewOpened: boolean;
+  isDetailsDialogOpened: boolean;
 };
 
 const initialState: NewJobAdState = {
@@ -21,6 +22,7 @@ const initialState: NewJobAdState = {
   step: 0,
   isValid: false,
   isPreviewOpened: false,
+  isDetailsDialogOpened: false,
 };
 
 export const newJobAdSlice = createSlice({
@@ -48,8 +50,11 @@ export const newJobAdSlice = createSlice({
     setDefaultDate: (state: NewJobAdState, action: PayloadAction<string>) => {
       state.ad.expiration_date = action.payload;
     },
-    updatePreview: (state: NewJobAdState, action: PayloadAction<boolean>) => {
+    togglePrevDialog: (state: NewJobAdState, action: PayloadAction<boolean>) => {
       state.isPreviewOpened = action.payload;
+    },
+    toggleDetailsDialog: (state: NewJobAdState, action: PayloadAction<boolean>) => {
+      state.isDetailsDialogOpened = action.payload;
     },
     updateMediaFiles: (state: NewJobAdState, action: PayloadAction<string[]>) => {
       state.ad.media = [...action.payload];
@@ -63,7 +68,8 @@ export const {
   updatePersona,
   updateDesc,
   updateExtraInfo,
-  updatePreview,
+  togglePrevDialog,
+  toggleDetailsDialog,
   updateMediaFiles,
   setDefaultDate,
 } = newJobAdSlice.actions;

@@ -13,7 +13,7 @@ import { useTheme } from '@mui/material/styles';
 import JobAd from 'common/components/Content/JobAd';
 import { useAppDispatch, useAppSelector } from 'store';
 import { previewJobAd as strings } from '../strings';
-import { setDefaultDate, updatePreview } from '../state';
+import { setDefaultDate, togglePrevDialog } from '../state';
 
 const THIRTY_DAYS_IN_MS = 2592000000;
 
@@ -33,7 +33,7 @@ const PreviewJobAd = () => {
     if (adContent.expiration_date.length <= 0)
       dispatch(setDefaultDate(new Date(Date.now() + THIRTY_DAYS_IN_MS).toISOString()));
 
-    dispatch(updatePreview(true));
+    dispatch(togglePrevDialog(true));
   };
 
   const handlePublish = () => {
@@ -47,7 +47,7 @@ const PreviewJobAd = () => {
       </Button>
       <Dialog
         open={isOpened}
-        onClose={() => dispatch(updatePreview(false))}
+        onClose={() => dispatch(togglePrevDialog(false))}
         fullWidth
         maxWidth="md"
         fullScreen={fullScreen}
@@ -57,7 +57,7 @@ const PreviewJobAd = () => {
           <DialogTitle>
             <IconButton
               sx={{ position: 'absolute', top: 12, right: 12 }}
-              onClick={() => dispatch(updatePreview(false))}
+              onClick={() => dispatch(togglePrevDialog(false))}
               size="medium"
             >
               <Close color="primary" fontSize="medium" />

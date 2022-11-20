@@ -21,6 +21,7 @@ const newAdContent = {
     ad_lbl: 'Háblanos de tu oferta laboral',
   },
   feedback: {
+    persona_select_not_valid: 'Debe seleccionar una opción',
     form_not_valid: 'Debe completar los campos requeridos',
   },
 };
