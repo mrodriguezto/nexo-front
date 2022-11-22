@@ -1,5 +1,11 @@
 import { Components } from '@mui/material';
 
+declare module '@mui/material' {
+  interface ButtonPropsColorOverrides {
+    light: true;
+  }
+}
+
 export const components: Components = {
   MuiAppBar: {
     styleOverrides: {
@@ -32,6 +38,9 @@ export const components: Components = {
         fontWeight: 600,
         textTransform: 'none',
         borderRadius: '9999px',
+      },
+      sizeSmall: {
+        padding: '0.3em 1.8em',
       },
       sizeMedium: {
         padding: '0.5em 2em',

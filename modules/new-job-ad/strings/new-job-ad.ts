@@ -41,7 +41,8 @@ const adDescriptionField = {
 const newAdSideinfo = {
   upload_lbl: 'Si deseas, añade imágenes',
   upload_btn: 'Cargar Imágenes',
-  files_empty: 'Carga imágenes que brinden más información',
+  add_photos: 'Agrega fotos para tu oferta laboral',
+  add_more_photos: 'Agregar más fotos',
   max_files_error: 'Se permiten 3 archivos como máximo',
 };
 

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import Image from 'next/image';
-import { Cancel, CancelOutlined } from '@mui/icons-material';
+import { Add, AddAPhoto, Cancel, CancelOutlined } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import { withStyles } from 'tss-react/mui';
 import { useSnackbar } from 'notistack';
@@ -19,7 +19,6 @@ const MediaUploadField = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
-  const reader = new FileReader();
 
   const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -48,6 +47,8 @@ const MediaUploadField = () => {
       return;
     }
 
+    const reader = new FileReader();
+
     reader.onloadend = () => {
       dispatch(updateMediaFiles([...files, String(reader.result)]));
     };
@@ -65,46 +66,65 @@ const MediaUploadField = () => {
     dispatch(updateMediaFiles(newFiles));
   };
 
-  const MediaWrapper = ({
-    children,
-    index,
-  }: {
-    children: React.ReactNode;
-    index: number;
-  }) => {
+  const ImagesContainer = ({ children }: { children: React.ReactNode }) => {
     return (
-      <Box position="relative">
-        <RemoveButton size="small" onClick={() => handleRemoveFile(index)}>
-          <CancelOutlined color="primary" fontSize="inherit" />
-        </RemoveButton>
-        {children}
+      <Box position="relative" height="100%">
+        <Button
+          sx={{ position: 'absolute', zIndex: 10, top: 8, left: 8 }}
+          color="light"
+          size="small"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <Add fontSize="small" />
+          {strings.add_more_photos}
+        </Button>
+        <Box height="100%">{children}</Box>
       </Box>
+    );
+  };
+
+  const AddImagesButton = () => {
+    return (
+      <Stack alignItems="center" justifyContent="center" height="100%">
+        <IconButton
+          sx={{
+            backgroundColor: 'white',
+          }}
+          size="large"
+          onClick={() => fileInputRef.current?.click()}
+          color="secondary"
+        >
+          <AddAPhoto />
+        </IconButton>
+        <Typography
+          mt={1}
+          color="black"
+          variant="body2"
+          maxWidth={200}
+          textAlign="center"
+        >
+          {strings.add_photos}
+        </Typography>
+      </Stack>
     );
   };
 
   return (
     <FieldContainer>
-      <Stack minHeight={200} flexDirection="row" gap={2} flexWrap="wrap" px={1} py={2}>
-        {files.length <= 0 ? (
-          <Typography textAlign="center" variant="body2">
-            {strings.files_empty}
-          </Typography>
-        ) : (
-          files.map((file, index) => (
-            <MediaWrapper index={index} key={file + index}>
-              <Image src={file} alt="" width={100} height={100} objectFit="cover" />
-            </MediaWrapper>
-          ))
-        )}
-      </Stack>
-      <Button
-        onClick={() => fileInputRef.current?.click()}
-        size="medium"
-        fullWidth
-        variant="outlined"
-      >
-        {strings.upload_btn}
-      </Button>
+      {files.length <= 0 ? (
+        <AddImagesButton />
+      ) : (
+        <ImagesContainer>
+          {files.map((file, index) => (
+            <Box key={file + index} height="100%" position="relative">
+              <RemoveButton size="small" onClick={() => handleRemoveFile(index)}>
+                <CancelOutlined color="primary" fontSize="inherit" />
+              </RemoveButton>
+              <Image src={file} alt="" layout="fill" objectFit="cover" />
+            </Box>
+          ))}
+        </ImagesContainer>
+      )}
 
       <input
         accept={imgTypes.join(',')}
@@ -121,20 +141,22 @@ const MediaUploadField = () => {
 const FieldContainer = withStyles(Box, (theme) => ({
   root: {
     width: '100%',
-    borderWidth: 2,
+    minHeight: 280,
+    borderWidth: 1,
     borderColor: theme.palette.primary.main,
     borderStyle: 'solid',
     borderRadius: 10,
-    padding: '1em',
     marginBottom: '2em',
+    backgroundColor: '#f3f3f3',
+    overflow: 'auto',
   },
 }));
 
 const RemoveButton = withStyles(IconButton, (theme) => ({
   root: {
     position: 'absolute',
-    top: -14,
-    right: -14,
+    top: 8,
+    right: 8,
     zIndex: 99,
     padding: 0,
     fontSize: '26px',
