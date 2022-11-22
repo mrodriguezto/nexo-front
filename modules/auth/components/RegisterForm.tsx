@@ -1,15 +1,16 @@
 import NextLink from 'next/link';
 import { Box, Grid, IconButton, Link, TextField, Typography } from '@mui/material';
-import { routes } from 'lib/strings';
-import { useForm } from 'react-hook-form';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useForm } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
 
+import { routes } from 'lib/strings';
 import { useToggle } from 'common/hooks';
 import LoadingButton from 'common/components/Button/LoadingButton';
 import { registerForm as strings } from '../strings';
 import { registerResolver } from '../utils';
 import { useAppDispatch, useAppSelector } from 'store';
-import { sendRegisterCode } from '../state';
+import { sendRegisterCode, updateRegisterData } from '../state';
 import { IRegisterData } from '../types';
 
 const RegisterForm = () => {
@@ -23,12 +24,17 @@ const RegisterForm = () => {
   const isSending = useAppSelector((state) => state.register.isSending);
   const dispatch = useAppDispatch();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const onLoginUser = async (data: IRegisterData) => {
     try {
-      const obj = await dispatch(sendRegisterCode(data)).unwrap();
-      console.log({ obj });
+      dispatch(updateRegisterData(data));
+      await dispatch(sendRegisterCode()).unwrap();
     } catch (error) {
-      console.log('Alto error');
+      enqueueSnackbar(strings.snack.error_on_submit, {
+        variant: 'error',
+        autoHideDuration: 2000,
+      });
     }
   };
 

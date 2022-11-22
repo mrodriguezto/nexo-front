@@ -5,17 +5,18 @@ const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-type SendCodeReturnType = { code: string; data: IRegisterData };
+type SendCodeReturnType = { code: string };
 
-export const sendRegisterCode = createAsyncThunk<SendCodeReturnType, IRegisterData>(
+export const sendRegisterCode = createAsyncThunk<SendCodeReturnType>(
   'register/send-code',
-  async (data: IRegisterData) => {
-    // TODO: mutation to send the code to the user email
+  async () => {
     await sleep(2000);
 
+    // TODO: mutation to send the code to the user email
+    const code = '123456';
+
     return {
-      data,
-      code: '123456',
+      code,
     };
   },
 );
@@ -41,6 +42,9 @@ export const registerSlice = createSlice({
     updateStep: (state: RegisterState, action: PayloadAction<number>) => {
       state.step = action.payload;
     },
+    updateRegisterData: (state: RegisterState, action: PayloadAction<IRegisterData>) => {
+      state.data = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,7 +56,6 @@ export const registerSlice = createSlice({
         (state: RegisterState, action: PayloadAction<SendCodeReturnType>) => {
           return {
             ...state,
-            data: action.payload.data,
             code: action.payload.code,
             isSending: false,
             step: 1,
@@ -65,6 +68,6 @@ export const registerSlice = createSlice({
   },
 });
 
-export const { updateStep } = registerSlice.actions;
+export const { updateStep, updateRegisterData } = registerSlice.actions;
 
 export const registerReducer = registerSlice.reducer;
