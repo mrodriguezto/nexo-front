@@ -1,34 +1,38 @@
 import type { NextPage } from 'next';
 
-import { useState } from 'react';
 import SimpleLayout from '@/layouts/SimpleLayout';
 import { registerPage } from '@/auth/strings';
 import RegisterContent from '@/auth/components/RegisterContent';
 import RegisterDecoration from '@/auth/components/RegisterDecoration';
 import ConfirmEmailContent from '@/auth/components/ConfirmEmailContent';
 import ConfirmEmailDecoration from '@/auth/components/ConfirmEmailDecoration';
+import { useAppSelector } from 'store';
 
-type Step = 'register' | 'confirmEmail';
-
-const content: { [key in Step]: React.ReactNode } = {
-  register: <RegisterContent />,
-  confirmEmail: <ConfirmEmailContent />,
+type Step = {
+  content: React.ReactNode;
+  sideinfo: React.ReactNode;
 };
 
-const sideinfo: { [key in Step]: React.ReactNode } = {
-  register: <RegisterDecoration />,
-  confirmEmail: <ConfirmEmailDecoration />,
-};
+const stepsComponent: Step[] = [
+  {
+    content: <RegisterContent />,
+    sideinfo: <RegisterDecoration />,
+  },
+  {
+    content: <ConfirmEmailContent />,
+    sideinfo: <ConfirmEmailDecoration />,
+  },
+];
 
 const RegisterPage: NextPage = () => {
-  const [currentStep, setCurrentStep] = useState<Step>('confirmEmail');
+  const currentStep = useAppSelector((state) => state.register.step);
 
   return (
     <SimpleLayout
       pageTitle={registerPage.title}
       pageDescription={registerPage.description}
-      mainContent={content[currentStep]}
-      sideinfo={sideinfo[currentStep]}
+      mainContent={stepsComponent[currentStep].content}
+      sideinfo={stepsComponent[currentStep].sideinfo}
     />
   );
 };
