@@ -7,8 +7,8 @@ const CleanNavbar = () => {
       position="fixed"
       sx={{
         height: {
-          xs: '60px',
-          md: '88px',
+          xs: '55px',
+          md: '70px',
         },
       }}
     >

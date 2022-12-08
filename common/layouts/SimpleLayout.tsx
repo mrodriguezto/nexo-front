@@ -9,12 +9,7 @@ type Props = {
   pageDescription: string;
 };
 
-const BasicLayout = ({
-  mainContent,
-  sideinfo,
-  pageTitle,
-  pageDescription,
-}: Props) => {
+const SimpleLayout = ({ mainContent, sideinfo, pageTitle, pageDescription }: Props) => {
   const title = `${pageTitle} | Nexo`;
 
   return (
@@ -42,7 +37,10 @@ const BasicLayout = ({
               md: 4,
               lg: 0,
             }}
-            paddingY={0}
+            paddingTop={{
+              xs: 4,
+              md: 1,
+            }}
             paddingX={{
               xs: 3,
               sm: 2,
@@ -95,4 +93,4 @@ const BasicLayout = ({
   );
 };
 
-export default BasicLayout;
+export default SimpleLayout;
