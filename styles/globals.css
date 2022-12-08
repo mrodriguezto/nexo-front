@@ -20,3 +20,11 @@ input::-ms-clear {
 a {
   text-decoration: none;
 }
+
+.carousel-full-height {
+  height: 100%;
+}
+
+.carousel-full-height :is(.carousel-slider, .slider-wrapper, .slider) {
+  height: 100%;
+}
