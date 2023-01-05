@@ -1,9 +1,10 @@
 import { useRef } from 'react';
 import Image from 'next/image';
-import { Add, AddAPhoto, Cancel, CancelOutlined } from '@mui/icons-material';
+import { Add, AddAPhoto, Cancel, CancelOutlined, Close } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
 import { withStyles } from 'tss-react/mui';
 import { useSnackbar } from 'notistack';
+import { Carousel } from 'react-responsive-carousel';
 
 import { imgTypes, IMG_MAX_SIZE } from 'common/constants';
 import { isFileValid } from 'common/utils';
@@ -66,7 +67,7 @@ const MediaUploadField = () => {
     dispatch(updateMediaFiles(newFiles));
   };
 
-  const ImagesContainer = ({ children }: { children: React.ReactNode }) => {
+  const ImagesContainer = ({ children }: { children: any }) => {
     return (
       <Box position="relative" height="100%">
         <Button
@@ -78,7 +79,21 @@ const MediaUploadField = () => {
           <Add fontSize="small" />
           {strings.add_more_photos}
         </Button>
-        <Box height="100%">{children}</Box>
+        <Box height="100%">
+          <Carousel
+            swipeable
+            emulateTouch
+            autoPlay
+            showStatus={false}
+            showThumbs={false}
+            showArrows={false}
+            className="carousel-full-height"
+            centerMode
+            centerSlidePercentage={96}
+          >
+            {children}
+          </Carousel>
+        </Box>
       </Box>
     );
   };
@@ -118,7 +133,7 @@ const MediaUploadField = () => {
           {files.map((file, index) => (
             <Box key={file + index} height="100%" position="relative">
               <RemoveButton size="small" onClick={() => handleRemoveFile(index)}>
-                <CancelOutlined color="primary" fontSize="inherit" />
+                <Close color="primary" fontSize="inherit" />
               </RemoveButton>
               <Image src={file} alt="" layout="fill" objectFit="cover" />
             </Box>
@@ -158,8 +173,7 @@ const RemoveButton = withStyles(IconButton, (theme) => ({
     top: 8,
     right: 8,
     zIndex: 99,
-    padding: 0,
-    fontSize: '26px',
+    fontSize: '18px',
     backgroundColor: 'white',
     '&:hover': {
       backgroundColor: '#eee',
