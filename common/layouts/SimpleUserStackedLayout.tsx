@@ -1,6 +1,6 @@
-import { Box, Container, Grid } from '@mui/material';
 import Head from 'next/head';
-import AuthNavbar from 'common/components/Navbar/AuthNavbar';
+import { Box, Container, Grid } from '@mui/material';
+import UserNavbar from 'common/components/Navbar/UserNavbar';
 
 type Props = {
   mainContent: React.ReactNode;
@@ -9,7 +9,7 @@ type Props = {
   pageDescription: string;
 };
 
-const BasicLayout = ({
+const SimpleUserStackedLayout = ({
   mainContent,
   sideinfo,
   pageTitle,
@@ -23,13 +23,10 @@ const BasicLayout = ({
         <title>{title}</title>
         <meta name="description" content={pageDescription} />
       </Head>
-      <AuthNavbar />
+      <UserNavbar />
       <Container
         sx={{
-          paddingTop: {
-            xs: 5,
-            md: 10,
-          },
+          paddingTop: 5,
         }}
         disableGutters
         fixed
@@ -55,9 +52,11 @@ const BasicLayout = ({
               item
               xs={12}
               md={8}
-              lg={9}
               component="main"
-              minHeight="calc(100vh - 8em)"
+              minHeight={{
+                xs: 'auto',
+                md: 'calc(100vh - 5em)',
+              }}
               display="flex"
               flexDirection="column"
               justifyContent="center"
@@ -65,13 +64,18 @@ const BasicLayout = ({
               {mainContent}
             </Grid>
             <Grid
-              paddingLeft={2}
+              paddingLeft={{
+                xs: 0,
+                md: 2,
+              }}
               item
               xs={12}
               md={4}
-              lg={3}
-              display={{ xs: 'none', md: 'flex' }}
-              minHeight="calc(100vh - 10em)"
+              display="flex"
+              minHeight={{
+                xs: 'auto',
+                md: 'calc(100vh - 10em)',
+              }}
               flexDirection="column"
               justifyContent="center"
             >
@@ -95,4 +99,4 @@ const BasicLayout = ({
   );
 };
 
-export default BasicLayout;
+export default SimpleUserStackedLayout;

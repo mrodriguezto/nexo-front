@@ -1,4 +1,4 @@
-import { Button, Box, Typography, Grow } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import Image from 'next/image';
 
 import { useAppDispatch } from 'store';
@@ -32,7 +32,7 @@ const BeginContent = () => {
         marginY={4}
       >
         <Image
-          src="/images/profile-1.svg"
+          src="/images/profile/1.svg"
           alt=""
           layout="fill"
           objectFit="contain"

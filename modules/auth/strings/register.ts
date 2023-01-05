@@ -25,6 +25,9 @@ const registerForm = {
     info: '¿Ya tienes una cuenta?',
     link: 'Iniciar Sesión',
   },
+  snack: {
+    error_on_submit: 'Ocurrió un error al ingresar tus datos al sistema',
+  },
 };
 
 const finishedRegistrationPage = {
@@ -44,14 +47,17 @@ const verifyEmailPage = {
 
 const verifyEmailContent = {
   title: 'Ya casi terminamos, verifica tu cuenta',
-  info1:
-    'Hemos enviado un mensaje de confirmación a tu correo, revisa tu bandeja, y haz click en',
-  info2: 'Si no recibiste el correo, da click en reenviar',
-  email_verification_btn: '"CONFIRMAR"',
+  info1: 'Hemos enviado un código de verificación a tu correo. Revisa tu bandeja.',
+  info2: 'Si no recibiste el correo, da click en reenviar.',
+  verify_btn: 'VERIFICAR',
   resend_btn: 'Reenviar',
   feedback: {
     success: 'Correo enviado',
     error: 'No se logró enviar el correo',
+    invalid_code: 'Código inválido',
+  },
+  code_input: {
+    lbl: 'Ingresa tu código',
   },
 };
 

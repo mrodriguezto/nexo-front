@@ -1,15 +1,16 @@
 html {
   scrollbar-width: thin;
-  scrollbar-color: #8d7bdc #e7e7e7;
+  scrollbar-color: #8d7bdc #fff;
 }
-body::-webkit-scrollbar {
-  width: 10px;
+::-webkit-scrollbar {
+  width: 16px;
 }
 
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: #8d7bdc;
-  border: 2px solid #fff;
+  border: 5px solid rgba(0, 0, 0, 0);
   border-radius: 10px;
+  background-clip: padding-box;
 }
 input::-ms-reveal,
 input::-ms-clear {
@@ -18,4 +19,12 @@ input::-ms-clear {
 
 a {
   text-decoration: none;
+}
+
+.carousel-full-height {
+  height: 100%;
+}
+
+.carousel-full-height :is(.carousel-slider, .slider-wrapper, .slider) {
+  height: 100%;
 }

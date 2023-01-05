@@ -63,7 +63,14 @@ const TipPopover = ({
       >
         <IconButton
           size="small"
-          sx={{ position: 'absolute', right: 0 }}
+          sx={{
+            position: 'absolute',
+            right: 0,
+            display: {
+              xs: 'block',
+              md: 'none',
+            },
+          }}
           onClick={handleClose}
           aria-label="Cerrar tip"
         >

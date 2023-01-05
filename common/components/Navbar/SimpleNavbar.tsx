@@ -1,14 +1,14 @@
 import { AppBar, Box, Container, Toolbar } from '@mui/material';
 import Image from 'next/image';
 
-const AuthNavbar = () => {
+const CleanNavbar = () => {
   return (
     <AppBar
       position="fixed"
       sx={{
         height: {
-          xs: '60px',
-          md: '88px',
+          xs: '55px',
+          md: '70px',
         },
       }}
     >
@@ -27,7 +27,7 @@ const AuthNavbar = () => {
             }}
           >
             <Image
-              src="/images/nexo-isotipo.svg"
+              src="/images/logo/nexo-isotipo.svg"
               width="100%"
               height="100%"
               alt="Nexo logo"
@@ -39,4 +39,4 @@ const AuthNavbar = () => {
   );
 };
 
-export default AuthNavbar;
+export default CleanNavbar;

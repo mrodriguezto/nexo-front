@@ -1,5 +1,11 @@
 import { Components } from '@mui/material';
 
+declare module '@mui/material' {
+  interface ButtonPropsColorOverrides {
+    light: true;
+  }
+}
+
 export const components: Components = {
   MuiAppBar: {
     styleOverrides: {
@@ -8,6 +14,10 @@ export const components: Components = {
         boxShadow: '0px 4px 4px rgba(140, 124, 202, 0.1)',
         justifyContent: 'center',
       },
+    },
+    defaultProps: {
+      elevation: 0,
+      color: 'transparent',
     },
   },
   MuiTextField: {
@@ -29,9 +39,26 @@ export const components: Components = {
         textTransform: 'none',
         borderRadius: '9999px',
       },
+      sizeSmall: {
+        padding: '0.3em 1.8em',
+      },
+      sizeMedium: {
+        padding: '0.5em 2em',
+      },
       sizeLarge: {
         padding: '0.6em 4em',
       },
+      outlined: {
+        borderWidth: 2,
+        '&:hover': {
+          borderWidth: 2,
+        },
+      },
+    },
+  },
+  MuiIcon: {
+    defaultProps: {
+      color: 'inherit',
     },
   },
 };

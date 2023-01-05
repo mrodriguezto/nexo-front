@@ -4,13 +4,13 @@ import NextLink from 'next/link';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { withStyles } from 'tss-react/mui';
 
-import BasicLayout from 'common/layouts/BasicLayout';
+import SimpleLayout from '@/layouts/SimpleLayout';
 import { finishedRegistrationPage as pageStrings } from '@/auth/strings';
 import { routes } from 'lib/strings';
 
 const RegisterFinishedPage: NextPage = () => {
   return (
-    <BasicLayout
+    <SimpleLayout
       pageTitle={pageStrings.title}
       pageDescription={pageStrings.description}
       mainContent={<MainContent />}
@@ -46,7 +46,7 @@ const MainContent = () => {
         minHeight={200}
       >
         <Image
-          src="/images/auth-thumbs.svg"
+          src="/images/auth/thumbs.svg"
           alt=""
           layout="fill"
           objectFit="contain"
@@ -75,7 +75,7 @@ const Sideinfo = () => {
   return (
     <Box position="relative" width="100%" height="100%" maxHeight={500}>
       <Image
-        src="/images/auth-thumbs.svg"
+        src="/images/auth/thumbs.svg"
         alt=""
         layout="fill"
         objectFit="contain"

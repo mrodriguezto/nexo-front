@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
-import { Box, Button, IconButton, Stack, Step } from '@mui/material';
+import { Box, Button, IconButton, Stack } from '@mui/material';
 import { GetServerSideProps } from 'next';
 import { ArrowBack } from '@mui/icons-material';
 
-import BasicLayout from '@/layouts/BasicLayout';
+import SimpleLayout from '@/layouts/SimpleLayout';
 import { newProfilePage as strings } from '@/new-profile/strings';
 import {
   BeginContent,
@@ -25,8 +25,28 @@ import { INewProfileStep as IStep } from '@/new-profile/types';
 import { updateStep } from '@/new-profile/state';
 import { store, useAppDispatch, useAppSelector } from 'store';
 import FadeIn from 'common/components/Transition/FadeIn';
-import { createProfile } from '@/new-profile/services';
-import { useSnackbar } from 'notistack';
+import { getProfileToSend } from '@/new-profile/services';
+import { gql, useMutation } from '@apollo/client';
+
+const CREATE_PROFILE = gql`
+  mutation CreateUser(
+    $avatarProfile: String!
+    $biography: String!
+    $disciplines: String!
+    $displayName: String!
+    $email: String!
+    $firstName: String!
+    $keywords: String!
+    $lastName: String!
+    $locationId: String!
+    $password: String!
+    $passwordCheck: String!
+    $title: String!
+    $topics: String!
+  ) {
+    Id
+  }
+`;
 
 const content: { [key in IStep]: React.ReactNode } = {
   begin: <BeginContent />,
@@ -51,7 +71,7 @@ const sideinfo: { [key in IStep]: React.ReactNode } = {
 const NewProfilePage: NextPage = () => {
   const currentStep = useAppSelector((state) => state.newProfile.step);
   const dispatch = useAppDispatch();
-  const { enqueueSnackbar } = useSnackbar();
+  const {} = useMutation(CREATE_PROFILE);
 
   const SideinfoWrapper = ({ children }: { children: React.ReactNode }) => {
     const canContinue = useAppSelector((state) => state.newProfile.canContinue);
@@ -66,17 +86,12 @@ const NewProfilePage: NextPage = () => {
       // TODO: finish profile creation
       if (!canContinue) return;
 
-      const state = store.getState();
+      createProfile();
+    };
 
-      createProfile(state.newProfile.profile)
-        .then(() => {
-          // router.replace('/profile');
-        })
-        .catch(() => {
-          enqueueSnackbar('Algo salió mal', {
-            variant: 'error',
-          });
-        });
+    const createProfile = async () => {
+      const state = store.getState();
+      const profile = await getProfileToSend(state.newProfile.profile);
     };
 
     return (
@@ -127,7 +142,7 @@ const NewProfilePage: NextPage = () => {
   };
 
   return (
-    <BasicLayout
+    <SimpleLayout
       pageTitle={strings.title}
       pageDescription={strings.description}
       mainContent={<MainContentWrapper>{content[currentStep]}</MainContentWrapper>}

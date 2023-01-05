@@ -1,39 +1,41 @@
 import NextLink from 'next/link';
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { routes } from 'lib/strings';
+import { Box, Grid, IconButton, Link, TextField, Typography } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
 
+import { routes } from 'lib/strings';
+import { useToggle } from 'common/hooks';
+import LoadingButton from 'common/components/Button/LoadingButton';
 import { registerForm as strings } from '../strings';
 import { registerResolver } from '../utils';
-import { useToggle } from 'common/hooks';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-
-type FormData = {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-};
+import { useAppDispatch, useAppSelector } from 'store';
+import { sendRegisterCode, updateRegisterData } from '../state';
+import { IRegisterData } from '../types';
 
 const RegisterForm = () => {
-  const { isActive: isPasswordVisible, toggle: togglePasswordVisibility } =
-    useToggle();
+  const { isActive: isPasswordVisible, toggle: toggleVisibility } = useToggle();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, formState: { errors } } = useForm<IRegisterData>({
     resolver: registerResolver,
     mode: 'onTouched'
   }); // prettier-ignore
 
-  const onLoginUser = async (data: FormData) => {
-    console.log({ data });
+  const isSending = useAppSelector((state) => state.register.isSending);
+  const dispatch = useAppDispatch();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const onLoginUser = async (data: IRegisterData) => {
+    try {
+      dispatch(updateRegisterData(data));
+      await dispatch(sendRegisterCode()).unwrap();
+    } catch (error) {
+      enqueueSnackbar(strings.snack.error_on_submit, {
+        variant: 'error',
+        autoHideDuration: 2000,
+      });
+    }
   };
 
   return (
@@ -43,7 +45,7 @@ const RegisterForm = () => {
       </Box>
       <Grid
         container
-        rowGap={3}
+        rowGap={2}
         columnSpacing={{
           xs: 2,
           md: 4,
@@ -88,7 +90,7 @@ const RegisterForm = () => {
               endAdornment: (
                 <IconButton
                   aria-label="toggle password visibility"
-                  onClick={togglePasswordVisibility}
+                  onClick={() => toggleVisibility()}
                   size="small"
                   sx={{ position: 'relative', left: 8 }}
                 >
@@ -100,13 +102,8 @@ const RegisterForm = () => {
         </Grid>
       </Grid>
 
-      <Box marginY={4} display="flex" justifyContent="center">
-        <Typography
-          maxWidth={380}
-          variant="body2"
-          color="GrayText"
-          textAlign="center"
-        >
+      <Box marginY={3.2} display="flex" justifyContent="center">
+        <Typography maxWidth={380} variant="body2" color="GrayText" textAlign="center">
           {strings.terms.info}{' '}
           <NextLink href={routes.terms} passHref>
             <Link>{strings.terms.link}</Link>
@@ -114,12 +111,12 @@ const RegisterForm = () => {
         </Typography>
       </Box>
       <Box display="flex" justifyContent="center">
-        <Button type="submit" size="large">
+        <LoadingButton type="submit" size="large" loading={isSending}>
           Registrarme
-        </Button>
+        </LoadingButton>
       </Box>
 
-      <Box marginY={4} display="flex" justifyContent="center">
+      <Box marginY={3} display="flex" justifyContent="center">
         <Typography variant="body2" color="GrayText" textAlign="center">
           {strings.has_account.info}{' '}
           <NextLink href={routes.login} passHref>

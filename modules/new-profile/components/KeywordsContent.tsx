@@ -63,19 +63,13 @@ const KeywordsContent = () => {
           </Typography>
         </Box>
 
-        <Box marginTop={4}>
+        <Box marginTop={4} maxWidth={500}>
           <Typography variant="h6" gutterBottom>
             {strings.tags_subtitle}
           </Typography>
-          <Stack flexDirection="row" gap={1} flexWrap="wrap">
+          <Stack flexDirection="row" gap={1.2} flexWrap="wrap">
             {strings.suggested_tags.map((tag) => (
-              <Chip
-                onClick={() => {}}
-                key={tag}
-                label={tag}
-                deleteIcon={<Add />}
-                onDelete={() => {}}
-              />
+              <Chip key={tag} label={tag} />
             ))}
           </Stack>
         </Box>

@@ -18,7 +18,8 @@
     "paths": {
       "@/layouts/*": ["common/layouts/*"],
       "@/auth/*": ["modules/auth/*"],
-      "@/new-profile/*": ["modules/new-profile/*"]
+      "@/new-profile/*": ["modules/new-profile/*"],
+      "@/new-job-ad/*": ["modules/new-job-ad/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
