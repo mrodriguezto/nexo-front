@@ -27,6 +27,7 @@ const registerForm = {
   },
   snack: {
     error_on_submit: 'Ocurrió un error al ingresar tus datos al sistema',
+    email_sent: 'Código enviado a tu correo',
   },
 };
 

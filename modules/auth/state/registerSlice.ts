@@ -24,14 +24,12 @@ export const sendRegisterCode = createAsyncThunk<SendCodeReturnType>(
 export type RegisterState = {
   data: IRegisterData | null;
   step: number;
-  code: string | null;
   isSending: boolean;
 };
 
 const initialState: RegisterState = {
   data: null,
   step: 0,
-  code: null,
   isSending: false,
 };
 

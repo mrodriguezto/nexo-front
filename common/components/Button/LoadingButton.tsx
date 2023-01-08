@@ -1,28 +1,29 @@
-import { Box, Button, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, ButtonProps } from '@mui/material';
 
-type Props = {
-  children: React.ReactNode;
+type CustomProps = {
   loading?: boolean;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  size?: 'small' | 'large' | 'medium';
 };
+
+type Props = ButtonProps & CustomProps;
 
 const LoadingButton = ({
   children,
   loading = false,
-  onClick = () => {},
+  onClick,
   type = 'button',
+  variant = 'contained',
+  color = 'primary',
   size,
 }: Props) => {
-  const handleClick = () => {
-    if (loading) return;
-
-    onClick();
-  };
-
   return (
-    <Button size={size} type={type} onClick={handleClick} disabled={loading}>
+    <Button
+      variant={variant}
+      size={size}
+      type={type}
+      onClick={loading ? undefined : onClick}
+      disabled={loading}
+      color={color}
+    >
       {loading ? <CircularProgress size={22} sx={{ position: 'absolute' }} /> : null}
       <Box
         sx={{

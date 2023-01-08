@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
+import { Box, Stack, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
+import { useLazyQuery, useMutation } from '@apollo/client';
 
 import LoadingButton from 'common/components/Button/LoadingButton';
 import { verifyEmailContent as strings } from '@/auth/strings';
 import { store, useAppDispatch, useAppSelector } from 'store';
-import { sendRegisterCode } from '../state';
-import { useRouter } from 'next/router';
-import { routes } from 'lib/strings';
+import { REGISTER_USER, SEND_TOKEN } from '../utils';
+import { updateStep } from '../state';
 
 const RESEND_DELAY = 30;
 
@@ -18,8 +19,10 @@ const ConfirmEmailContent = () => {
   const [inCode, setInCode] = useState('');
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
-  const currentCode = useAppSelector((state) => state.register.code);
-  const router = useRouter();
+  const user = useAppSelector((state) => state.register.data);
+
+  const [addUser, { loading: isVerifying }] = useMutation(REGISTER_USER);
+  const [sendToken, { loading: isSending }] = useLazyQuery(SEND_TOKEN);
 
   useEffect(() => {
     if (canResendEmail) return;
@@ -41,13 +44,21 @@ const ConfirmEmailContent = () => {
     if (!canResendEmail) return;
 
     try {
-      await dispatch(sendRegisterCode()).unwrap();
-
-      enqueueSnackbar(strings.feedback.success, {
-        variant: 'success',
+      await sendToken({
+        variables: { email: user!.email },
+        onCompleted: () => {
+          enqueueSnackbar(strings.feedback.success, {
+            variant: 'success',
+          });
+          setCanResendEmail(false);
+        },
+        onError: (error) => {
+          enqueueSnackbar(strings.feedback.error, {
+            variant: 'error',
+          });
+          setCanResendEmail(true);
+        },
       });
-
-      setCanResendEmail(false);
     } catch (error) {
       enqueueSnackbar(strings.feedback.error, {
         variant: 'error',
@@ -55,19 +66,29 @@ const ConfirmEmailContent = () => {
     }
   };
 
-  const handleVerifyCode = () => {
-    if (currentCode !== inCode) {
-      enqueueSnackbar(strings.feedback.invalid_code, {
-        variant: 'error',
-      });
-      return;
-    }
+  // Sends the user with the code
+  const handleVerifyCode = async () => {
+    const user = store.getState().register.data!;
 
-    // TODO: send request to verify the code against the backend
-
-    localStorage.setItem('register-data', JSON.stringify(store.getState().register.data));
-
-    router.replace(routes.newProfile);
+    await addUser({
+      variables: {
+        email: user.email,
+        firstName: user.firstname,
+        lastName: user.lastname,
+        password: user.password,
+        passwordCheck: user.password,
+        token: inCode,
+      },
+      onCompleted: (data) => {
+        dispatch(updateStep(2));
+      },
+      onError: (error) => {
+        dispatch(updateStep(2)); // TODO: Delete this after
+        enqueueSnackbar(strings.feedback.error, {
+          variant: 'error',
+        });
+      },
+    });
   };
 
   return (
@@ -121,16 +142,19 @@ const ConfirmEmailContent = () => {
         }}
         rowGap={3}
       >
-        <LoadingButton onClick={handleVerifyCode}>{strings.verify_btn}</LoadingButton>
-        <Button
+        <LoadingButton onClick={handleVerifyCode} loading={isVerifying}>
+          {strings.verify_btn}
+        </LoadingButton>
+        <LoadingButton
           size="small"
           variant="outlined"
           color="secondary"
           onClick={handleResend}
           disabled={!canResendEmail}
+          loading={isSending}
         >
           {canResendEmail ? strings.resend_btn : `${countDown} s para reenviar`}
-        </Button>
+        </LoadingButton>
       </Stack>
     </Stack>
   );
