@@ -1,6 +1,10 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+
+const httpLink = createHttpLink({
+  uri: 'http://15.228.119.142',
+});
 
 export const nexoClient = new ApolloClient({
-  uri: 'http://15.228.119.142/',
   cache: new InMemoryCache(),
+  link: httpLink,
 });

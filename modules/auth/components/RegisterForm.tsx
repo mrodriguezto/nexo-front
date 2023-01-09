@@ -3,33 +3,51 @@ import { Box, Grid, IconButton, Link, TextField, Typography } from '@mui/materia
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
+import { useLazyQuery } from '@apollo/client';
 
 import { routes } from 'lib/strings';
 import { useToggle } from 'common/hooks';
 import LoadingButton from 'common/components/Button/LoadingButton';
+import { useAppDispatch } from 'store';
 import { registerForm as strings } from '../strings';
-import { registerResolver } from '../utils';
-import { useAppDispatch, useAppSelector } from 'store';
-import { sendRegisterCode, updateRegisterData } from '../state';
+import { registerResolver, SEND_TOKEN } from '../utils';
+import { updateRegisterData, updateStep } from '../state';
 import { IRegisterData } from '../types';
 
 const RegisterForm = () => {
   const { isActive: isPasswordVisible, toggle: toggleVisibility } = useToggle();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { register, handleSubmit, formState: { errors } } = useForm<IRegisterData>({
     resolver: registerResolver,
     mode: 'onTouched'
   }); // prettier-ignore
 
-  const isSending = useAppSelector((state) => state.register.isSending);
   const dispatch = useAppDispatch();
-
-  const { enqueueSnackbar } = useSnackbar();
+  const [sendToken, { loading, error }] = useLazyQuery(SEND_TOKEN);
 
   const onLoginUser = async (data: IRegisterData) => {
     try {
       dispatch(updateRegisterData(data));
-      await dispatch(sendRegisterCode()).unwrap();
+
+      await sendToken({
+        variables: { email: data.email },
+        onCompleted: () => {
+          dispatch(updateStep(1));
+          enqueueSnackbar(strings.snack.email_sent, {
+            variant: 'success',
+            autoHideDuration: 2000,
+          });
+        },
+        onError: (error) => {
+          dispatch(updateStep(1));
+
+          enqueueSnackbar(strings.snack.error_on_submit, {
+            variant: 'error',
+            autoHideDuration: 2000,
+          });
+        },
+      });
     } catch (error) {
       enqueueSnackbar(strings.snack.error_on_submit, {
         variant: 'error',
@@ -111,7 +129,7 @@ const RegisterForm = () => {
         </Typography>
       </Box>
       <Box display="flex" justifyContent="center">
-        <LoadingButton type="submit" size="large" loading={isSending}>
+        <LoadingButton type="submit" size="large" loading={loading}>
           Registrarme
         </LoadingButton>
       </Box>
