@@ -19,10 +19,6 @@ export const getProfileToSend = async (profile: INewProfile) => {
     profileImgFile = null;
   }
 
-  const mediaFiles = await Promise.all([...mediaFilesPromises]);
-
-  // const profileToSend = { ...profile, media: mediaFiles, image: profileImgFile };
-
   const {
     biography,
     disciplines,
@@ -32,26 +28,13 @@ export const getProfileToSend = async (profile: INewProfile) => {
     topics,
   } = profile;
 
-  // TODO: Delete this
-  const {
-    email,
-    firstname: firstName,
-    lastname: lastName,
-    password,
-  } = JSON.parse(localStorage.getItem('register-data') || '') as IRegisterData;
-
   const profileToSend = {
-    avatarProfile: '',
+    avatar: '',
     biography,
     disciplines,
     displayName,
-    email,
-    firstName,
     keywords,
-    lastName,
     location: 'test',
-    password,
-    passwordCheck: password,
     title,
     topics,
   };

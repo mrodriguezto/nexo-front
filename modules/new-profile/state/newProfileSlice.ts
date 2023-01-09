@@ -75,10 +75,7 @@ export const newProfileSlice = createSlice({
     updateMedia: (state: NewProfileState, action: PayloadAction<IMedia[]>) => {
       state.profile.media = action.payload;
     },
-    updateProfileImg: (
-      state: NewProfileState,
-      action: PayloadAction<IProfileImage>,
-    ) => {
+    updateProfileImg: (state: NewProfileState, action: PayloadAction<IProfileImage>) => {
       state.profile.image = action.payload;
     },
   },
