@@ -4,31 +4,55 @@ import { Box, Button, Link, Typography } from '@mui/material';
 import { uploadsContent as strings } from '../strings';
 import TipPopover from 'common/components/Popover/TipPopover';
 import ProfileMediaUploader from './ProfileMediaUploader';
-import { useAppSelector } from 'store';
-import { createProfile } from '../services';
+import { store, useAppSelector } from 'store';
+import { getProfileToSend } from '../services';
+import { useMutation } from '@apollo/client';
+import { CREATE_PROFILE } from '../utils';
 
 const UploadsContent = () => {
   const canContinue = useAppSelector((state) => state.newProfile.canContinue);
   const profile = useAppSelector((state) => state.newProfile.profile);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const [sendProfile, { loading }] = useMutation(CREATE_PROFILE);
 
   const handleFinalize = () => {
     if (!canContinue) return;
 
-    createProfile(profile)
-      .then(() => {
-        // router.replace('/profile');
-      })
-      .catch(() => {
-        enqueueSnackbar('Algo salió mal', {
-          variant: 'error',
-        });
-      });
+    // createProfile(profile)
+    //   .then(() => {
+    //     // router.replace('/profile');
+    //   })
+    //   .catch(() => {
+    //     enqueueSnackbar('Algo salió mal', {
+    //       variant: 'error',
+    //     });
+    //   });
   };
 
-  const handleSkip = () => {
-    // TODO: finalize the creation
+  const handleSkip = async () => {
+    const state = store.getState();
+    const profile = await getProfileToSend(state.newProfile.profile);
+
+    try {
+      await sendProfile({
+        variables: {
+          ...profile,
+        },
+        onCompleted: (data) => {
+          console.log(data);
+        },
+        onError: (error) => {
+          enqueueSnackbar('Algo salió mal', {
+            variant: 'error',
+          });
+        },
+      });
+    } catch (error) {
+      enqueueSnackbar('Algo salió mal', {
+        variant: 'error',
+      });
+    }
   };
 
   return (
@@ -100,7 +124,14 @@ const UploadsContent = () => {
             md: 'left',
           }}
         >
-          <Link onClick={handleSkip}>{strings.do_later_link}</Link>
+          <Link
+            style={{
+              cursor: 'pointer',
+            }}
+            onClick={handleSkip}
+          >
+            {strings.do_later_link}
+          </Link>
         </Box>
       </Box>
     </Box>
