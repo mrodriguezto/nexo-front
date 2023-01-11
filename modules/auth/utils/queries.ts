@@ -33,3 +33,9 @@ export const SEND_TOKEN: TypedDocumentNode<null, { email: string }> = gql`
     getEmailTokenToSignUp(email: $email)
   }
 `;
+
+export const LOGIN_USER = gql`
+  query Login($email: String!, $password: String!) {
+    login(email: $email, password: $password)
+  }
+`;

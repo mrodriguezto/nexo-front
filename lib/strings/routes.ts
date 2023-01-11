@@ -13,4 +13,7 @@ export const routes = {
 
   // NEW PROFILE
   newProfile: '/new-profile',
+
+  // PROFILE
+  profile: '/profile',
 };

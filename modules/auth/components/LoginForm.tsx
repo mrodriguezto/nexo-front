@@ -14,7 +14,10 @@ import { useForm } from 'react-hook-form';
 import { routes } from 'lib/strings';
 import { useToggle } from 'common/hooks';
 import { loginForm as strings } from '../strings';
-import { loginResolver } from '../utils';
+import { loginResolver, LOGIN_USER } from '../utils';
+import { useLazyQuery } from '@apollo/client';
+import LoadingButton from 'common/components/Button/LoadingButton';
+import { useRouter } from 'next/router';
 
 type FormData = {
   email: string;
@@ -22,16 +25,27 @@ type FormData = {
 };
 
 const LoginForm = () => {
-  const { isActive: isPasswordVisible, toggle: togglePasswordVisibility } =
-    useToggle();
+  const { isActive: isPasswordVisible, toggle: togglePasswordVisibility } = useToggle();
+  const router = useRouter();
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: loginResolver,
     mode: 'onTouched'
   }); // prettier-ignore
 
+  const [loginUser, { loading, error }] = useLazyQuery(LOGIN_USER);
+
   const onRegisterUser = async (data: FormData) => {
-    console.log({ data });
+    await loginUser({
+      variables: { email: data.email, password: data.password },
+      onCompleted: () => {
+        console.log('onCompleted');
+        router.replace(routes.profile);
+      },
+      onError: (error) => {
+        console.log('onError', error);
+      },
+    });
   };
 
   return (
@@ -63,7 +77,7 @@ const LoginForm = () => {
             endAdornment: (
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={togglePasswordVisibility}
+                onClick={() => togglePasswordVisibility()}
                 size="small"
                 sx={{ position: 'relative', left: 8 }}
               >
@@ -76,9 +90,9 @@ const LoginForm = () => {
         <NextLink href={routes.restore_password} passHref>
           <Link variant="body2">{strings.links.forgot_pass_link}</Link>
         </NextLink>
-        <Button type="submit" size="large">
+        <LoadingButton type="submit" size="large" loading={loading}>
           {strings.btns.login}
-        </Button>
+        </LoadingButton>
         <Stack
           direction={{
             xs: 'column',
